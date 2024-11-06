@@ -1,0 +1,43 @@
+name: Setup E2E testing
+runs:
+  using: composite
+  steps:
+  - uses: pnpm/action-setup@v4
+  - uses: actions/setup-node@v4
+    with:
+      node-version: 22.5.1
+      cache: 'pnpm'
+      cache-dependency-path: './pnpm-lock.yaml'
+  - name: Install dependencies
+    shell: bash
+    run: pnpm i
+  - uses: actions/cache@v3
+    name: Check Playwright cache
+    id: playwright-cache
+    with:
+      path: ~/.cache/ms-playwright
+      key: ${{ runner.os }}-playwright-${{ env.PLAYWRIGHT_VERSION }}
+  - name: Install Playwright
+    shell: bash
+    run: pnpm dlx playwright@${{ env.PLAYWRIGHT_VERSION }} install --with-deps
+    if: steps.playwright-cache.outputs.cache-hit != 'true'
+  - name: Run service deps via Docker
+    uses: hoverkraft-tech/compose-action@v2.0.1
+    with:
+      compose-file: docker-compose.dev.yaml
+  - name: Update .env.dev config
+    shell: bash
+    run: |
+      echo "REVERSE_PROXY_PORT=3000" >> .env.dev
+  - name: Configure env and build
+    shell: bash
+    run: pnpm setup:dev --ci
+  - name: Migrate DB
+    shell: bash
+    run: pnpm db:migrate
+  - name: Seed DB
+    shell: bash
+    run: pnpm seed
+  - name: Run
+    shell: bash
+    run: pnpm start & sleep 15

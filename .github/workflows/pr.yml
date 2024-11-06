@@ -1,0 +1,81 @@
+name: PR checks
+env:
+  PLAYWRIGHT_VERSION: 1.46.1
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main, develop ]
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Setup node, pnpm, install dependencies
+        uses: ./.github/actions/setup
+      - name: Run linter
+        run: pnpm lint
+  e2e:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Setup script .env
+        run: |
+          touch ./scripts/setup/.env
+          echo "DB_USERNAME=dev" >> ./scripts/setup/.env
+          echo "DB_PASSWORD=dev" >> ./scripts/setup/.env
+      - name: Setup app .env
+        run: |
+          touch .env
+          echo "EMAIL_SENDER_NAME=App" >> .env
+          echo "EMAIL_SENDER_ADDRESS=app@myappdomain.com" >> .env
+          echo "EMAIL_USER=${{ secrets.EMAIL_USER }}" >> .env
+          echo "EMAIL_PASSWORD=${{ secrets.EMAIL_PASSWORD }}" >> .env
+          echo "EMAIL_HOST=sandbox.smtp.mailtrap.io" >> .env
+          echo "NUXT_PUBLIC_OIDC_ENABLED=${{ vars.NUXT_PUBLIC_OIDC_ENABLED }}" >> .env
+          echo "OIDC_ALLOW_SIGNUP=${{ vars.OIDC_ALLOW_SIGNUP }}" >> .env
+          echo "OIDC_CLIENT_ID=${{ secrets.OIDC_CLIENT_ID }}" >> .env
+          echo "OIDC_CLIENT_SECRET=${{ secrets.OIDC_CLIENT_SECRET }}" >> .env
+          echo "OIDC_ISSUER=${{ vars.OIDC_ISSUER }}" >> .env
+          echo "OIDC_JWKS_URL=${{ vars.OIDC_JWKS_URL }}" >> .env
+          echo "OIDC_AUTHORIZATION_ENDPOINT=${{ vars.OIDC_AUTHORIZATION_ENDPOINT }}" >> .env
+          echo "OIDC_TOKEN_ENDPOINT=${{ vars.OIDC_TOKEN_ENDPOINT }}" >> .env
+          echo "OIDC_USERINFO_ENDPOINT=${{ vars.OIDC_USERINFO_ENDPOINT }}" >> .env
+          echo "OIDC_SESSION_SECRET=${{ secrets.OIDC_SESSION_SECRET }}" >> .env
+      - name: Setup E2E .env
+        run: |
+          touch ./tests/.env
+          echo "MAILTRAP_ACCOUNT_ID=${{ secrets.MAILTRAP_ACCOUNT_ID }}" >> ./tests/.env
+          echo "MAILTRAP_TOKEN=${{ secrets.MAILTRAP_TOKEN }}" >> ./tests/.env
+          echo "MAILTRAP_INBOX_ID=${{ secrets.MAILTRAP_INBOX_ID }}" >> ./tests/.env
+          echo "MAILTRAP_INBOX_NAME=e2e" >> ./tests/.env
+          echo "PERCY_TOKEN=${{ secrets.PERCY_TOKEN }}" >> ./tests/.env
+          echo "OIDC_TEST_USER_EMAIL=${{ secrets.OIDC_TEST_USER_EMAIL }}" >> ./tests/.env
+          echo "OIDC_TEST_USER_PASSWORD=${{ secrets.OIDC_TEST_USER_PASSWORD }}" >> ./tests/.env
+      - name: Install, build, seed, and start server
+        uses: ./.github/actions/run
+      - name: Check if platform is running
+        uses: indiesdev/curl@v1.1
+        with:
+          url: http://localhost:3000/api/healthcheck
+          method: "GET"
+          accept: 200
+      # Disabled until configuration is provided
+      # - name: Run functional tests
+      #   shell: bash
+      #   run: pnpm e2e:functional
+      # - name: Run visual tests
+      #   shell: bash
+      #   run: pnpm e2e:visual
+      # - name: Run a11y tests
+      #   shell: bash
+      #   run: pnpm e2e:a11y
+      # - uses: actions/upload-artifact@v3
+      #   if: always()
+      #   with:
+      #     name: playwright-report
+      #     path: ./tests/playwright-report/
+      #     retention-days: 1
