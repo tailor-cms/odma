@@ -23,22 +23,22 @@
   },
   "devDependencies": {
     "@app/seed": "workspace:^",
-    "@nuxt/eslint-config": "^0.3.13",
+    "@nuxt/eslint-config": "^0.6.1",
     "boxen": "^7.1.1",
     "chalk": "^5.3.0",
     "dotenv-cli": "^7.4.2",
     "eslint": "^9.14.0",
-    "execa": "^9.4.0",
+    "execa": "^9.5.1",
     "inquirer": "^9.2.23",
     "lodash": "^4.17.21",
     "minimist": "^1.2.8",
-    "ora": "^8.1.0",
-    "pg": "^8.13.0",
+    "ora": "^8.1.1",
+    "pg": "^8.13.1",
     "pid-port": "^1.0.0",
     "pkg-dir": "^8.0.0",
     "shelljs": "^0.8.5",
-    "typescript": "^5.5.4",
-    "vitepress": "^1.4.1"
+    "typescript": "^5.6.3",
+    "vitepress": "^1.5.0"
   },
   "dependencies": {
     "@inquirer/select": "^2.4.7",

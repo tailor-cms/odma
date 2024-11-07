@@ -10,7 +10,7 @@
   "main": "./src/index.ts",
   "devDependencies": {
     "@app/interfaces": "workspace:*",
-    "@types/lodash": "^4.17.10",
+    "@types/lodash": "^4.17.13",
     "@types/pluralize": "^0.0.33"
   },
   "peerDependencies": {
