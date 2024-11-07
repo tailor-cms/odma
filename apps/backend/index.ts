@@ -1,44 +1,32 @@
-import app from './app.js';
-import boxen from 'boxen';
-import { createRequire } from 'node:module';
+/* eslint-disable */
+import boxen, { type Options as BoxenOptions } from 'boxen';
 import Promise from 'bluebird';
-import { promisify } from 'node:util';
-import toCase from 'to-case';
 
-const require = createRequire(import.meta.url);
-const pkg = require('./package.json');
+import app from './app.ts';
 
-// NOTE: This needs to be done before db models get loaded!
+const env = process.env;
+
+// This needs to be done before db models get loaded!
 const isProduction = process.env.NODE_ENV === 'production';
 Promise.config({ longStackTraces: !isProduction });
-
-/* eslint-disable */
 import config from './config/server/index.js';
 import database from './shared/database/index.js';
 import getLogger from './shared/logger.js';
 /* eslint-enable */
 
-const capitalize = toCase.capital;
 const logger = getLogger();
-const runApp = promisify(app.listen.bind(app));
 
 database
   .initialize()
   .then(() => logger.info('Database initialized'))
-  .then(() => runApp(config.port))
+  .then(() => app.listen(config.port))
   .then(() => {
     logger.info(`Server listening on port ${config.port}`);
-    welcome(pkg.name, pkg.version);
+    welcome(env.npm_package_name, env.npm_package_version);
   })
   .catch((err) => logger.error({ err }));
 
-const message = (name, version) =>
-  `
-    ${capitalize(name)} v${version}
-
-    It's aliveeeee 🚀
-
-    `.trim();
+const message = (name, version) => `${name} v${version} 🚀`.trim();
 
 function welcome(name, version) {
   const options = {
@@ -47,6 +35,6 @@ function welcome(name, version) {
     borderStyle: 'double',
     borderColor: 'blue',
     align: 'left',
-  };
-  console.error(boxen(message(name, version), options));
+  } as BoxenOptions;
+  console.log(boxen(message(name, version), options));
 }
