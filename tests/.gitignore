@@ -1,0 +1,12 @@
+node_modules/
+
+# Playwright
+/test-results/
+/playwright-report/
+/playwright/.cache/
+# State storage
+# Storing context for authenticated user
+.auth.json
+# Temp files
+tmp/*
+!tmp/.gitkeep
