@@ -1,0 +1,39 @@
+# TODO: Make all env variables configurable
+services:
+  postgres:
+    container_name: "postgres"
+    image: "postgres:15.1"
+    environment:
+      POSTGRES_DB: "app_starter"
+      POSTGRES_USER: "dev"
+      POSTGRES_PASSWORD: "dev"
+    expose:
+      - "5432"
+    restart: "no"
+
+  app-backend:
+    image: "app-backend"
+    container_name: "app-backend"
+    depends_on:
+      - "postgres"
+    build:
+      dockerfile: "./Dockerfile"
+      context: "."
+    expose:
+      - "3000"
+    # Make .env based
+    ports:
+      - "3000:3000"
+    env_file:
+      - .env
+    environment:
+      NODE_ENV: "development"
+      PROTOCOL: "http"
+      HOSTNAME: "localhost"
+      PORT: 3000
+      REVERSE_PROXY_PORT: 3000
+      DATABASE_HOST: "postgres"
+      DATABASE_NAME: "app_starter"
+      DATABASE_USER: "dev"
+      DATABASE_PASSWORD: "dev"
+    restart: "no"
