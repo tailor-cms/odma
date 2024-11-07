@@ -1,14 +1,18 @@
 <template>
-  <VSheet class="overflow-hidden" color="primary-lighten-4" rounded="lg">
-    <VList bg-color="transparent" class="text-left mb-6">
+  <VSheet
+    class="overflow-hidden"
+    color="primary-lighten-4"
+    rounded="lg">
+    <VList
+      bg-color="transparent"
+      class="text-left mb-6">
       <VListItem
         v-for="{ name, label, icon, query } in routes"
         :key="name"
         :to="{ name, query }"
         active-class="bg-primary-lighten-4 text-primary-darken-4"
         class="mb-2 pa-4"
-        rounded="lg"
-      >
+        rounded="lg">
         <template #prepend>
           <VIcon>mdi-{{ icon }}</VIcon>
         </template>

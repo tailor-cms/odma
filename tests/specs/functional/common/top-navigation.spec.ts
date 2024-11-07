@@ -1,9 +1,6 @@
 import { expect, test } from '@playwright/test';
-
-import { ActivityOutline } from '../../../pom/repository/Outline.ts';
 import { AppBar } from '../../../pom/common/AppBar.ts';
 import SeedClient from '../../../api/SeedClient.ts';
-import { toSeededRepository } from '../../../helpers/seed.ts';
 
 test.beforeEach(async ({ page }) => {
   await SeedClient.resetDatabase();

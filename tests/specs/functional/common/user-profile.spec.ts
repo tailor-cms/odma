@@ -67,16 +67,16 @@ test('updating user should fail if required fields are empty', async ({
   await profilePage.hasVisibleAlert('Last name is a required field');
 });
 
-test('updating user should fail if first or last name are less than two characters', async ({
-  page,
-}) => {
-  const profilePage = new UserProfile(page);
-  await profilePage.fillFirstName(faker.string.alpha(1));
-  await profilePage.fillLastName(faker.string.alpha(1));
-  await profilePage.save();
-  await profilePage.hasVisibleAlert('First name must be at least 2 characters');
-  await profilePage.hasVisibleAlert('Last name must be at least 2 characters');
-});
+test(
+  'updating user should fail if first or last name are less than two characters',
+  async ({ page }) => {
+    const profilePage = new UserProfile(page);
+    await profilePage.fillFirstName(faker.string.alpha(1));
+    await profilePage.fillLastName(faker.string.alpha(1));
+    await profilePage.save();
+    await profilePage.hasVisibleAlert('First name must be at least 2 characters');
+    await profilePage.hasVisibleAlert('Last name must be at least 2 characters');
+  });
 
 test('should be able to update profile photo', async ({ page }) => {
   const profilePage = new UserProfile(page);
