@@ -47,7 +47,6 @@
     "pinia": "^2.2.4",
     "pluralize": "^8.0.0",
     "promise-queue": "^2.2.5",
-    "sse-event-types": "workspace:*",
     "@app/config": "workspace:*",
     "to-case": "^2.0.0",
     "url-join": "^5.0.0",
