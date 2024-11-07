@@ -67,7 +67,7 @@
 <script lang="ts" setup>
 import { useDisplay } from 'vuetify';
 import type { User } from '@app/interfaces/user';
-import { UserAvatar } from '@app/core-components';
+import { UserAvatar } from '@app/vue-components';
 
 import { useAuthStore } from '@/stores/auth';
 import { useConfigStore } from '@/stores/config';
