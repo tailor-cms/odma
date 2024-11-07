@@ -1,0 +1,3 @@
+name: app-starter
+description: Infrastructure provisioning for the app-starter project
+runtime: nodejs
