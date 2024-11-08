@@ -9,7 +9,7 @@ import Promise from 'bluebird';
 import randomstring from 'randomstring';
 import { role as roles } from '@app/config';
 import mail from '../shared/mail/index.js';
-import { auth as authConfig } from '../config/server/index.js';
+import { auth as authConfig } from '../config/index.js';
 import Audience from '../shared/auth/audience.js';
 
 const {

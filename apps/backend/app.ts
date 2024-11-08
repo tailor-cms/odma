@@ -11,7 +11,7 @@ import qs from 'qs';
 import origin from './shared/origin.js';
 
 import auth from './shared/auth/index.js';
-import config from './config/server/index.js';
+import config from './config/index.js';
 import getLogger from './shared/logger.js';
 import router from './router.js';
 

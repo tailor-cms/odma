@@ -1,4 +1,4 @@
-import { hostname } from '../config/server/index.js';
+import { hostname } from '../config/index.js';
 import createLogger from './logger.js';
 
 const logger = createLogger();
