@@ -4,7 +4,7 @@ import Promise from 'bluebird';
 
 import app from './app.ts';
 import config from '#config';
-import { createLogger } from './shared/logger.js';
+import { createLogger } from '#logger';
 
 
 // This needs to be done before db models get loaded!
