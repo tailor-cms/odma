@@ -98,6 +98,7 @@
     "yup": "^1.4.0"
   },
   "devDependencies": {
+    "@types/bluebird": "^3.5.42",
     "@types/express": "^5.0.0",
     "dargs": "^8.1.0",
     "del-cli": "^5.1.0",

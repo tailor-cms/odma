@@ -304,6 +304,9 @@ importers:
         specifier: ^1.4.0
         version: 1.4.0
     devDependencies:
+      '@types/bluebird':
+        specifier: ^3.5.42
+        version: 3.5.42
       '@types/express':
         specifier: ^5.0.0
         version: 5.0.0
