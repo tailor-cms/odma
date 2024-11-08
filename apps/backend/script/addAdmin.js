@@ -1,9 +1,6 @@
 import 'dotenv/config';
 
 import roleConfig from '@app/config/src/role.js';
-import createLogger from '../shared/logger.js';
-
-createLogger.enabled = false;
 
 // Dynamic import is needed in order for the `enabled` flag to be respected
 const { default: db } = await import('../shared/database/index.js');

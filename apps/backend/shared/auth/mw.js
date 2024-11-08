@@ -2,7 +2,7 @@ import get from 'lodash/get.js';
 import roleConfig from '@app/config/src/role.js';
 import { StatusCodes } from 'http-status-codes';
 import { createError } from '../error/helpers.js';
-import { auth as authConfig } from '../../config/index.js';
+import { auth as authConfig } from '#config';
 
 const { user: role } = roleConfig;
 

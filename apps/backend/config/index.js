@@ -9,9 +9,17 @@ import * as storage from './storage.js';
 import * as kvStore from './kvStore.js';
 import * as test from './test.js';
 
-const { hostname, protocol, port, origin } = resolveUrl(process.env);
+const env = process.env;
+const isProduction = env.NODE_ENV === 'production';
+const packageName = env.npm_package_name;
+const packageVersion = env.npm_package_version;
+
+const { hostname, protocol, port, origin } = resolveUrl(env);
 
 export {
+  packageName,
+  packageVersion,
+  isProduction,
   ai,
   auth,
   consumer,
@@ -27,6 +35,9 @@ export {
 };
 
 export default {
+  packageName,
+  packageVersion,
+  isProduction,
   ai,
   auth,
   consumer,

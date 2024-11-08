@@ -8,17 +8,15 @@ import helmet from 'helmet';
 import history from 'connect-history-api-fallback';
 import qs from 'qs';
 
-import origin from './shared/origin.js';
-
 import auth from './shared/auth/index.js';
-import config from './config/index.js';
-import getLogger from './shared/logger.js';
+import origin from './shared/origin.js';
 import router from './router.js';
+import { createHttpLogger } from '#logger';
+import config from '#config';
 
 const { STORAGE_PATH } = process.env;
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const logger = getLogger();
 const app = express();
 
 const configCookie = JSON.stringify(
@@ -84,7 +82,7 @@ app.use(
 if (STORAGE_PATH) app.use(express.static(STORAGE_PATH));
 
 // Mount main router.
-app.use('/api', requestLogger, router);
+app.use('/api', createHttpLogger(), router);
 
 // Global error handler.
 app.use(errorHandler);
@@ -94,14 +92,9 @@ app.use((_req, res) => res.status(404).end());
 
 export default app;
 
-function requestLogger(req, _res, next) {
-  logger.info({ req });
-  next();
-}
-
-function errorHandler(err, _req, res, _next) {
+function errorHandler(err, req, res, _next) {
   if (!err.status || err.status === 500) {
-    logger.error({ err });
+    req.log.error({ err });
     res.status(500).end();
     return;
   }
