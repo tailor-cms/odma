@@ -1,8 +1,8 @@
 import isString from 'lodash/isString.js';
 import OpenAI from 'openai';
 
-import { ai as aiConfig } from '../../config/index.js';
 import { createLogger } from '../logger.js';
+import { ai as aiConfig } from '#config';
 
 const logger = createLogger('ai');
 

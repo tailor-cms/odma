@@ -3,6 +3,10 @@
   "version": "0.0.1",
   "codename": "X",
   "type": "module",
+  "imports": {
+    "#config": "./config/index.js",
+    "#config/*": "./config/*"
+  },
   "scripts": {
     "dev": "nodemon --import ./script/preflight.js --experimental-strip-types ./index.ts || exit 0",
     "start": "node --import ./script/preflight.js --experimental-strip-types ./index.ts",

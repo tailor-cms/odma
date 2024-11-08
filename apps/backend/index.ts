@@ -10,7 +10,7 @@ const env = process.env;
 // This needs to be done before db models get loaded!
 const isProduction = process.env.NODE_ENV === 'production';
 Promise.config({ longStackTraces: !isProduction });
-import config from './config/index.js';
+import config from '#config';
 import database from './shared/database/index.js';
 /* eslint-enable */
 

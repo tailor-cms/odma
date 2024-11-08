@@ -9,10 +9,10 @@ import history from 'connect-history-api-fallback';
 import qs from 'qs';
 
 import auth from './shared/auth/index.js';
-import config from './config/index.js';
 import { createHttpLogger } from './shared/logger.js';
 import origin from './shared/origin.js';
 import router from './router.js';
+import config from '#config';
 
 const { STORAGE_PATH } = process.env;
 
