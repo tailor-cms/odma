@@ -18,9 +18,9 @@
   "dependencies": {
     "@app/config": "workspace:*",
     "@app/seed": "workspace:*",
-    "@aws-sdk/client-s3": "^3.686.0",
-    "@aws-sdk/lib-storage": "^3.686.0",
-    "@aws-sdk/s3-request-presigner": "^3.686.0",
+    "@aws-sdk/client-s3": "^3.687.0",
+    "@aws-sdk/lib-storage": "^3.687.0",
+    "@aws-sdk/s3-request-presigner": "^3.687.0",
     "@aws-sdk/util-format-url": "^3.686.0",
     "@faker-js/faker": "^8.4.1",
     "@keyv/redis": "^3.0.1",
