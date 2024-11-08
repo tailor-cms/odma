@@ -1,11 +1,11 @@
+import express from 'express';
 import ai from './shared/ai/index.js';
 import {
   ai as aiConfig,
   auth as authConfig,
   test as testConfig,
-} from './config/server/index.js';
+} from './config/index.js';
 import authenticator from './shared/auth/index.js';
-import express from 'express';
 import { extractAuthData } from './shared/auth/mw.js';
 import seedRouter from './tests/api/index.js';
 import user from './user/index.js';

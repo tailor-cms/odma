@@ -1,9 +1,9 @@
 import camelCase from 'lodash/camelCase.js';
-import db from '../../shared/database/index.js';
 import { faker } from '@faker-js/faker';
 import mapKeys from 'lodash/mapKeys.js';
 import { role as roles } from '@app/config';
 import seedUsers from '@app/seed/user.json' with { type: 'json' };
+import db from '../../shared/database/index.js';
 
 const { User } = db;
 

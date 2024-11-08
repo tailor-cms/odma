@@ -1,8 +1,8 @@
-import { createError, validationError } from '../shared/error/helpers.js';
-import db from '../shared/database/index.js';
 import map from 'lodash/map.js';
 import { Op } from 'sequelize';
 import { StatusCodes } from 'http-status-codes';
+import db from '../shared/database/index.js';
+import { createError, validationError } from '../shared/error/helpers.js';
 
 const { User } = db;
 

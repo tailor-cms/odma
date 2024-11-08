@@ -1,20 +1,19 @@
+import { fileURLToPath } from 'node:url';
+import path from 'node:path';
 import bodyParser from 'body-parser';
 import cookieParser from 'cookie-parser';
 import cors from 'cors';
 import express from 'express';
-import { fileURLToPath } from 'node:url';
 import helmet from 'helmet';
 import history from 'connect-history-api-fallback';
-import origin from './shared/origin.js';
-import path from 'node:path';
 import qs from 'qs';
 
-/* eslint-disable */
+import origin from './shared/origin.js';
+
 import auth from './shared/auth/index.js';
-import config from './config/server/index.js';
+import config from './config/index.js';
 import getLogger from './shared/logger.js';
 import router from './router.js';
-/* eslint-enable */
 
 const { STORAGE_PATH } = process.env;
 
@@ -33,8 +32,9 @@ const configCookie = JSON.stringify(
 if (config.general.reverseProxyPolicy)
   app.set('trust proxy', config.general.reverseProxyPolicy);
 
-config.auth.oidc.enabled &&
-  (await (async () => {
+// eslint-disable-next-line @typescript-eslint/no-unused-expressions
+config.auth.oidc.enabled
+  && (await (async () => {
     const { default: consolidate } = await import('consolidate');
     const { default: session } = await import('express-session');
     app.engine('mustache', consolidate.mustache);
@@ -90,7 +90,7 @@ app.use('/api', requestLogger, router);
 app.use(errorHandler);
 
 // Handle non-existing routes.
-app.use((_req, res, next) => res.status(404).end());
+app.use((_req, res) => res.status(404).end());
 
 export default app;
 

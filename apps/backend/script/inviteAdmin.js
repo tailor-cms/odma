@@ -1,8 +1,8 @@
 import 'dotenv/config';
 
+import roleConfig from '@app/config/src/role.js';
 import createLogger from '../shared/logger.js';
 import Deferred from '../shared/util/Deferred.js';
-import roleConfig from '@app/config/src/role.js';
 
 createLogger.enabled = false;
 

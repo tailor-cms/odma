@@ -1,22 +1,21 @@
-import { SequelizeStorage, Umzug } from 'umzug';
-import config from './config.js';
-import createLogger from '../logger.js';
 import { createRequire } from 'node:module';
-import forEach from 'lodash/forEach.js';
-import Hooks from './hooks.js';
-import invoke from 'lodash/invoke.js';
 import path from 'node:path';
+import invoke from 'lodash/invoke.js';
+import forEach from 'lodash/forEach.js';
+import { SequelizeStorage, Umzug } from 'umzug';
 import pick from 'lodash/pick.js';
 import Promise from 'bluebird';
 import semver from 'semver';
 import Sequelize from 'sequelize';
+import createLogger from '../logger.js';
 import sequelizeConfig from '../../sequelize.config.cjs';
-import { wrapMethods } from './helpers.js';
 
 // Require models.
-/* eslint-disable */
+
 import User from '../../user/user.model.js';
-/* eslint-enable */
+import Hooks from './hooks.js';
+import config from './config.js';
+import { wrapMethods } from './helpers.js';
 
 const require = createRequire(import.meta.url);
 const pkg = require('../../package.json');
