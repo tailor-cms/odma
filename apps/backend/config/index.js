@@ -10,8 +10,10 @@ import * as kvStore from './kvStore.js';
 import * as test from './test.js';
 
 const { hostname, protocol, port, origin } = resolveUrl(process.env);
+const isProduction = process.env.NODE_ENV === 'production';
 
 export {
+  isProduction,
   ai,
   auth,
   consumer,
@@ -27,6 +29,7 @@ export {
 };
 
 export default {
+  isProduction,
   ai,
   auth,
   consumer,

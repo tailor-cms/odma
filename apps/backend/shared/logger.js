@@ -1,7 +1,7 @@
 import pino from 'pino';
 import pinoHttp from 'pino-http';
 
-const isProduction = process.env.NODE_ENV === 'production';
+import { isProduction } from '#config';
 
 export const Level = {
   Fatal: 'fatal',
