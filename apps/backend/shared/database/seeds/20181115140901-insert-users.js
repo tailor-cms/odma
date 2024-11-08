@@ -12,7 +12,7 @@ module.exports = {
       created_at: now,
       updated_at: now,
     }));
-    return import('#config')
+    return import('../../../config/index.js')
       .then(({ auth: config }) =>
         Promise.map(rows, (user) => encryptPassword(user, config.saltRounds)),
       )
