@@ -3,6 +3,7 @@ import boxen, { type Options as BoxenOptions } from 'boxen';
 import Promise from 'bluebird';
 
 import app from './app.ts';
+import { createLogger } from './shared/logger.js';
 
 const env = process.env;
 
@@ -11,10 +12,9 @@ const isProduction = process.env.NODE_ENV === 'production';
 Promise.config({ longStackTraces: !isProduction });
 import config from './config/index.js';
 import database from './shared/database/index.js';
-import getLogger from './shared/logger.js';
 /* eslint-enable */
 
-const logger = getLogger();
+const logger = createLogger();
 
 database
   .initialize()
