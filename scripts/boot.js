@@ -65,7 +65,7 @@ const dbConfig = env.DATABASE_URI
   : {
       host: env.DATABASE_HOST || 'localhost',
       port: env.DATABASE_PORT || 5432,
-      user: env.DATABASE_USER,
+      user: env.DATABASE_USERNAME,
       password: env.DATABASE_PASSWORD,
       database: env.DATABASE_NAME,
     };

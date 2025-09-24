@@ -5,14 +5,16 @@ import { HealthModule } from './modules/health/health.module';
 import { MailModule } from './modules/mail/mail.module';
 import { MikroOrmModule } from '@mikro-orm/nestjs';
 import { Module } from '@nestjs/common';
+import { ServeStaticModule } from '@nestjs/serve-static';
 import { ThrottlerModule } from '@nestjs/throttler';
 import { UserModule } from './modules/user/user.module';
-import dbConfig, { DbConfig } from './config/db.config';
 import authConfig from './config/auth.config';
+import dbConfig from './config/db.config';
 import generalConfig from './config/general.config';
-import { validationSchema } from './config/validation';
+import { join } from 'path';
 import mailConfig from './config/mail.config';
 import mikroOrmConfig from './config/mikro-orm.config';
+import { validationSchema } from './config/validation';
 
 @Module({
   imports: [
@@ -27,8 +29,8 @@ import mikroOrmConfig from './config/mikro-orm.config';
     MikroOrmModule.forRootAsync({
       inject: [ConfigService],
       useFactory: async (configService: ConfigService) => {
-        const mikroOrmConfig = configService.get<DbConfig>('mikroORM');
-        const database = configService.get<DbConfig>('database');
+        const mikroOrmConfig = configService.get('mikroORM');
+        const database = configService.get('database');
         const saltRounds = configService.get<number>('auth.saltRounds');
         return {
           ...mikroOrmConfig,
@@ -38,6 +40,11 @@ import mikroOrmConfig from './config/mikro-orm.config';
       },
     }),
     ThrottlerModule.forRoot([{ ttl: 60000, limit: 100 }]),
+    ServeStaticModule.forRoot({
+      rootPath: join(__dirname, '../../..', 'frontend/.output/public'),
+      exclude: ['/api*', '/api/**'],
+      serveRoot: '/',
+    }),
     AuthModule,
     CommonModule,
     HealthModule,

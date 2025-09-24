@@ -4,14 +4,21 @@ import dbConfig from './src/config/db.config';
 import * as dotenv from 'dotenv';
 import * as path from 'path';
 
-// Load environment variables
 dotenv.config({ path: path.resolve(__dirname, '../../.env') });
 
-// Get the config functions
-const mikroConfig = mikroOrmConfig();
-const databaseConfig = dbConfig();
+// Since the configs use registerAs, we need to call the returned function
+// The registerAs function returns a factory function
+const mikroConfigFactory = mikroOrmConfig as any;
+const dbConfigFactory = dbConfig as any;
 
-// Export using defineConfig for proper typing and validation
+const mikroConfig =
+  typeof mikroConfigFactory === 'function'
+    ? mikroConfigFactory()
+    : mikroConfigFactory;
+
+const databaseConfig =
+  typeof dbConfigFactory === 'function' ? dbConfigFactory() : dbConfigFactory;
+
 export default defineConfig({
   driver: PostgreSqlDriver,
   ...mikroConfig,

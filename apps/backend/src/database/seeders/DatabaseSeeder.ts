@@ -36,6 +36,6 @@ export class DatabaseSeeder extends Seeder {
     await em.flush();
     console.log('✅ Database seeded successfully');
     console.log('📧 Admin email: admin@example.com');
-    console.log('🔑 Admin password: test123');
+    console.log('🔑 Admin password: test123!');
   }
 }

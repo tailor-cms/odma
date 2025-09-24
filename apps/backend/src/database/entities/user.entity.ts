@@ -78,8 +78,11 @@ export class User extends BaseEntity {
   private async hashPassword(args: EventArgs<User>) {
     // Only hash if password is being set/changed and isn't already hashed
     if (this.password && !this.password.startsWith('$2')) {
-      // Get saltRounds from config or use default
-      const saltRounds = (args.em.config.getAll() as any).saltRounds || 10;
+      // Get saltRounds from MikroORM config (injected from ConfigService)
+      // Falls back to env for CLI operations like seeding
+      const config = args.em.config.getAll() as any;
+      const saltRounds =
+        config.saltRounds || parseInt(process.env.AUTH_SALT_ROUNDS || '10', 10);
       this.password = await bcrypt.hash(this.password, saltRounds);
     }
   }
