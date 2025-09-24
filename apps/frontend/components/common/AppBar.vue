@@ -14,10 +14,6 @@
       />
       <VAppBarTitle class="app-name text-primary-lighten-3">
         App
-        <span v-if="!smAndDown" class="text-caption font-weight-bold">
-          <span class="text-primary-lighten-3 text-uppercase"> starter </span>
-          <span class="pl-1 text-teal-lighten-4">v0.1</span>
-        </span>
       </VAppBarTitle>
     </NuxtLink>
     <template #append>
@@ -82,7 +78,7 @@ const config = useConfigStore();
 
 const routes = computed(() => {
   const items = [
-    { name: 'Catalog', to: '/' },
+    { name: 'Home', to: '/' },
     { name: 'Admin', to: { name: 'system-user-management' } },
   ];
   if (!authStore.isAdmin) items.pop();

@@ -1,7 +1,8 @@
 import request from './request';
+import { extractData } from './helpers';
 
 const urls = {
-  root: '/users',
+  root: '/auth',
   login: () => `${urls.root}/login`,
   logout: () => `${urls.root}/logout`,
   forgotPassword: () => `${urls.root}/forgot-password`,
@@ -12,31 +13,37 @@ const urls = {
 };
 
 function login(credentials) {
-  return request.post(urls.login(), credentials);
+  return request.post(urls.login(), credentials).then(extractData);
 }
 
 function logout() {
-  return request.get(urls.logout());
+  return request.get(urls.logout()).then(extractData);
 }
 
 function forgotPassword(email) {
-  return request.post(urls.forgotPassword(), { email });
+  return request.post(urls.forgotPassword(), { email }).then(extractData);
 }
 
 function resetPassword(token, password) {
-  return request.post(urls.resetPassword(), { token, password });
+  return request
+    .post(urls.resetPassword(), { token, password })
+    .then(extractData);
 }
 
 function validateResetToken(token) {
-  return request.base.post(urls.resetTokenStatus(), { token });
+  return request.base
+    .post(urls.resetTokenStatus(), { token })
+    .then(extractData);
 }
 
 function changePassword(currentPassword, newPassword) {
-  return request.post(urls.changePassword(), { currentPassword, newPassword });
+  return request
+    .post(urls.changePassword(), { currentPassword, newPassword })
+    .then(extractData);
 }
 
 function getUserInfo() {
-  return request.get(urls.profile());
+  return request.get(urls.profile()).then(extractData);
 }
 
 function updateUserInfo(userData) {

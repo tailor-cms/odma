@@ -139,7 +139,7 @@ const headers = [
 
 const actions = {
   archive: (user: any) => api.remove(user),
-  restore: (user: any) => api.upsert(user),
+  restore: (user: any) => api.restore(user),
 };
 
 const isLoading = ref(true);
@@ -161,13 +161,13 @@ const showUserDialog = (user = null) => {
 const fetch = async (opts = {}) => {
   Object.assign(dataTable, opts);
   isLoading.value = true;
-  const { items, total } = await api.fetch({
+  const { data: items, total } = await api.fetch({
     sortBy: dataTable.sortBy[0].key,
     sortOrder: dataTable.sortBy[0].order === 'desc' ? 'DESC' : 'ASC',
     offset: (dataTable.page - 1) * dataTable.itemsPerPage,
     limit: dataTable.itemsPerPage,
     filter: filter.value,
-    archived: showArchiveToggle.value || undefined,
+    includeArchived: showArchiveToggle.value || undefined,
   });
   users.value = items;
   totalItems.value = total;

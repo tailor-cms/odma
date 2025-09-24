@@ -1,0 +1,133 @@
+import * as nodemailer from 'nodemailer';
+import { ConfigService } from '@nestjs/config';
+import { Injectable } from '@nestjs/common';
+import { MailConfig } from '@/config/mail.config';
+import { TemplateService } from './template.service';
+import { User } from '@/database/entities';
+
+@Injectable()
+export class MailService {
+  private transporter: nodemailer.Transporter;
+  private fromName: string;
+  private fromEmail: string;
+
+  constructor(
+    private configService: ConfigService,
+    private readonly templateService: TemplateService,
+  ) {
+    const mailConfig = this.configService.get('mail') as MailConfig;
+    this.fromName = mailConfig.from.name;
+    this.fromEmail = mailConfig.from.email;
+    this.transporter = nodemailer.createTransport({
+      host: mailConfig.host,
+      port: mailConfig.port,
+      secure: mailConfig.secure,
+      auth: mailConfig.auth.user ? mailConfig.auth : undefined,
+    });
+  }
+
+  async sendPasswordResetEmail(user: User, token: string): Promise<void> {
+    const resetUrl = `${this.configService.get('FRONTEND_URL')}/auth/reset-password/${token}`;
+    const variables = {
+      resetUrl,
+      title: 'Password Reset Request',
+      headerIcon: '🔐',
+      headerTitle: 'Password Reset Request',
+      headerGradientStart: '#667eea',
+      headerGradientEnd: '#764ba2',
+      buttonColor: '#007bff',
+      firstName: user.firstName || 'User',
+      fromName: this.fromName,
+      footerNote:
+        'This is an automated message. Please do not reply to this email.',
+    };
+
+    const html = await this.templateService.renderTemplate(
+      'password-reset.html',
+      variables,
+    );
+    const text = await this.templateService.renderTemplate(
+      'password-reset',
+      variables,
+    );
+
+    const mailOptions = {
+      from: `"${this.fromName}" <${this.fromEmail}>`,
+      to: user.email,
+      subject: 'Password Reset Request',
+      html,
+      text,
+    };
+    await this.transporter.sendMail(mailOptions);
+  }
+
+  async sendInvitationEmail(user: User, token: string): Promise<void> {
+    const inviteUrl = `${this.configService.get('FRONTEND_URL')}/auth/setup/${token}`;
+    const variables = {
+      inviteUrl,
+      title: "You're Invited!",
+      headerIcon: '🎉',
+      headerTitle: 'Welcome!',
+      headerGradientStart: '#28a745',
+      headerGradientEnd: '#20c997',
+      buttonColor: '#28a745',
+      firstName: user.firstName || 'there',
+      fromName: this.fromName,
+      footerNote:
+        'This invitation was sent to you by an administrator of our platform.',
+    };
+
+    const html = await this.templateService.renderTemplate(
+      'invitation.html',
+      variables,
+    );
+    const text = await this.templateService.renderTemplate(
+      'invitation',
+      variables,
+    );
+
+    const mailOptions = {
+      from: `"${this.fromName}" <${this.fromEmail}>`,
+      to: user.email,
+      subject: 'You have been invited to join',
+      html,
+      text,
+    };
+
+    await this.transporter.sendMail(mailOptions);
+  }
+
+  async sendWelcomeEmail(user: User): Promise<void> {
+    const variables = {
+      title: 'Welcome to Our Platform!',
+      headerIcon: '🎉',
+      headerTitle: `Welcome ${user.firstName || 'aboard'}!`,
+      headerGradientStart: '#667eea',
+      headerGradientEnd: '#764ba2',
+      buttonColor: '#667eea',
+      firstName: user.firstName || 'aboard',
+      fromName: this.fromName,
+      footerNote:
+        "You're receiving this email because account was created on our platform.",
+    };
+
+    const html = await this.templateService.renderTemplate(
+      'welcome.html',
+      variables,
+    );
+    const text = await this.templateService.renderTemplate(
+      'welcome',
+      variables,
+    );
+
+    const mailOptions = {
+      from: `"${this.fromName}" <${this.fromEmail}>`,
+      to: user.email,
+      subject: 'Welcome to our platform!',
+      html,
+      text,
+    };
+
+    await this.transporter.sendMail(mailOptions);
+  }
+}

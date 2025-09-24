@@ -23,9 +23,9 @@ export const useAuthStore = defineStore('auth', () => {
     email: string;
     password: string;
   }): Promise<void> {
-    return api
-      .login(credentials)
-      .then(({ data: { user, authData } }) => $reset(user, authData?.strategy));
+    return api.login(credentials).then(({ user, authData } ) => {
+      $reset(user, authData?.strategy || 'local');
+    });
   }
 
   function logout() {
@@ -59,7 +59,7 @@ export const useAuthStore = defineStore('auth', () => {
   function fetchUserInfo() {
     return api
       .getUserInfo()
-      .then(({ data: { user, authData } }) => $reset(user, authData?.strategy))
+      .then(({ user, authData }) => $reset(user, authData?.strategy || 'local'))
       .catch(() => $reset());
   }
 

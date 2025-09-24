@@ -169,7 +169,7 @@ const close = () => {
 
 const submit = handleSubmit(async () => {
   const action = isNewUser.value ? 'create' : 'update';
-  await api.upsert({
+  await api[action]({
     id: props.userData?.id,
     email: emailInput.value,
     firstName: firstNameInput.value,

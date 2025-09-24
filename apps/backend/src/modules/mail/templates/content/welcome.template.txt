@@ -1,0 +1,20 @@
+Welcome {{firstName}}!
+======================
+
+Your account has been successfully created!
+
+We're thrilled to have you on board. You can now log in and start exploring all the features our platform has to offer.
+
+Getting Started
+---------------
+Here are a few things you can do to get the most out of your experience:
+• Complete your profile
+• Explore the dashboard
+
+If you have any questions or need assistance, our support team is here to help!
+
+Best regards,
+{{fromName}}
+
+---
+You're receiving this email because you recently created an account on our platform.
