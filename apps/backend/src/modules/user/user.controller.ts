@@ -26,7 +26,7 @@ import {
 } from './dto';
 import type { User } from '@/database/entities';
 import { UserRole } from '@/database/entities';
-import type { UserService } from './user.service';
+import { UserService } from './user.service';
 import { Roles } from '@/modules/auth/decorators';
 
 @ApiTags('users')

@@ -38,5 +38,6 @@ export default createConfigForNuxt({
   files: ['apps/backend/**/*.ts'],
   rules: {
     '@typescript-eslint/no-extraneous-class': 'off',
+    '@typescript-eslint/consistent-type-imports': 'off',
   },
 });

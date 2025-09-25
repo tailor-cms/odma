@@ -78,6 +78,9 @@ importers:
       '@app/config':
         specifier: workspace:^
         version: link:../../packages/app-config
+      '@app/seed':
+        specifier: workspace:^
+        version: link:../../packages/app-seed
       '@mikro-orm/cli':
         specifier: ^6.5.6
         version: 6.5.6(pg@8.16.3)

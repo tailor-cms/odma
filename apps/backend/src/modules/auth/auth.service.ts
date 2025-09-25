@@ -11,13 +11,13 @@ import type {
 } from './dto';
 import * as bcrypt from 'bcrypt';
 import type { AuthConfig } from '@/config';
-import type { ConfigService } from '@nestjs/config';
-import type { JwtService } from '@nestjs/jwt';
+import { ConfigService } from '@nestjs/config';
+import { JwtService } from '@nestjs/jwt';
 import { InjectRepository } from '@mikro-orm/nestjs';
-import type { MailService } from '@/modules/mail/mail.service';
-import type { SqlEntityManager } from '@mikro-orm/postgresql';
+import { MailService } from '@/modules/mail/mail.service';
+import { SqlEntityManager } from '@mikro-orm/postgresql';
 import { User } from '@/database/entities';
-import type { UserRepository } from '@/modules/user/user.repository';
+import { UserRepository } from '@/modules/user/user.repository';
 import type { JwtPayload } from './strategies/jwt.strategy';
 import ms from 'ms';
 

@@ -1,41 +1,19 @@
-import type { EntityManager } from '@mikro-orm/core';
+import { EntityManager } from '@mikro-orm/core';
 import { Seeder } from '@mikro-orm/seeder';
-import { User, UserRole } from '../entities/user.entity';
+import { User } from '../entities/user.entity';
+import users from '@app/seed/user.json';
 
 export class DatabaseSeeder extends Seeder {
   async run(em: EntityManager): Promise<void> {
     if (process.env.NODE_ENV === 'development') {
       await em.nativeDelete(User, {});
-    }
-    const users = [
-      {
-        email: 'admin@example.com',
-        password: 'test123!',
-        role: UserRole.ADMIN,
-        firstName: 'Admin',
-        lastName: 'User',
-      },
-      {
-        email: 'john.doe@example.com',
-        password: 'admin123!',
-        role: UserRole.USER,
-        firstName: 'John',
-        lastName: 'Doe',
-      },
-      {
-        email: 'jane.smith@example.com',
-        password: 'test123!',
-        role: UserRole.USER,
-        firstName: 'Jane',
-        lastName: 'Smith',
-      },
-    ];
-    for (const userData of users) {
-      em.create(User, userData as any);
+    };
+    for (const it of users) {
+      em.create(User, it as any);
     }
     await em.flush();
     console.log('✅ Database seeded successfully');
-    console.log('📧 Admin email: admin@example.com');
-    console.log('🔑 Admin password: test123!');
+    console.log(`📧 Email: ${users[0].email}`);
+    console.log(`🔑 Password: ${users[0].password}`);
   }
 }

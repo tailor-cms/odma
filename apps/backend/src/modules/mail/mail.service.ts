@@ -1,8 +1,8 @@
 import * as nodemailer from 'nodemailer';
-import type { ConfigService } from '@nestjs/config';
+import { ConfigService } from '@nestjs/config';
 import { Injectable } from '@nestjs/common';
 import type { MailConfig } from '@/config/mail.config';
-import type { TemplateService } from './template.service';
+import { TemplateService } from './template.service';
 import type { User } from '@/database/entities';
 
 @Injectable()

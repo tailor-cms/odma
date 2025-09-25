@@ -5,15 +5,15 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 import type {
-  FilterQuery,
-  SqlEntityManager } from '@mikro-orm/postgresql';
+  FilterQuery } from '@mikro-orm/postgresql';
 import {
   QueryOrder,
+  SqlEntityManager,
 } from '@mikro-orm/postgresql';
 import { User, UserRole } from '@/database/entities';
-import type { AuthService } from '@/modules/auth/auth.service';
+import { AuthService } from '@/modules/auth/auth.service';
 import { InjectRepository } from '@mikro-orm/nestjs';
-import type { UserRepository } from './user.repository';
+import { UserRepository } from './user.repository';
 
 import type {
   CreateUserDto,

@@ -15,9 +15,9 @@ import {
   ResetPasswordDto,
 } from './dto';
 import { CurrentUser, Public } from './decorators';
-import type { AuthService } from './auth.service';
+import { AuthService } from './auth.service';
 import type { Response } from 'express';
-import type { ConfigService } from '@nestjs/config';
+import { ConfigService } from '@nestjs/config';
 
 @ApiTags('auth')
 @Controller('auth')
