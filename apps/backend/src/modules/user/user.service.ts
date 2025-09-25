@@ -79,6 +79,7 @@ export class UserService {
         { lastName: { $ilike: `%${search}%` } },
       ];
     }
+    if (query.email) where.email = query.email;
     if (!includeArchived) where.deletedAt = null;
     const sortFieldMap: Record<UserSortField, keyof User> = {
       [UserSortField.ID]: 'id',

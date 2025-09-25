@@ -75,6 +75,9 @@ importers:
 
   apps/backend:
     dependencies:
+      '@app/config':
+        specifier: workspace:^
+        version: link:../../packages/app-config
       '@mikro-orm/cli':
         specifier: ^6.4.1
         version: 6.5.2(pg@8.16.3)

@@ -8,6 +8,7 @@ import { User } from '@/database/entities';
 @Injectable()
 export class MailService {
   private transporter: nodemailer.Transporter;
+  private origin: string;
   private fromName: string;
   private fromEmail: string;
 
@@ -18,6 +19,7 @@ export class MailService {
     const mailConfig = this.configService.get('mail') as MailConfig;
     this.fromName = mailConfig.from.name;
     this.fromEmail = mailConfig.from.email;
+    this.origin = this.configService.get('origin') as string;
     this.transporter = nodemailer.createTransport({
       host: mailConfig.host,
       port: mailConfig.port,
@@ -27,7 +29,7 @@ export class MailService {
   }
 
   async sendPasswordResetEmail(user: User, token: string): Promise<void> {
-    const resetUrl = `${this.configService.get('FRONTEND_URL')}/auth/reset-password/${token}`;
+    const resetUrl = `${this.origin}/auth/reset-password/${token}`;
     const variables = {
       resetUrl,
       title: 'Password Reset Request',
@@ -62,7 +64,7 @@ export class MailService {
   }
 
   async sendInvitationEmail(user: User, token: string): Promise<void> {
-    const inviteUrl = `${this.configService.get('FRONTEND_URL')}/auth/setup/${token}`;
+    const inviteUrl = `${this.origin}/auth/reset-password/${token}`;
     const variables = {
       inviteUrl,
       title: "You're Invited!",
@@ -90,40 +92,6 @@ export class MailService {
       from: `"${this.fromName}" <${this.fromEmail}>`,
       to: user.email,
       subject: 'You have been invited to join',
-      html,
-      text,
-    };
-
-    await this.transporter.sendMail(mailOptions);
-  }
-
-  async sendWelcomeEmail(user: User): Promise<void> {
-    const variables = {
-      title: 'Welcome to Our Platform!',
-      headerIcon: '🎉',
-      headerTitle: `Welcome ${user.firstName || 'aboard'}!`,
-      headerGradientStart: '#667eea',
-      headerGradientEnd: '#764ba2',
-      buttonColor: '#667eea',
-      firstName: user.firstName || 'aboard',
-      fromName: this.fromName,
-      footerNote:
-        "You're receiving this email because account was created on our platform.",
-    };
-
-    const html = await this.templateService.renderTemplate(
-      'welcome.html',
-      variables,
-    );
-    const text = await this.templateService.renderTemplate(
-      'welcome',
-      variables,
-    );
-
-    const mailOptions = {
-      from: `"${this.fromName}" <${this.fromEmail}>`,
-      to: user.email,
-      subject: 'Welcome to our platform!',
       html,
       text,
     };

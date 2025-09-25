@@ -31,6 +31,7 @@
     "cache:clear": "mikro-orm cache:clear"
   },
   "dependencies": {
+    "@app/config": "workspace:^",
     "@mikro-orm/cli": "^6.4.1",
     "@mikro-orm/core": "^6.4.1",
     "@mikro-orm/migrations": "^6.4.1",

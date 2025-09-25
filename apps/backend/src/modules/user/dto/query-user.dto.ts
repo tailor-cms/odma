@@ -27,6 +27,15 @@ export enum SortOrder {
 
 export class QueryUserDto {
   @ApiPropertyOptional({
+    description: 'Find by exact email',
+    example: 'admin@example.com',
+  })
+  @IsString()
+  @IsOptional()
+  @Transform(({ value }) => value?.toLowerCase().trim())
+  email?: string;
+
+  @ApiPropertyOptional({
     description: 'Search term for email, first name, or last name',
     example: 'john',
   })

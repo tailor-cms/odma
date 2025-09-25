@@ -8,8 +8,14 @@
     "tsConfigPath": "tsconfig.json",
     "assets": [
       {
-        "include": "modules/mail/templates/**/*",
-        "outDir": "dist"
+        "include": "**/*.template.html",
+        "outDir": "dist/src",
+        "watchAssets": true
+      },
+      {
+        "include": "**/*.template.txt",
+        "outDir": "dist/src",
+        "watchAssets": true
       }
     ]
   }

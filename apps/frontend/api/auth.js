@@ -26,7 +26,7 @@ function forgotPassword(email) {
 
 function resetPassword(token, password) {
   return request
-    .post(urls.resetPassword(), { token, password })
+    .post(urls.resetPassword(), { token, newPassword: password })
     .then(extractData);
 }
 

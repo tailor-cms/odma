@@ -1,11 +1,10 @@
 import isLocalhost from 'is-localhost';
-import parse from 'url-parse';
 
-export default function (env) {
-  const hostname = resolveHostname(env);
+export function resolveOrigin(env) {
+  const { HOSTNAME: hostname } = env;
   const protocol = env.PROTOCOL ? env.PROTOCOL : resolveProtocol(hostname);
   const port = resolvePort(env);
-  const origin = resolveOrigin(
+  const origin = resolveOriginUrl(
     hostname,
     protocol,
     port,
@@ -14,21 +13,12 @@ export default function (env) {
   return { hostname, protocol, port, origin };
 }
 
-// Legacy config support
-function resolveHostname(env) {
-  const { HOSTNAME, SERVER_URL } = env;
-  if (HOSTNAME) return HOSTNAME;
-  const LEGACY_HOSTNAME = parse(SERVER_URL).hostname;
-  return LEGACY_HOSTNAME || 'localhost';
-}
-
 function resolveProtocol(hostname) {
   return isLocalhost(hostname) ? 'http' : 'https';
 }
 
 function resolvePort(env) {
-  const { PORT, SERVER_PORT } = env;
-  return PORT || SERVER_PORT || 3001;
+  return env.PORT || 3000;
 }
 
 function resolveOriginPort(port, reverseProxyPort) {
@@ -37,10 +27,10 @@ function resolveOriginPort(port, reverseProxyPort) {
   return `:${reverseProxyPort}`;
 }
 
-function resolveOrigin(
+function resolveOriginUrl(
   hostname = 'localhost',
   protocol = 'http',
-  port = 3001,
+  port = 3000,
   reverseProxyPort,
 ) {
   return `${protocol}://${hostname}${resolveOriginPort(
