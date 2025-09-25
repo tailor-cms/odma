@@ -1,5 +1,5 @@
 import { EntityRepository } from '@mikro-orm/core';
-import { User } from '@/database/entities';
+import type { User } from '@/database/entities';
 
 export class UserRepository extends EntityRepository<User> {
   async get(id: string): Promise<User | null> {

@@ -1,6 +1,6 @@
 import kebabCase from 'lodash/kebabCase';
 import { registerAs } from '@nestjs/config';
-import { MikroOrmModuleSyncOptions } from '@mikro-orm/nestjs';
+import type { MikroOrmModuleSyncOptions } from '@mikro-orm/nestjs';
 import { Migrator } from '@mikro-orm/migrations';
 import { SeedManager } from '@mikro-orm/seeder';
 import { SqlHighlighter } from '@mikro-orm/sql-highlighter';

@@ -1,4 +1,3 @@
-import { extractData } from './helpers';
 import request from './request';
 
 function fetch(params) {
@@ -31,5 +30,5 @@ export default {
   update,
   remove,
   reinvite,
-  restore
+  restore,
 };

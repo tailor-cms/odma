@@ -16,7 +16,7 @@ export function sanitizeRequestBody(body: any, visited = new WeakSet()): any {
 
   // Handle Arrays
   if (Array.isArray(body)) {
-    return body.map(item => sanitizeRequestBody(item, visited));
+    return body.map((item) => sanitizeRequestBody(item, visited));
   }
 
   // Handle Date objects
@@ -74,11 +74,11 @@ export function sanitizeRequestBody(body: any, visited = new WeakSet()): any {
     'socialSecurity',
     'passport',
     'license',
-    'driverLicense'
+    'driverLicense',
   ]);
 
   for (const key in body) {
-    if (!body.hasOwnProperty(key)) continue;
+    if (!Object.prototype.hasOwnProperty.call(body, key)) continue;
     const lowerKey = key.toLowerCase();
     // Check if field name contains sensitive keywords
     const isSensitive = sensitiveFields.has(lowerKey) ||

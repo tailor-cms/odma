@@ -1,11 +1,12 @@
-import {
+import type {
   ArgumentsHost,
+  ExceptionFilter } from '@nestjs/common';
+import {
   BadRequestException,
   Catch,
-  ExceptionFilter,
   Logger,
 } from '@nestjs/common';
-import { Request, Response } from 'express';
+import type { Request, Response } from 'express';
 import { sanitizeUser } from '../utils/sanitize-user.util';
 import { sanitizeRequestBody } from '../utils/sanitize-request-body.util';
 
@@ -32,7 +33,7 @@ export class ValidationExceptionFilter implements ExceptionFilter {
 
     this.logger.warn(
       `Validation Error: ${request.method} ${request.url} - ${JSON.stringify(errors)}`,
-      { user: sanitizedUser, body: sanitizedBody }
+      { user: sanitizedUser, body: sanitizedBody },
     );
 
     const statusCode = exception.getStatus();

@@ -6,10 +6,9 @@ import {
   IsInt,
   Min,
   Max,
-  IsBoolean
+  IsBoolean,
 } from 'class-validator';
 import { Transform, Type } from 'class-transformer';
-import { UserRole } from '@/database/entities';
 
 export enum UserSortField {
   ID = 'id',

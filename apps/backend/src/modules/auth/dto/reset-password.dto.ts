@@ -13,7 +13,7 @@ import { Transform } from 'class-transformer';
 const PW_REGEX =
   /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]/;
 
-  const PW_REGEX_MESSAGE = oneLine`
+const PW_REGEX_MESSAGE = oneLine`
   Password must contain at least one
   uppercase letter, one lowercase letter, one number,
   and one special character`;

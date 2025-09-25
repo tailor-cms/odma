@@ -69,7 +69,7 @@ export class TemplateService {
       const content = await fs.readFile(templatePath, 'utf-8');
       this.logger.debug(`Template loaded from: ${templatePath}`);
       return content;
-    } catch (err) {
+    } catch {
       throw new Error(
         `Template file not found: ${templateName} at ${templatePath}.
         Ensure nest-cli.json includes templates in assets.`,

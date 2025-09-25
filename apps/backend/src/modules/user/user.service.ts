@@ -4,21 +4,23 @@ import {
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
-import {
+import type {
   FilterQuery,
+  SqlEntityManager } from '@mikro-orm/postgresql';
+import {
   QueryOrder,
-  SqlEntityManager,
 } from '@mikro-orm/postgresql';
 import { User, UserRole } from '@/database/entities';
-import { AuthService } from '@/modules/auth/auth.service';
+import type { AuthService } from '@/modules/auth/auth.service';
 import { InjectRepository } from '@mikro-orm/nestjs';
-import { UserRepository } from './user.repository';
+import type { UserRepository } from './user.repository';
 
-import {
+import type {
   CreateUserDto,
   UpdateUserDto,
   QueryUserDto,
-  PaginatedUsersDto,
+  PaginatedUsersDto } from './dto';
+import {
   UserSortField,
   SortOrder,
 } from './dto';

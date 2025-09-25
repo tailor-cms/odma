@@ -16,15 +16,17 @@ import {
   ApiResponse,
   ApiTags,
 } from '@nestjs/swagger';
-import {
+import type {
   CreateUserDto,
-  UserDto,
   UpdateUserDto,
+  QueryUserDto } from './dto';
+import {
+  UserDto,
   PaginatedUsersDto,
-  QueryUserDto,
 } from './dto';
-import { User, UserRole } from '@/database/entities';
-import { UserService } from './user.service';
+import type { User } from '@/database/entities';
+import { UserRole } from '@/database/entities';
+import type { UserService } from './user.service';
 import { Roles } from '@/modules/auth/decorators';
 
 @ApiTags('users')

@@ -92,8 +92,8 @@ import AppDialog from '@/components/common/AppDialog.vue';
 const UserRole = role.user;
 
 export interface Props {
-  visible: boolean;
-  userData: any;
+  visible?: boolean;
+  userData?: any;
   users: User[];
 }
 

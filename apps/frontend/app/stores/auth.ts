@@ -23,7 +23,7 @@ export const useAuthStore = defineStore('auth', () => {
     email: string;
     password: string;
   }): Promise<void> {
-    return api.login(credentials).then(({ user, authData } ) => {
+    return api.login(credentials).then(({ user, authData }) => {
       $reset(user, authData?.strategy || 'local');
     });
   }

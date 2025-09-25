@@ -1,13 +1,14 @@
-import {
+import type {
   ArgumentsHost,
+  ExceptionFilter } from '@nestjs/common';
+import {
   Catch,
-  ExceptionFilter,
   HttpException,
   HttpStatus,
   Logger,
   BadRequestException,
 } from '@nestjs/common';
-import { Request, Response } from 'express';
+import type { Request, Response } from 'express';
 import { sanitizeUser } from '../utils/sanitize-user.util';
 import { sanitizeRequestBody } from '../utils/sanitize-request-body.util';
 
@@ -20,7 +21,7 @@ export class AllExceptionsFilter implements ExceptionFilter {
     const response = ctx.getResponse<Response>();
     const request = ctx.getRequest<Request>();
 
-    let status = HttpStatus.INTERNAL_SERVER_ERROR;
+    const status = HttpStatus.INTERNAL_SERVER_ERROR;
     let message = 'Internal server error';
 
     // Skip HttpExceptions and BadRequestExceptions as they're

@@ -34,4 +34,9 @@ export default createConfigForNuxt({
     '@stylistic/indent-binary-ops': 'off',
     '@typescript-eslint/no-explicit-any': 'off',
   },
+}).append({
+  files: ['apps/backend/**/*.ts'],
+  rules: {
+    '@typescript-eslint/no-extraneous-class': 'off',
+  },
 });

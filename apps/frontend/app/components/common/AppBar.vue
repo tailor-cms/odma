@@ -61,7 +61,6 @@
 </template>
 
 <script lang="ts" setup>
-import { useDisplay } from 'vuetify';
 import type { User } from '@app/interfaces/user';
 import { UserAvatar } from '@app/vue-components';
 
@@ -69,8 +68,6 @@ import { useAuthStore } from '@/stores/auth';
 import { useConfigStore } from '@/stores/config';
 
 defineProps<{ user: User }>();
-
-const { smAndDown } = useDisplay();
 
 const { $oidc } = useNuxtApp() as any;
 const authStore = useAuthStore();

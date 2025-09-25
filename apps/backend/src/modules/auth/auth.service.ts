@@ -3,7 +3,7 @@ import {
   Injectable,
   UnauthorizedException,
 } from '@nestjs/common';
-import {
+import type {
   ChangePasswordDto,
   ForgotPasswordDto,
   LoginDto,
@@ -11,14 +11,14 @@ import {
 } from './dto';
 import * as bcrypt from 'bcrypt';
 import type { AuthConfig } from '@/config';
-import { ConfigService } from '@nestjs/config';
-import { JwtService } from '@nestjs/jwt';
+import type { ConfigService } from '@nestjs/config';
+import type { JwtService } from '@nestjs/jwt';
 import { InjectRepository } from '@mikro-orm/nestjs';
-import { MailService } from '@/modules/mail/mail.service';
-import { SqlEntityManager } from '@mikro-orm/postgresql';
+import type { MailService } from '@/modules/mail/mail.service';
+import type { SqlEntityManager } from '@mikro-orm/postgresql';
 import { User } from '@/database/entities';
-import { UserRepository } from '@/modules/user/user.repository';
-import { JwtPayload } from './strategies/jwt.strategy';
+import type { UserRepository } from '@/modules/user/user.repository';
+import type { JwtPayload } from './strategies/jwt.strategy';
 import ms from 'ms';
 
 export enum Audience {
@@ -91,7 +91,7 @@ export class AuthService {
       const secret = this.getTokenSecret(user);
       await this.jwtService.verify(token, { secret });
       return user;
-    } catch (error) {
+    } catch {
       throw new BadRequestException('Invalid or expired reset token');
     }
   }

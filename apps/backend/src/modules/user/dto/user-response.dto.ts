@@ -69,6 +69,6 @@ export class PaginatedUsersDto {
   @ApiProperty({ description: 'Has previous page', example: false })
   hasPrevious: boolean;
 
-  @ApiProperty({ description: 'Has next page', example: true})
+  @ApiProperty({ description: 'Has next page', example: true })
   hasNext: boolean;
 }

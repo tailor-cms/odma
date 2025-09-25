@@ -36,5 +36,5 @@ export default () => {
       .split(',')
       .filter((s) => s)
       .map((s) => s.trim()),
-  }
+  };
 };

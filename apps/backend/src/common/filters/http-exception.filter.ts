@@ -1,11 +1,12 @@
-import {
+import type {
   ArgumentsHost,
+  ExceptionFilter } from '@nestjs/common';
+import {
   Catch,
-  ExceptionFilter,
   HttpException,
   Logger,
 } from '@nestjs/common';
-import { Request, Response } from 'express';
+import type { Request, Response } from 'express';
 import { sanitizeUser } from '../utils/sanitize-user.util';
 import { sanitizeRequestBody } from '../utils/sanitize-request-body.util';
 
@@ -30,7 +31,9 @@ export class HttpExceptionFilter implements ExceptionFilter {
 
     const statusCode = exception.getStatus();
     this.logger.error(
-      `HTTP Exception: ${request.method} ${request.url} - ${statusCode} - ${JSON.stringify(error)}`,
+      `HTTP Exception:
+      ${request.method} ${request.url}
+      ${statusCode} - ${JSON.stringify(error)}`,
       { user: sanitizedUser, body: sanitizedBody },
     );
 

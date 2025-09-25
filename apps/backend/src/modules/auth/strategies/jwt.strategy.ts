@@ -1,10 +1,10 @@
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { ExtractJwt, Strategy } from 'passport-jwt';
-import { ConfigService } from '@nestjs/config';
-import { EntityRepository } from '@mikro-orm/postgresql';
+import type { ConfigService } from '@nestjs/config';
+import type { EntityRepository } from '@mikro-orm/postgresql';
 import { InjectRepository } from '@mikro-orm/nestjs';
 import { PassportStrategy } from '@nestjs/passport';
-import { Request } from 'express';
+import type { Request } from 'express';
 import { User } from '@/database/entities';
 
 export interface JwtPayload {
@@ -28,7 +28,7 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
     if (!jwtSecret) {
       throw new Error('JWT secret is not configured');
     }
-    
+
     super({
       jwtFromRequest: ExtractJwt.fromExtractors([
         (req: Request) => {
@@ -45,7 +45,7 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
   async validate({ sub, email }: JwtPayload): Promise<User> {
     const user = await this.userRepository.findOne(
       { id: sub, email },
-      { populate: false, refresh: true}
+      { populate: false, refresh: true },
     );
     if (!user) throw new UnauthorizedException('User not found');
     if (user.isDeleted)

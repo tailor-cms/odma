@@ -1,9 +1,9 @@
 import * as nodemailer from 'nodemailer';
-import { ConfigService } from '@nestjs/config';
+import type { ConfigService } from '@nestjs/config';
 import { Injectable } from '@nestjs/common';
-import { MailConfig } from '@/config/mail.config';
-import { TemplateService } from './template.service';
-import { User } from '@/database/entities';
+import type { MailConfig } from '@/config/mail.config';
+import type { TemplateService } from './template.service';
+import type { User } from '@/database/entities';
 
 @Injectable()
 export class MailService {
@@ -67,7 +67,7 @@ export class MailService {
     const inviteUrl = `${this.origin}/auth/reset-password/${token}`;
     const variables = {
       inviteUrl,
-      title: "You're Invited!",
+      title: 'You\'re Invited!',
       headerIcon: '🎉',
       headerTitle: 'Welcome!',
       headerGradientStart: '#28a745',

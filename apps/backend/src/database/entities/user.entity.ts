@@ -1,10 +1,11 @@
 import * as bcrypt from 'bcrypt';
+import type {
+  EventArgs } from '@mikro-orm/core';
 import {
   BeforeCreate,
   BeforeUpdate,
   Entity,
   Enum,
-  EventArgs,
   Index,
   Property,
 } from '@mikro-orm/core';
