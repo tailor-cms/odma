@@ -86,7 +86,7 @@ import { role } from '@app/config';
 import { useForm } from 'vee-validate';
 import type { User } from '@app/interfaces/user';
 
-import { user as api } from '@/api';
+import { user as api } from '~/api';
 import AppDialog from '@/components/common/AppDialog.vue';
 
 const UserRole = role.user;

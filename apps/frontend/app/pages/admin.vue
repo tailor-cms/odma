@@ -23,7 +23,7 @@
 
 <script lang="ts" setup>
 import AdminSidebar from '@/components/admin/AdminSidebar.vue';
-import { useAuthStore } from '@/stores/auth';
+import { useAuthStore } from '~/stores/auth';
 
 definePageMeta({
   name: 'admin',

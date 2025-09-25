@@ -13,7 +13,7 @@
 import AppBar from '@/components/common/AppBar.vue';
 import ConfirmationDialog from '@/components/common/ConfirmationDialog.vue';
 import NotificationSnackbar from '@/components/common/NotificationSnackbar.vue';
-import { useAuthStore } from '@/stores/auth';
+import { useAuthStore } from '~/stores/auth';
 
 const store = useAuthStore();
 </script>

@@ -18,7 +18,7 @@ dependencies:
 Before you begin, ensure you have the following installed:
 
 - [Node.js (version 22.x or higher)](https://nodejs.org/en/download/)
-- [pnpm (version 9.0.6 or higher)](https://pnpm.io/installation)
+- [pnpm (version 10.17.1 or higher)](https://pnpm.io/installation)
 - Clone the repository to your local machine.
 
 ### Setup Using Docker

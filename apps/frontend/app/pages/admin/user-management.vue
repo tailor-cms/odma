@@ -107,8 +107,8 @@ import { formatDate } from 'date-fns/format';
 import humanize from 'humanize-string';
 import type { User } from '@app/interfaces/user';
 
-import { user as api } from '@/api';
-import { useAuthStore } from '@/stores/auth';
+import { user as api } from '~/api';
+import { useAuthStore } from '~/stores/auth';
 import UserDialog from '@/components/admin/UserDialog.vue';
 
 definePageMeta({

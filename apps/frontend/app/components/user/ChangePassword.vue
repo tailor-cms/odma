@@ -72,7 +72,7 @@ import { object, string, ref as yupRef } from 'yup';
 import { useForm } from 'vee-validate';
 
 import AppDialog from '@/components/common/AppDialog.vue';
-import { useAuthStore } from '@/stores/auth';
+import { useAuthStore } from '~/stores/auth';
 
 const isVisible = ref(false);
 

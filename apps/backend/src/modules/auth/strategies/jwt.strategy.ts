@@ -24,6 +24,11 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
     @InjectRepository(User)
     private userRepository: EntityRepository<User>,
   ) {
+    const jwtSecret = configService.get<string>('auth.jwt.secret');
+    if (!jwtSecret) {
+      throw new Error('JWT secret is not configured');
+    }
+    
     super({
       jwtFromRequest: ExtractJwt.fromExtractors([
         (req: Request) => {
@@ -33,7 +38,7 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
         ExtractJwt.fromAuthHeaderAsBearerToken(),
       ]),
       ignoreExpiration: false,
-      secretOrKey: configService.get('auth.jwt.secret'),
+      secretOrKey: jwtSecret,
     });
   }
 
