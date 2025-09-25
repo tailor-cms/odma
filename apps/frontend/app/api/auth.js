@@ -3,13 +3,13 @@ import { extractData } from './helpers';
 
 const urls = {
   root: '/auth',
-  login: () => `${urls.root}/login`,
-  logout: () => `${urls.root}/logout`,
-  forgotPassword: () => `${urls.root}/forgot-password`,
-  resetPassword: () => `${urls.root}/reset-password`,
+  login: () => `${urls.authRoot}/login`,
+  logout: () => `${urls.authRoot}/logout`,
+  forgotPassword: () => `${urls.authRoot}/forgot-password`,
+  resetPassword: () => `${urls.authRoot}/reset-password`,
   resetTokenStatus: () => `${urls.resetPassword()}/token-status`,
-  profile: () => `${urls.root}/me`,
-  changePassword: () => `${urls.profile()}/change-password`,
+  changePassword: () => `${urls.authRoot}/change-password`,
+  profile: () => 'me',
 };
 
 function login(credentials) {
@@ -47,7 +47,7 @@ function getUserInfo() {
 }
 
 function updateUserInfo(userData) {
-  return request.patch(urls.profile(), userData);
+  return request.patch(urls.profile(), userData).then((res) => res.data);
 }
 
 export default {

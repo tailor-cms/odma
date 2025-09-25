@@ -14,10 +14,11 @@ import {
   LoginDto,
   ResetPasswordDto,
 } from './dto';
-import { CurrentUser, Public } from './decorators';
 import { AuthService } from './auth.service';
-import type { Response } from 'express';
 import { ConfigService } from '@nestjs/config';
+import { CurrentUser } from '@/common/decorators/current-user.decorator';
+import { Public } from './decorators';
+import type { Response } from 'express';
 
 @ApiTags('auth')
 @Controller('auth')
@@ -110,12 +111,5 @@ export class AuthController {
   @HttpCode(HttpStatus.ACCEPTED)
   async validateResetToken(@Body('token') token: string): Promise<void> {
     await this.authService.validateResetPasswordToken(token);
-  }
-
-  @ApiOperation({ summary: 'Get current user profile' })
-  @ApiResponse({ status: 200, description: 'Current user profile' })
-  @Get('me')
-  async getProfile(@CurrentUser() user: any) {
-    return { user: user.toJSON() };
   }
 }
