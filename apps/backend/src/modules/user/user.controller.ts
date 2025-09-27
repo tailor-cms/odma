@@ -1,3 +1,4 @@
+import { ApiOperation, ApiParam, ApiResponse, ApiTags } from '@nestjs/swagger';
 import {
   Body,
   Controller,
@@ -10,20 +11,8 @@ import {
   Post,
   Query,
 } from '@nestjs/common';
-import {
-  ApiOperation,
-  ApiParam,
-  ApiResponse,
-  ApiTags,
-} from '@nestjs/swagger';
-import type {
-  CreateUserDto,
-  UpdateUserDto,
-  QueryUserDto } from './dto';
-import {
-  UserDto,
-  PaginatedUsersDto,
-} from './dto';
+import type { CreateUserDto, UpdateUserDto, QueryUserDto } from './dto';
+import { UserDto, PaginatedUsersDto } from './dto';
 import type { User } from '@/database/entities';
 import { UserRole } from '@/database/entities';
 import { UserService } from './user.service';
@@ -42,7 +31,7 @@ export class UserController {
     status: 200,
     type: PaginatedUsersDto,
   })
-  async findAll(@Query() queryDto: QueryUserDto) {
+  async fetch(@Query() queryDto: QueryUserDto) {
     return this.userService.findAll(queryDto);
   }
 
@@ -66,7 +55,7 @@ export class UserController {
   @ApiParam({ name: 'id', description: 'User ID' })
   @ApiResponse({ status: 200, description: 'User found', type: UserDto })
   @ApiResponse({ status: 404, description: 'User not found' })
-  async findOne(@Param('id') id: string): Promise<User> {
+  async get(@Param('id') id: string): Promise<User> {
     return this.userService.get(id);
   }
 
