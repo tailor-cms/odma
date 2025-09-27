@@ -2,7 +2,7 @@ import request from './request';
 import { extractData } from './helpers';
 
 const urls = {
-  root: '/auth',
+  authRoot: '/auth',
   login: () => `${urls.authRoot}/login`,
   logout: () => `${urls.authRoot}/logout`,
   forgotPassword: () => `${urls.authRoot}/forgot-password`,
