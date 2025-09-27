@@ -10,6 +10,9 @@ export const generalValidationSchema = {
   NODE_ENV: Joi.string()
     .valid('development', 'production', 'test', 'staging')
     .default('development'),
+  LOG_LEVEL: Joi.string()
+    .valid('trace', 'debug', 'info', 'warn', 'error', 'fatal')
+    .default('info'),
   CORS_ALLOWED_ORIGINS: Joi.string().default('http://localhost:3000'),
 };
 
@@ -20,6 +23,7 @@ export interface GeneralConfig {
   origin: string;
   nodeEnv: string;
   isProduction: boolean;
+  logLevel: string;
   corsAllowedOrigins: string[];
 }
 
@@ -32,6 +36,7 @@ export default () => {
     protocol,
     nodeEnv: env.NODE_ENV,
     isProduction: env.NODE_ENV === 'production',
+    logLevel: env.LOG_LEVEL,
     corsAllowedOrigins: (env.CORS_ALLOWED_ORIGINS as string)
       .split(',')
       .filter((s) => s)

@@ -4,17 +4,20 @@ import { NestFactory, Reflector } from '@nestjs/core';
 import { AllExceptionsFilter } from './common/filters/all-exceptions.filter';
 import { AppModule } from './app.module';
 import { ConfigService } from '@nestjs/config';
+import { Logger } from 'nestjs-pino';
 import { HttpExceptionFilter } from './common/filters/http-exception.filter';
 import { ResponseInterceptor } from './common/interceptors/response.interceptor';
 import { ValidationExceptionFilter } from './common/filters/validation-exception.filter';
+
 import cookieParser from 'cookie-parser';
 import helmet from 'helmet';
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
+  const app = await NestFactory.create(AppModule, { bufferLogs: true });
   const config = app.get(ConfigService);
   const reflector = app.get(Reflector);
-  app.use(cookieParser(config.get<string>('auth.jwt.secret', 'cookie-secret')));
+  app.useLogger(app.get(Logger));
+  app.use(cookieParser(config.get<string>('auth.jwt.secret')));
   app.use(helmet({ contentSecurityPolicy: false }));
   app.enableCors({
     origin: config.get<string[]>('corsAllowedOrigins'),
@@ -37,7 +40,7 @@ async function bootstrap() {
     }),
     new ResponseInterceptor(),
   );
-  // Exception filters (registered in reverse order of execution)
+  // Registered in reverse order of execution
   app.useGlobalFilters(
     new AllExceptionsFilter(),
     new HttpExceptionFilter(),
@@ -64,7 +67,7 @@ async function bootstrap() {
       },
     });
   }
-  // Serve static files and set config cookie
+  // Set config cookie
   app.use((req, res, next) => {
     if (req.path === '/' || req.path === '/index.html') {
       const configCookie = JSON.stringify(
@@ -78,7 +81,6 @@ async function bootstrap() {
     }
     next();
   });
-
   const port = config.get<number>('port') as number;
   await app.listen(port);
   console.log(`🚀 Application is running on: http://localhost:${port}/api`);
