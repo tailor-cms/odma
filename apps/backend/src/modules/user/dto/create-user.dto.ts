@@ -8,6 +8,7 @@ import {
   IsOptional,
   IsEnum,
 } from 'class-validator';
+import { NoXSS } from '@/common/validators/no-xss.validator';
 import { Transform } from 'class-transformer';
 import { UserRole } from '@/database/entities';
 
@@ -16,29 +17,45 @@ export class CreateUserDto {
     description: 'User email address',
     example: 'user@example.com',
   })
-  @IsEmail()
   @IsNotEmpty()
-  @Transform(({ value }) => value?.toLowerCase().trim())
+  @IsString({ message: 'Email must be a string' })
+  @IsEmail()
+  @Transform(({ value }) => {
+    if (typeof value !== 'string') return value;
+    return value.toLowerCase().trim();
+  })
   email: string;
 
   @ApiPropertyOptional({
     description: 'User first name',
     example: 'John',
   })
-  @IsString()
   @IsOptional()
-  @MinLength(2)
+  @IsString({ message: 'First name must be a string' })
+  @MinLength(0)
   @MaxLength(50)
+  @NoXSS()
+  @Transform(({ value }) => {
+    if (value === null || value === undefined) return value;
+    if (typeof value !== 'string') return value;
+    return value.trim();
+  })
   firstName?: string;
 
   @ApiPropertyOptional({
     description: 'User last name',
     example: 'Doe',
   })
-  @IsString()
   @IsOptional()
-  @MinLength(2)
+  @IsString({ message: 'Last name must be a string' })
+  @MinLength(0)
   @MaxLength(50)
+  @NoXSS()
+  @Transform(({ value }) => {
+    if (value === null || value === undefined) return value;
+    if (typeof value !== 'string') return value;
+    return value.trim();
+  })
   lastName?: string;
 
   @ApiPropertyOptional({

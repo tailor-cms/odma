@@ -10,13 +10,13 @@ import type {
   ResetPasswordDto,
 } from './dto';
 import type { AuthConfig } from '@/config';
+import { EntityManager } from '@mikro-orm/core';
 import { ConfigService } from '@nestjs/config';
 import type { JwtPayload } from './strategies/jwt.strategy';
 import { JwtService } from '@nestjs/jwt';
 import { InjectRepository } from '@mikro-orm/nestjs';
 import { MailService } from '@/modules/mail/mail.service';
 import { PinoLogger } from 'nestjs-pino';
-import { SqlEntityManager } from '@mikro-orm/postgresql';
 import { User } from '@/database/entities';
 import { UserRepository } from '@/modules/user/user.repository';
 
@@ -36,10 +36,10 @@ export class AuthService {
   constructor(
     @InjectRepository(User)
     private readonly userRepository: UserRepository,
-    private em: SqlEntityManager,
-    private configService: ConfigService,
-    private mailService: MailService,
-    private jwtService: JwtService,
+    private readonly em: EntityManager,
+    private readonly configService: ConfigService,
+    private readonly mailService: MailService,
+    private readonly jwtService: JwtService,
     private readonly logger: PinoLogger,
   ) {
     this.config = configService.get('auth') as AuthConfig;
@@ -66,7 +66,10 @@ export class AuthService {
     this.logger.debug(`Logout success for email: ${user.email}`);
   }
 
-  async validateCredentials(email: string, pw: string): Promise<User | undefined> {
+  async validateCredentials(
+    email: string,
+    pw: string,
+  ): Promise<User | undefined> {
     this.logger.debug(`Validating credentials for email: ${email}`);
     const user = await this.userRepository.findByEmail(email);
     if (!user || user.isDeleted) {

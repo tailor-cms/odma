@@ -166,7 +166,7 @@ const fetch = async (opts = {}) => {
     sortOrder: dataTable.sortBy[0].order === 'desc' ? 'DESC' : 'ASC',
     offset: (dataTable.page - 1) * dataTable.itemsPerPage,
     limit: dataTable.itemsPerPage,
-    filter: filter.value,
+    search: filter.value,
     includeArchived: showArchiveToggle.value || undefined,
   });
   users.value = items;

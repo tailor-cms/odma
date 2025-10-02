@@ -10,6 +10,7 @@ import {
 } from 'class-validator';
 import { Transform } from 'class-transformer';
 import { UserRole } from '@/database/entities';
+import { NoXSS } from '@/common/validators/no-xss.validator';
 
 export class UpdateUserDto {
   @ApiPropertyOptional({
@@ -25,20 +26,24 @@ export class UpdateUserDto {
     description: 'User first name',
     example: 'John',
   })
-  @IsString()
   @IsOptional()
+  @IsString({ message: 'First name must be a string' })
   @MinLength(2)
   @MaxLength(50)
+  @NoXSS()
+  @Transform(({ value }) => typeof value === 'string' ? value.trim() : value)
   firstName?: string;
 
   @ApiPropertyOptional({
     description: 'User last name',
     example: 'Doe',
   })
-  @IsString()
   @IsOptional()
+  @IsString({ message: 'Last name must be a string' })
   @MinLength(2)
   @MaxLength(50)
+  @NoXSS()
+  @Transform(({ value }) => typeof value === 'string' ? value.trim() : value)
   lastName?: string;
 
   @ApiPropertyOptional({

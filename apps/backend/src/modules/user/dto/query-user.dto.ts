@@ -7,6 +7,7 @@ import {
   Min,
   Max,
   IsBoolean,
+  IsEmail,
 } from 'class-validator';
 import { Transform, Type } from 'class-transformer';
 
@@ -29,8 +30,8 @@ export class QueryUserDto {
     description: 'Find by exact email',
     example: 'admin@example.com',
   })
-  @IsString()
   @IsOptional()
+  @IsEmail()
   @Transform(({ value }) => value?.toLowerCase().trim())
   email?: string;
 

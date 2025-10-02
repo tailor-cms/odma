@@ -11,9 +11,10 @@ import {
   Post,
   Query,
 } from '@nestjs/common';
-import type { CreateUserDto, UpdateUserDto, QueryUserDto } from './dto';
+import { CreateUserDto, UpdateUserDto, QueryUserDto } from './dto';
 import { UserDto, PaginatedUsersDto } from './dto';
-import type { User } from '@/database/entities';
+import { CurrentUser } from '@/common/decorators/current-user.decorator';
+import { User } from '@/database/entities';
 import { UserRole } from '@/database/entities';
 import { UserService } from './user.service';
 import { Roles } from '@/modules/auth/decorators';
@@ -46,7 +47,7 @@ export class UserController {
   @ApiResponse({ status: 409, description: 'User already exists' })
   async create(@Body() createUserDto: CreateUserDto) {
     const user = await this.userService.create(createUserDto);
-    return user.profile;
+    return user.toJSON();
   }
 
   @Get(':id')
@@ -73,8 +74,10 @@ export class UserController {
   async update(
     @Param('id') id: string,
     @Body() updateUserDto: UpdateUserDto,
+    @CurrentUser() currentUser: any,
   ): Promise<User> {
-    return this.userService.update(id, updateUserDto);
+    const user = await this.userService.update(id, updateUserDto, currentUser);
+    return user.toJSON() as User;
   }
 
   @Delete(':id')
@@ -84,12 +87,16 @@ export class UserController {
   @ApiParam({ name: 'id', description: 'User ID' })
   @ApiResponse({ status: 204, description: 'User deleted successfully' })
   @ApiResponse({ status: 404, description: 'User not found' })
-  async remove(@Param('id') id: string): Promise<void> {
-    return this.userService.remove(id);
+  async remove(
+    @Param('id') id: string,
+    @CurrentUser() currentUser: any,
+  ): Promise<void> {
+    return this.userService.remove(id, currentUser);
   }
 
   @Post(':id/restore')
   @Roles(UserRole.ADMIN)
+  @HttpCode(HttpStatus.OK)
   @ApiOperation({ summary: 'Restore soft-deleted user (Admin only)' })
   @ApiParam({ name: 'id', description: 'User ID' })
   @ApiResponse({

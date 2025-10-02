@@ -102,6 +102,13 @@ export class User extends BaseEntity {
 
   toJSON() {
     const { password, refreshToken, ...user } = this as any;
-    return user;
+    return {
+      ...user,
+      profile: this.profile,
+      fullName: this.fullName,
+      label: this.label,
+      isAdmin: this.isAdmin,
+      isDeleted: this.isDeleted,
+    };
   }
 }

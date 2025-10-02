@@ -1,7 +1,8 @@
-import { Injectable, Logger } from '@nestjs/common';
-import { promises as fs } from 'fs';
-import { join } from 'path';
 import * as Handlebars from 'handlebars';
+import { Injectable } from '@nestjs/common';
+import { PinoLogger } from 'nestjs-pino';
+import { join } from 'path';
+import { promises as fs } from 'fs';
 
 interface TemplateVars {
   [key: string]: any;
@@ -9,12 +10,12 @@ interface TemplateVars {
 
 @Injectable()
 export class TemplateService {
-  private readonly logger = new Logger(TemplateService.name);
   private handlebars: typeof Handlebars;
   private templateCache = new Map<string, HandlebarsTemplateDelegate>();
 
-  constructor() {
+  constructor(private readonly logger: PinoLogger) {
     this.handlebars = Handlebars.create();
+    this.logger.setContext(TemplateService.name);
   }
 
   async renderTemplate(name: string, vars: TemplateVars): Promise<string> {

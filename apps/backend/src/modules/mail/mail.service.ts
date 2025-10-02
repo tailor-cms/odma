@@ -2,20 +2,23 @@ import * as nodemailer from 'nodemailer';
 import { ConfigService } from '@nestjs/config';
 import { Injectable } from '@nestjs/common';
 import type { MailConfig } from '@/config/mail.config';
+import { PinoLogger } from 'nestjs-pino';
 import { TemplateService } from './template.service';
 import type { User } from '@/database/entities';
 
 @Injectable()
 export class MailService {
   private transporter: nodemailer.Transporter;
-  private origin: string;
   private fromName: string;
   private fromEmail: string;
+  private origin: string;
 
   constructor(
-    private configService: ConfigService,
+    private readonly configService: ConfigService,
+    private readonly logger: PinoLogger,
     private readonly templateService: TemplateService,
   ) {
+    this.logger.setContext(MailService.name);
     const mailConfig = this.configService.get('mail') as MailConfig;
     this.fromName = mailConfig.from.name;
     this.fromEmail = mailConfig.from.email;
@@ -29,6 +32,7 @@ export class MailService {
   }
 
   async sendPasswordResetEmail(user: User, token: string): Promise<void> {
+    await this.logger.info(`Sending password reset email to: ${user.email}`);
     const resetUrl = `${this.origin}/auth/reset-password/${token}`;
     const variables = {
       resetUrl,
@@ -60,14 +64,23 @@ export class MailService {
       html,
       text,
     };
-    await this.transporter.sendMail(mailOptions);
+    try {
+      await this.transporter.sendMail(mailOptions);
+      await this.logger.info(`Reset password email sent to: ${user.email}`);
+    } catch (err) {
+      await this.logger.error(
+        `Failed to send reset password email to: ${user.email}`,
+        err,
+      );
+    }
   }
 
   async sendInvitationEmail(user: User, token: string): Promise<void> {
+    await this.logger.info(`Sending invitation email to: ${user.email}`);
     const inviteUrl = `${this.origin}/auth/reset-password/${token}`;
     const variables = {
       inviteUrl,
-      title: 'You\'re Invited!',
+      title: "You're Invited!",
       headerIcon: '🎉',
       headerTitle: 'Welcome!',
       headerGradientStart: '#28a745',
@@ -96,6 +109,14 @@ export class MailService {
       text,
     };
 
-    await this.transporter.sendMail(mailOptions);
+    try {
+      await this.transporter.sendMail(mailOptions);
+      await this.logger.info(`Invitation email sent to: ${user.email}`);
+    } catch (error) {
+      await this.logger.error(
+        `Failed to send invitation email to: ${user.email}`,
+        error,
+      );
+    }
   }
 }

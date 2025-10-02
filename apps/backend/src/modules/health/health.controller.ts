@@ -1,6 +1,6 @@
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { Controller, Get, ServiceUnavailableException } from '@nestjs/common';
-import { EntityManager } from '@mikro-orm/postgresql';
+import { EntityManager } from '@mikro-orm/core';
 import { Public } from '@/modules/auth/decorators';
 
 @ApiTags('health')
@@ -31,7 +31,8 @@ export class HealthController {
   @Get('health/ready')
   async readiness() {
     try {
-      await this.em.execute('SELECT 1');
+      // Use a database-agnostic way to check connection
+      await this.em.getConnection().execute('SELECT 1');
       return {
         status: 'ready',
         services: { database: 'connected' },

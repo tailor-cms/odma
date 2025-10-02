@@ -1,8 +1,9 @@
 import { Controller, Body, Get, Patch } from '@nestjs/common';
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
-import { UpdateProfileDto, UserDto } from './dto';
-import { UserService } from './user.service';
+import { UpdateProfileDto } from './dto';
 import { CurrentUser } from '@/common/decorators/current-user.decorator';
+import { UserService } from './user.service';
+import { User } from '@/database/entities';
 
 @ApiTags('me')
 @Controller('me')
@@ -12,7 +13,7 @@ export class CurrentUserController {
   @ApiOperation({ summary: 'Get current user profile' })
   @ApiResponse({ status: 200, description: 'Current user profile' })
   @Get()
-  async get(@CurrentUser() user: any): Promise<{ user: UserDto }> {
+  async get(@CurrentUser() user: any): Promise<{ user: User }> {
     return { user };
   }
 
@@ -22,7 +23,7 @@ export class CurrentUserController {
   async update(
     @CurrentUser() user: any,
     @Body() updateProfileDto: UpdateProfileDto,
-  ): Promise<{ user: UserDto }> {
+  ): Promise<{ user: any }> {
     const updatedUser = await this.userService.update(
       user.id,
       updateProfileDto,
