@@ -80,7 +80,7 @@ export class MailService {
     const inviteUrl = `${this.origin}/auth/reset-password/${token}`;
     const variables = {
       inviteUrl,
-      title: "You're Invited!",
+      title: 'You\'re Invited!',
       headerIcon: '🎉',
       headerTitle: 'Welcome!',
       headerGradientStart: '#28a745',

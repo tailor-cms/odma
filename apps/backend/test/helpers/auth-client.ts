@@ -42,7 +42,6 @@ export class AuthClient {
 
   constructor(private readonly app: INestApplication) {}
 
-
   /**
    * Fluent API for making requests to any endpoint (cookies automatically
    * handled)

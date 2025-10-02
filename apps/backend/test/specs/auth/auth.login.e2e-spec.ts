@@ -5,13 +5,12 @@ import {
   closeTestingApp,
   createTestUser,
   createTestingApp,
-  seedTestUsers,
+  seedTestUsers, getEntityManager,
 } from '../../helpers/test.helpers';
 import { INestApplication } from '@nestjs/common';
 import { User } from '@/database/entities';
 import { expectUser } from '../../helpers/assertions';
 import { userFactory } from '../../helpers/factories';
-import { getEntityManager } from '../../helpers/test.helpers';
 import request from 'supertest';
 
 describe('Auth login', () => {

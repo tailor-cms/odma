@@ -207,7 +207,7 @@ describe('User input validation', () => {
         { firstName: 'Владимир', lastName: 'Путин' }, // Cyrillic
         { firstName: 'محمد', lastName: 'أحمد' }, // Arabic
         { firstName: '🙂', lastName: '😀' }, // Emojis
-        { firstName: "O'Brien", lastName: 'McDonald' }, // Apostrophes
+        { firstName: 'O\'Brien', lastName: 'McDonald' }, // Apostrophes
         { firstName: 'Anne-Marie', lastName: 'Saint-Claire' }, // Hyphens
       ];
       for (const [index, names] of unicodeNames.entries()) {

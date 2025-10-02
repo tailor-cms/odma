@@ -11,11 +11,9 @@ import {
   Post,
   Query,
 } from '@nestjs/common';
-import { CreateUserDto, UpdateUserDto, QueryUserDto } from './dto';
-import { UserDto, PaginatedUsersDto } from './dto';
+import { CreateUserDto, UpdateUserDto, QueryUserDto, UserDto, PaginatedUsersDto } from './dto';
 import { CurrentUser } from '@/common/decorators/current-user.decorator';
-import { User } from '@/database/entities';
-import { UserRole } from '@/database/entities';
+import { User, UserRole } from '@/database/entities';
 import { UserService } from './user.service';
 import { Roles } from '@/modules/auth/decorators';
 

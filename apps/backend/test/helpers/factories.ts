@@ -47,11 +47,11 @@ export const userFactory = {
     '<<SCRIPT>alert("XSS");//<</SCRIPT>',
   ],
   sqlInjectionPayloads: [
-    "'; DROP TABLE users; --",
-    "' OR '1'='1",
+    '\'; DROP TABLE users; --',
+    '\' OR \'1\'=\'1',
     '" OR "1"="1',
-    "admin' --",
-    "admin' #",
-    "' OR 1=1 --",
+    'admin\' --',
+    'admin\' #',
+    '\' OR 1=1 --',
   ],
 };

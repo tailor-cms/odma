@@ -164,7 +164,7 @@ const fetch = async (opts = {}) => {
   const { data: items, total } = await api.fetch({
     sortBy: dataTable.sortBy[0].key,
     sortOrder: dataTable.sortBy[0].order === 'desc' ? 'DESC' : 'ASC',
-    offset: (dataTable.page - 1) * dataTable.itemsPerPage,
+    page: dataTable.page,
     limit: dataTable.itemsPerPage,
     search: filter.value,
     includeArchived: showArchiveToggle.value || undefined,

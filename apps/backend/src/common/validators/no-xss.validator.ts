@@ -59,7 +59,7 @@ export function SanitizeHTML() {
             .replace(/&gt;/g, '>')
             .replace(/&amp;/g, '&')
             .replace(/&quot;/g, '"')
-            .replace(/&#x27;/g, "'")
+            .replace(/&#x27;/g, '\'')
             .replace(/&#x2F;/g, '/');
         }
         descriptor?.set?.call(this, value);

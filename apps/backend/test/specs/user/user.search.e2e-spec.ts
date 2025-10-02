@@ -110,15 +110,15 @@ describe('User search and filtering', () => {
     it('should handle special characters in search', async () => {
       await createTestUser({
         email: 'special@test.com',
-        firstName: "O'Brien",
+        firstName: 'O\'Brien',
         lastName: 'Smith-Jones',
       });
       const response = await api
         .as(admin)
-        .get({ query: { search: "O'Brien" } })
+        .get({ query: { search: 'O\'Brien' } })
         .expect(200);
       expect(response.body.data).toHaveLength(1);
-      expect(response.body.data[0].firstName).toBe("O'Brien");
+      expect(response.body.data[0].firstName).toBe('O\'Brien');
     });
 
     it('should escape special regex characters', async () => {

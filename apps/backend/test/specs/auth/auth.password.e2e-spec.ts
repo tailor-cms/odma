@@ -8,7 +8,7 @@ import {
   TestUser,
   getJwtService,
   getConfigService,
-  AuthClient,
+  AuthClient, getEntityManager,
 } from '../../helpers/test.helpers';
 import {
   createResetToken,
@@ -18,7 +18,6 @@ import {
   generateValidPassword,
 } from '../../helpers/auth.spec.helpers';
 import { User } from '@/database/entities';
-import { getEntityManager } from '../../helpers/test.helpers';
 
 describe('Auth - Password management', () => {
   let app: INestApplication;

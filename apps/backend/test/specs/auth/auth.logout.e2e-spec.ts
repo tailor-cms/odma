@@ -6,9 +6,8 @@ import {
   cleanDatabase,
   closeTestingApp,
   createTestingApp,
-  seedTestUsers,
+  seedTestUsers, getEntityManager,
 } from '../../helpers/test.helpers';
-import { getEntityManager } from '../../helpers/test.helpers';
 import request from 'supertest';
 
 describe('Auth logout', () => {

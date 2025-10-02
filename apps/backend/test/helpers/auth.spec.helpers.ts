@@ -50,8 +50,8 @@ async function createToken(
   if (!config) throw new Error('Auth config not found');
 
   // ACCESS tokens use default secret, others use user-specific secret
-  const secret = audience === Audience.ACCESS 
-    ? config.jwt.secret 
+  const secret = audience === Audience.ACCESS
+    ? config.jwt.secret
     : generateUserSecret(user, config);
   const tokenConfig = TOKEN_CONFIG[audience];
   const expiresIn = options?.expiresIn || tokenConfig.expiresIn;
