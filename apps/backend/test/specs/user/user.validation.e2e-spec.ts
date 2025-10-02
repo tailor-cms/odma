@@ -248,7 +248,7 @@ describe('User input validation', () => {
       }
     });
 
-    it('should handle null vs undefined vs empty string for optional fields', async () => {
+    it('should handle null vs undef vs empty str for optionals', async () => {
       const testCases = [
         { data: { email: 'null@test.com', firstName: null, lastName: null } },
         { data: { email: 'undefined@test.com' } },

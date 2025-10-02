@@ -213,7 +213,7 @@ export class UserService {
     this.logger.debug('User found for reinvitation:', user.email);
     try {
       await this.authService.sendInvitationEmail(user);
-    } catch (error) {
+    } catch {
       throw new BadRequestException('Failed to send invitation email');
     }
   }

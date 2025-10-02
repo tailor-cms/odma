@@ -12,7 +12,7 @@ const xssValidator = (value: any, _args: ValidationArguments) => {
     /<iframe\b[^<]*(?:(?!<\/iframe>)<[^<]*)*<\/iframe>/gi,
     /javascript:/gi,
     /on\w+\s*=/gi, // Event handlers like onclick=, onerror=
-    /<img[^>]+src[\\s]*=[\\s]*["\']javascript:/gi,
+    /<img[^>]+src[\s]*=[\s]*["']javascript:/gi,
     /<object\b[^<]*(?:(?!<\/object>)<[^<]*)*<\/object>/gi,
     /<embed\b[^<]*(?:(?!<\/embed>)<[^<]*)*<\/embed>/gi,
   ];

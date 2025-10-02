@@ -129,7 +129,7 @@ describe('Auth - Password management', () => {
     // TODO: Decide if we want to enforce this
     it.skip('should not allow changing to the same password', async () => {
       await authClient.login(user.email, user.password);
-      const response = await authClient.auth.changePassword(
+      await authClient.auth.changePassword(
         user.password,
         'TestPassword123!55',
       );
