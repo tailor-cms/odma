@@ -1,9 +1,9 @@
 <div align="center">
-  <img src="docs/public/logo.png" alt="App Starter" width="120">
-  <h1>App Starter</h1>
+  <img src="apps/frontend/public/img/default-logo-full.svg" alt="Odma" width="120">
+  <h1>Odma</h1>
   <p><strong>Production-ready full-stack application starter with enterprise-grade tooling</strong></p>
   
-  [![CI](https://github.com/your-org/app-starter/workflows/PR%20checks/badge.svg)](https://github.com/your-org/app-starter/actions)
+  [![CI](https://github.com/tailor-cms/odma/workflows/PR%20checks/badge.svg)](https://github.com/tailor-cms/odma/actions)
   [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
   [![Node.js](https://img.shields.io/badge/Node.js-22.x-green.svg)](https://nodejs.org/)
   [![TypeScript](https://img.shields.io/badge/TypeScript-5.x-blue.svg)](https://www.typescriptlang.org/)
@@ -13,7 +13,7 @@
 
 ## 🚀 Overview
 
-**App Starter** is a comprehensive full-stack application template built with modern technologies and enterprise-grade practices. It provides a solid foundation for building scalable web applications with authentication, user management, and production deployment capabilities.
+**Odma** is a comprehensive full-stack application template built with modern technologies and enterprise-grade practices. It provides a solid foundation for building scalable web applications with authentication, user management, and production deployment capabilities.
 
 ### **🏗️ Architecture**
 
@@ -48,8 +48,8 @@
 ### 1. Clone & Setup
 
 ```bash
-git clone https://github.com/your-org/app-starter.git
-cd app-starter
+git clone https://github.com/tailor-cms/odma.git
+cd odma
 
 # Interactive setup (creates .env, sets up database, etc.)
 pnpm setup:dev
@@ -78,7 +78,7 @@ Default admin user (created during setup):
 ## 📂 Project Structure
 
 ```
-app-starter/
+odma/
 ├── apps/
 │   ├── backend/           # NestJS API server
 │   └── frontend/          # Nuxt 3 SPA client
@@ -346,6 +346,6 @@ This project is licensed under the **MIT License** - see the [LICENSE](LICENSE) 
 ---
 
 <div align="center">
-  <p>Made with ❤️</p>
+  <p>Made with ❤️ by <a href="https://github.com/tailor-cms">Tailor CMS</a></p>
   <p>⭐ <strong>Star this repository if it helped you!</strong></p>
 </div>
