@@ -6,6 +6,7 @@ import { AppModule } from './app.module';
 import { ConfigService } from '@nestjs/config';
 import { Logger } from 'nestjs-pino';
 import { HttpExceptionFilter } from './common/filters/http-exception.filter';
+import { LoggingInterceptor } from './common/interceptors/logging.interceptor';
 import { ResponseInterceptor } from './common/interceptors/response.interceptor';
 import { ThrottlerExceptionFilter } from './common/filters/throttler-exception.filter';
 import { ValidationExceptionFilter } from './common/filters/validation-exception.filter';
@@ -35,6 +36,7 @@ async function bootstrap() {
     }),
   );
   app.useGlobalInterceptors(
+    app.get(LoggingInterceptor),
     new ClassSerializerInterceptor(reflector, {
       excludeExtraneousValues: false,
       enableImplicitConversion: false,
