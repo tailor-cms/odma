@@ -16,7 +16,7 @@ import {
 } from './dto';
 import { AuthService } from './auth.service';
 import { ConfigService } from '@nestjs/config';
-import { CurrentUser } from '@/common/decorators/current-user.decorator';
+import { CurrentUser } from '@/modules/auth/decorators/current-user.decorator';
 import { Public } from './decorators';
 import type { Response } from 'express';
 

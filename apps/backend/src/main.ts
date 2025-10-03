@@ -7,6 +7,7 @@ import { ConfigService } from '@nestjs/config';
 import { Logger } from 'nestjs-pino';
 import { HttpExceptionFilter } from './common/filters/http-exception.filter';
 import { ResponseInterceptor } from './common/interceptors/response.interceptor';
+import { ThrottlerExceptionFilter } from './common/filters/throttler-exception.filter';
 import { ValidationExceptionFilter } from './common/filters/validation-exception.filter';
 
 import cookieParser from 'cookie-parser';
@@ -43,9 +44,10 @@ async function bootstrap() {
   );
   // Registered in reverse order of execution
   app.useGlobalFilters(
-    new AllExceptionsFilter(),
-    new HttpExceptionFilter(),
-    new ValidationExceptionFilter(),
+    app.get(AllExceptionsFilter),
+    app.get(HttpExceptionFilter),
+    app.get(ThrottlerExceptionFilter),
+    app.get(ValidationExceptionFilter),
   );
   if (!config.get<string>('isProduction')) {
     const apiDocConfig = new DocumentBuilder()

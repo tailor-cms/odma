@@ -1,29 +1,27 @@
-import type {
-  ArgumentsHost,
-  ExceptionFilter } from '@nestjs/common';
+import type { ArgumentsHost, ExceptionFilter } from '@nestjs/common';
 import {
+  BadRequestException,
   Catch,
   HttpException,
   HttpStatus,
-  Logger,
-  BadRequestException,
 } from '@nestjs/common';
 import type { Request, Response } from 'express';
-import { sanitizeUser } from '../utils/sanitize-user.util';
+import { PinoLogger } from 'nestjs-pino';
 import { sanitizeRequestBody } from '../utils/sanitize-request-body.util';
+import { sanitizeUser } from '../utils/sanitize-user.util';
 
 @Catch()
 export class AllExceptionsFilter implements ExceptionFilter {
-  private readonly logger = new Logger(AllExceptionsFilter.name);
+  constructor(private readonly logger: PinoLogger) {
+    this.logger.setContext(AllExceptionsFilter.name);
+  }
 
   catch(exception: unknown, host: ArgumentsHost) {
     const ctx = host.switchToHttp();
     const response = ctx.getResponse<Response>();
     const request = ctx.getRequest<Request>();
-
     const status = HttpStatus.INTERNAL_SERVER_ERROR;
     let message = 'Internal server error';
-
     // Skip HttpExceptions and BadRequestExceptions as they're
     // handled by specific filters
     if (
@@ -32,7 +30,6 @@ export class AllExceptionsFilter implements ExceptionFilter {
     ) {
       throw exception;
     }
-
     // Handle non-HTTP exceptions (database errors, network errors, etc.)
     if (exception instanceof Error) {
       message = exception.message;
@@ -41,13 +38,12 @@ export class AllExceptionsFilter implements ExceptionFilter {
         message = 'Internal server error';
       }
     }
-
     // Sanitize user data for logging
     const sanitizedUser = sanitizeUser(request.user);
     const sanitizedBody = sanitizeRequestBody(request.body);
-
+    const errMsg = `${request.method} ${request.url} - ${status} - ${message}`;
     this.logger.error(
-      `Unhandled Exception: ${request.method} ${request.url} - ${status} - ${message}`,
+      `Unhandled Exception: ${errMsg}`,
       {
         user: sanitizedUser,
         body: sanitizedBody,

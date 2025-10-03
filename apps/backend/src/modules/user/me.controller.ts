@@ -1,7 +1,7 @@
 import { Controller, Body, Get, Patch } from '@nestjs/common';
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { UpdateProfileDto } from './dto';
-import { CurrentUser } from '@/common/decorators/current-user.decorator';
+import { CurrentUser } from '@/modules/auth/decorators/current-user.decorator';
 import { UserService } from './user.service';
 import { User } from '@/database/entities';
 

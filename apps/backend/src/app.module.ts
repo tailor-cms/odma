@@ -1,4 +1,6 @@
 import { ConfigModule, ConfigService } from '@nestjs/config';
+import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler';
+import { APP_GUARD } from '@nestjs/core';
 import { AuthModule } from './modules/auth/auth.module';
 import { CommonModule } from './common/common.module';
 import { HealthModule } from './modules/health/health.module';
@@ -7,7 +9,6 @@ import { MailModule } from './modules/mail/mail.module';
 import { MikroOrmModule } from '@mikro-orm/nestjs';
 import { Module } from '@nestjs/common';
 import { ServeStaticModule } from '@nestjs/serve-static';
-import { ThrottlerModule } from '@nestjs/throttler';
 import { UserModule } from './modules/user/user.module';
 
 import authConfig from './config/auth.config';
@@ -62,6 +63,12 @@ import { validationSchema } from './config/validation';
     HealthModule,
     MailModule,
     UserModule,
+  ],
+  providers: [
+    {
+      provide: APP_GUARD,
+      useClass: ThrottlerGuard,
+    },
   ],
 })
 export class AppModule {}

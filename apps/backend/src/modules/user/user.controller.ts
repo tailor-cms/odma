@@ -18,7 +18,7 @@ import {
   UserDto,
   PaginatedUsersDto,
 } from './dto';
-import { CurrentUser } from '@/common/decorators/current-user.decorator';
+import { CurrentUser } from '@/modules/auth/decorators/current-user.decorator';
 import { User, UserRole } from '@/database/entities';
 import { UserService } from './user.service';
 import { Roles } from '@/modules/auth/decorators';

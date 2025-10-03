@@ -1,8 +1,9 @@
 import { Module, Global } from '@nestjs/common';
-import { ResponseInterceptor } from './interceptors/response.interceptor';
-import { LoggingInterceptor } from './interceptors/logging.interceptor';
-import { HttpExceptionFilter } from './filters/http-exception.filter';
 import { AllExceptionsFilter } from './filters/all-exceptions.filter';
+import { HttpExceptionFilter } from './filters/http-exception.filter';
+import { LoggingInterceptor } from './interceptors/logging.interceptor';
+import { ResponseInterceptor } from './interceptors/response.interceptor';
+import { ThrottlerExceptionFilter } from './filters/throttler-exception.filter';
 import { ValidationExceptionFilter } from './filters/validation-exception.filter';
 
 @Global()
@@ -14,6 +15,7 @@ import { ValidationExceptionFilter } from './filters/validation-exception.filter
     HttpExceptionFilter,
     LoggingInterceptor,
     ResponseInterceptor,
+    ThrottlerExceptionFilter,
     ValidationExceptionFilter,
   ],
   exports: [
@@ -21,6 +23,7 @@ import { ValidationExceptionFilter } from './filters/validation-exception.filter
     HttpExceptionFilter,
     LoggingInterceptor,
     ResponseInterceptor,
+    ThrottlerExceptionFilter,
     ValidationExceptionFilter,
   ],
 })
