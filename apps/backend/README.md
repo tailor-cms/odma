@@ -5,29 +5,42 @@ and security-first design.
 
 ## 🚀 Architecture Overview
 
-### Core Modules
+This backend is a well-structured NestJS application built with enterprise-grade security and scalability in mind.
 
-- **Auth**: JWT authentication, role-based access, password reset, user invitations
-- **User**: Complete user management with search, filtering, soft deletion, admin controls
-- **Mail**: Template-based emails with Handlebars (password reset, invitations)
-- **Health**: Production monitoring endpoints for load balancers
+### **Core Framework & Technologies**
+- **NestJS** v11.1.6 with TypeScript
+- **MikroORM** v6.5.6 with PostgreSQL driver
+- **Passport.js** for authentication (JWT + Local strategies)
+- **Pino** for structured logging
+- **Jest** for testing with comprehensive e2e test suite
 
-### Security Features
+### **Key Modules**
+- **Auth Module** (`src/modules/auth/`): JWT authentication, login/logout, password reset
+- **User Module** (`src/modules/user/`): User CRUD operations, profile management
+- **Mail Module** (`src/modules/mail/`): Email templates and sending (with Handlebars)
+- **Health Module** (`src/modules/health/`): Health check endpoints
 
-- Global JWT protection with role-based access control (Admin/User)
-- XSS prevention, input validation, secure cookie handling
-- Comprehensive logging with sensitive data masking
-- Production-ready exception handling and monitoring
+### **Security Features**
+- Global JWT authentication guard
+- Role-based access control (ADMIN/USER roles)
+- Input validation with class-validator
+- Helmet.js for security headers
+- Rate limiting with Throttler
+- XSS protection validators
+- Password hashing with bcrypt
 
-### Technology Stack
+### **Database & ORM**
+- PostgreSQL with MikroORM
+- User entity with roles, soft delete capability
+- Migration and seeding system
+- Custom repository pattern
 
-- **Framework**: NestJS with TypeScript
-- **Database**: PostgreSQL with MikroORM (migrations, seeding, repository pattern)
-- **Authentication**: JWT with secure HTTP-only cookies
-- **Email**: Nodemailer with Handlebars templating
-- **Logging**: Structured logging with Pino
-- **API Docs**: Swagger/OpenAPI integration
-- **Testing**: Comprehensive E2E test suite with security testing
+### **Development Features**
+- Swagger API documentation
+- Hot reload development mode
+- Comprehensive e2e test suite
+- TypeScript path mapping
+- Pino pretty logging for development
 
 ## 🛠️ Quick Start
 
