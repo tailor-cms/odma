@@ -45,11 +45,12 @@ async function bootstrap() {
     new ResponseInterceptor(),
   );
   // Registered in reverse order of execution
+  // Order: Most specific → Most general
   app.useGlobalFilters(
-    app.get(AllExceptionsFilter),
-    app.get(HttpExceptionFilter),
-    app.get(ThrottlerExceptionFilter),
-    app.get(ValidationExceptionFilter),
+    app.get(AllExceptionsFilter),       // 4th: Catch-all for non-HTTP exceptions
+    app.get(HttpExceptionFilter),       // 3rd: General HTTP exceptions
+    app.get(ValidationExceptionFilter), // 2nd: BadRequestException (validation)
+    app.get(ThrottlerExceptionFilter),  // 1st: ThrottlerException
   );
   if (!config.get<string>('isProduction')) {
     const apiDocConfig = new DocumentBuilder()

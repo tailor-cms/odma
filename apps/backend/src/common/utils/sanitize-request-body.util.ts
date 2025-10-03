@@ -81,7 +81,8 @@ export function sanitizeRequestBody(body: any, visited = new WeakSet()): any {
     if (!Object.prototype.hasOwnProperty.call(body, key)) continue;
     const lowerKey = key.toLowerCase();
     // Check if field name contains sensitive keywords
-    const isSensitive = sensitiveFields.has(lowerKey) ||
+    const isSensitive =
+      sensitiveFields.has(lowerKey) ||
       lowerKey.includes('password') ||
       lowerKey.includes('token') ||
       lowerKey.includes('secret') ||

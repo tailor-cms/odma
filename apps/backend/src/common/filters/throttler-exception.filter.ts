@@ -1,6 +1,8 @@
 import type { ArgumentsHost, ExceptionFilter } from '@nestjs/common';
 import type { Request, Response } from 'express';
 import { Catch } from '@nestjs/common';
+import { ErrorTypes } from '../constants/error-codes';
+import type { ErrorResponse } from '../interfaces/response.interface';
 import { PinoLogger } from 'nestjs-pino';
 import { ThrottlerException } from '@nestjs/throttler';
 import { sanitizeUser } from '../utils/sanitize-user.util';
@@ -39,15 +41,28 @@ export class ThrottlerExceptionFilter implements ExceptionFilter {
       'X-RateLimit-Reset',
       Math.ceil(Date.now() / 1000 + retryAfter).toString(),
     );
-    return response.status(429).json({
+    const errorResponse: ErrorResponse = {
       success: false,
-      statusCode: 429,
-      path: request.url,
-      method: request.method,
-      message: 'Too many requests, please try again later',
-      retryAfter,
-      timestamp: new Date().toISOString(),
-    });
+      error: {
+        type: ErrorTypes.RATE_LIMIT,
+        message: 'Too many requests, please try again later',
+        details: [
+          {
+            retryAfter,
+            limitInfo: { limit: 100, window: '60 seconds' },
+            suspicious: this.detectSuspiciousActivity(request),
+          },
+        ],
+      },
+      meta: {
+        statusCode: 429,
+        path: request.url,
+        method: request.method,
+        timestamp: new Date().toISOString(),
+        duration: 0, // Not available in exception context
+      },
+    };
+    return response.status(429).json(errorResponse);
   }
 
   private detectSuspiciousActivity(request: Request): boolean {

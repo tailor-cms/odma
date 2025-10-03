@@ -1,9 +1,12 @@
 import type { ArgumentsHost, ExceptionFilter } from '@nestjs/common';
 import { BadRequestException, Catch } from '@nestjs/common';
+import { ErrorTypes } from '../constants/error-codes';
+import type { ErrorResponse } from '../interfaces/response.interface';
 import type { Request, Response } from 'express';
 import { PinoLogger } from 'nestjs-pino';
 import { sanitizeUser } from '../utils/sanitize-user.util';
 import { sanitizeRequestBody } from '../utils/sanitize-request-body.util';
+import { formatValidationDetails } from '../utils/format-error-details.util';
 
 @Catch(BadRequestException)
 export class ValidationExceptionFilter implements ExceptionFilter {
@@ -15,6 +18,7 @@ export class ValidationExceptionFilter implements ExceptionFilter {
     const ctx = host.switchToHttp();
     const request = ctx.getRequest<Request>();
     const response = ctx.getResponse<Response>();
+    const statusCode = exception.getStatus();
     let errors = [] as any[];
     const exceptionResponse = exception.getResponse() as any;
     if (exceptionResponse.message && Array.isArray(exceptionResponse.message)) {
@@ -26,19 +30,28 @@ export class ValidationExceptionFilter implements ExceptionFilter {
     const sanitizedUser = sanitizeUser(request.user);
     const sanitizedBody = sanitizeRequestBody(request.body);
     this.logger.warn(
-      `Validation Error:
-      ${request.method} ${request.url} - ${JSON.stringify(errors)}`,
-      { user: sanitizedUser, body: sanitizedBody },
+      `Validation Error: ${request.method} ${request.url}`,
+      {
+        user: sanitizedUser,
+        body: sanitizedBody,
+        validationErrors: errors
+      },
     );
-    const statusCode = exception.getStatus();
-    return response.status(statusCode).json({
+    const errorResponse: ErrorResponse = {
       success: false,
-      statusCode,
-      path: request.url,
-      method: request.method,
-      message: 'Validation failed',
-      errors,
-      timestamp: new Date().toISOString(),
-    });
+      error: {
+        type: ErrorTypes.VALIDATION,
+        message: 'Request validation failed',
+        details: formatValidationDetails(errors),
+      },
+      meta: {
+        statusCode,
+        path: request.url,
+        method: request.method,
+        timestamp: new Date().toISOString(),
+        duration: 0, // Not available in exception context
+      },
+    };
+    return response.status(statusCode).json(errorResponse);
   }
 }

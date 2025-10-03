@@ -1,7 +1,10 @@
 import type { ArgumentsHost, ExceptionFilter } from '@nestjs/common';
 import { Catch, HttpException } from '@nestjs/common';
 import type { Request, Response } from 'express';
+import type { ErrorResponse } from '../interfaces/response.interface';
 import { PinoLogger } from 'nestjs-pino';
+import { formatErrorDetails } from '../utils/format-error-details.util';
+import { getErrorType } from '../constants/error-codes';
 import { sanitizeRequestBody } from '../utils/sanitize-request-body.util';
 import { sanitizeUser } from '../utils/sanitize-user.util';
 
@@ -15,28 +18,44 @@ export class HttpExceptionFilter implements ExceptionFilter {
     const ctx = host.switchToHttp();
     const request = ctx.getRequest<Request>();
     const response = ctx.getResponse<Response>();
+    const statusCode = exception.getStatus();
+    const errorType = getErrorType(statusCode);
     const exceptionResponse = exception.getResponse();
-    const error =
+    const exceptionInfo =
       typeof exceptionResponse === 'string'
         ? { message: exceptionResponse }
-        : (exceptionResponse as object);
+        : (exceptionResponse as any);
     // Sanitize user data for logging
     const sanitizedUser = sanitizeUser(request.user);
     const sanitizedBody = sanitizeRequestBody(request.body);
-    const statusCode = exception.getStatus();
+    const message = exceptionInfo.message || 'HTTP Exception';
     this.logger.error(
-      `HTTP Exception:
-      ${request.method} ${request.url}
-      ${statusCode} - ${JSON.stringify(error)}`,
-      { user: sanitizedUser, body: sanitizedBody },
+      `HTTP Exception: ${request.method} ${request.url} ${statusCode}`,
+      {
+        statusCode,
+        errorType,
+        user: sanitizedUser,
+        body: sanitizedBody,
+        message,
+      },
     );
-    return response.status(statusCode).json({
+    const errorResponse: ErrorResponse = {
       success: false,
-      statusCode,
-      path: request.url,
-      method: request.method,
-      ...error,
-      timestamp: new Date().toISOString(),
-    });
+      error: {
+        type: errorType,
+        message,
+        details: exceptionInfo.error
+          ? formatErrorDetails(exceptionInfo)
+          : undefined,
+      },
+      meta: {
+        timestamp: new Date().toISOString(),
+        path: request.url,
+        method: request.method,
+        duration: 0, // Not available in exception context
+        statusCode,
+      },
+    };
+    return response.status(statusCode).json(errorResponse);
   }
 }

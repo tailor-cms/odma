@@ -1,12 +1,10 @@
 import type { ArgumentsHost, ExceptionFilter } from '@nestjs/common';
-import {
-  BadRequestException,
-  Catch,
-  HttpException,
-  HttpStatus,
-} from '@nestjs/common';
+import { Catch, HttpStatus } from '@nestjs/common';
 import type { Request, Response } from 'express';
+import type { ErrorResponse } from '../interfaces/response.interface';
+import { ErrorTypes } from '../constants/error-codes';
 import { PinoLogger } from 'nestjs-pino';
+import { formatDevelopmentDetails } from '../utils/format-error-details.util';
 import { sanitizeRequestBody } from '../utils/sanitize-request-body.util';
 import { sanitizeUser } from '../utils/sanitize-user.util';
 
@@ -20,51 +18,42 @@ export class AllExceptionsFilter implements ExceptionFilter {
     const ctx = host.switchToHttp();
     const response = ctx.getResponse<Response>();
     const request = ctx.getRequest<Request>();
-    const status = HttpStatus.INTERNAL_SERVER_ERROR;
-    let message = 'Internal server error';
-    // Skip HttpExceptions and BadRequestExceptions as they're
-    // handled by specific filters
-    if (
-      exception instanceof BadRequestException ||
-      exception instanceof HttpException
-    ) {
-      throw exception;
-    }
+    const isProduction = process.env.NODE_ENV === 'production';
+    const isDevelopment = process.env.NODE_ENV === 'development';
+    const isErrorInstance = exception instanceof Error;
     // Handle non-HTTP exceptions (database errors, network errors, etc.)
-    if (exception instanceof Error) {
-      message = exception.message;
-      // Don't expose internal error details in production
-      if (process.env.NODE_ENV === 'production') {
-        message = 'Internal server error';
-      }
-    }
+    // Note: HttpExceptions should already be handled by more specific filters
+    // Don't expose internal error details in production
     // Sanitize user data for logging
     const sanitizedUser = sanitizeUser(request.user);
     const sanitizedBody = sanitizeRequestBody(request.body);
-    const errMsg = `${request.method} ${request.url} - ${status} - ${message}`;
-    this.logger.error(
-      `Unhandled Exception: ${errMsg}`,
-      {
-        user: sanitizedUser,
-        body: sanitizedBody,
-        stack: exception instanceof Error ? exception.stack : undefined,
-        error:
-          exception instanceof Error ? exception.message : String(exception),
-      },
-    );
-
-    return response.status(status).json({
-      success: false,
-      path: request.url,
-      method: request.method,
-      statusCode: status,
-      message,
-      timestamp: new Date().toISOString(),
-      ...(process.env.NODE_ENV === 'development' && {
-        stack: exception instanceof Error ? exception.stack : undefined,
-        originalError:
-          exception instanceof Error ? exception.message : String(exception),
-      }),
+    const status = HttpStatus.INTERNAL_SERVER_ERROR;
+    const message =
+      isErrorInstance && !isProduction
+        ? exception.message
+        : 'Internal server error';
+    const desc = `${request.method} ${request.url} - ${status} - ${message}`;
+    this.logger.error(`Unhandled Exception: ${desc}`, {
+      user: sanitizedUser,
+      body: sanitizedBody,
+      stack: isErrorInstance ? exception.stack : undefined,
+      error: isErrorInstance ? exception.message : String(exception),
     });
+    const details =
+      isDevelopment && isErrorInstance
+        ? formatDevelopmentDetails(exception)
+        : undefined;
+    const errorResponse: ErrorResponse = {
+      success: false,
+      error: { type: ErrorTypes.INTERNAL, message, details },
+      meta: {
+        path: request.url,
+        method: request.method,
+        statusCode: status,
+        timestamp: new Date().toISOString(),
+        duration: 0, // Not available in exception context
+      },
+    };
+    return response.status(status).json(errorResponse);
   }
 }

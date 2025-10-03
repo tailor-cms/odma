@@ -6,6 +6,16 @@ import { ResponseInterceptor } from './interceptors/response.interceptor';
 import { ThrottlerExceptionFilter } from './filters/throttler-exception.filter';
 import { ValidationExceptionFilter } from './filters/validation-exception.filter';
 
+// Re-export constants and interfaces for easy access
+export type { ErrorType } from './constants/error-codes';
+export { ErrorTypes } from './constants/error-codes';
+export type {
+  ApiResponse,
+  EnhancedResponse,
+  ErrorResponse,
+  SuccessResponse,
+} from './interfaces/response.interface';
+
 @Global()
 @Module({
   providers: [
