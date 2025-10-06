@@ -11,8 +11,8 @@ export type { ErrorType } from './constants/error-codes';
 export { ErrorTypes } from './constants/error-codes';
 export type {
   ApiResponse,
-  EnhancedResponse,
   ErrorResponse,
+  StructuredResponse,
   SuccessResponse,
 } from './interfaces/response.interface';
 

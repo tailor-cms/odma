@@ -1,4 +1,4 @@
-export interface EnhancedResponse<T = any> {
+export interface StructuredResponse<T = any> {
   success: boolean;
   data?: T;
   error?: {
@@ -21,14 +21,14 @@ export interface EnhancedResponse<T = any> {
   };
 }
 
-// Type helpers for better developer experience
-export type SuccessResponse<T = any> = EnhancedResponse<T> & {
+// Type helpers for better dev experience
+export type SuccessResponse<T = any> = StructuredResponse<T> & {
   success: true;
   data: T;
   error?: never;
 };
 
-export type ErrorResponse = EnhancedResponse<never> & {
+export type ErrorResponse = StructuredResponse<never> & {
   success: false;
   data?: never;
   error: {
