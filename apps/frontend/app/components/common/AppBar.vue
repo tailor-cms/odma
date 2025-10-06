@@ -13,7 +13,7 @@
         width="44"
       />
       <VAppBarTitle class="app-name text-primary-lighten-3">
-        App
+        Odma
       </VAppBarTitle>
     </NuxtLink>
     <template #append>

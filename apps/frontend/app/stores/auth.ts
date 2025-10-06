@@ -8,7 +8,6 @@ export const useAuthStore = defineStore('auth', () => {
 
   const isAdmin = computed(() => user.value?.role === 'ADMIN');
   const isDefaultUser = computed(() => user.value?.role === 'USER');
-
   const isOidcActive = computed(() => strategy.value === 'oidc');
 
   function $reset(
@@ -66,7 +65,12 @@ export const useAuthStore = defineStore('auth', () => {
   function updateInfo(payload: any) {
     return api
       .updateUserInfo(payload)
-      .then(({ data }) => (user.value = data.user));
+      .then((response) => {
+        if (response.success && response.data) {
+          user.value = response.data.user || response.data;
+        }
+        return response;
+      });
   }
 
   return {

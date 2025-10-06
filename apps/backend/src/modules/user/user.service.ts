@@ -155,7 +155,6 @@ export class UserService {
       this.logger.debug('Admin attempted to demote themselves');
       throw new BadRequestException('Cannot demote your own admin account');
     }
-
     if (payload.email && payload.email !== user.email) {
       this.logger.debug('Attempting to change email to:', payload.email);
       this.logger.debug('Checking for existing user with new email');

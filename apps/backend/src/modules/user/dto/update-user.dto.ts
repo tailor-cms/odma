@@ -68,5 +68,4 @@ export class UpdateUserDto {
 
 export class UpdateProfileDto extends OmitType(UpdateUserDto, [
   'role',
-  'email',
 ] as const) {}

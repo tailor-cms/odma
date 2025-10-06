@@ -1,5 +1,6 @@
 import axios, { Axios } from 'axios';
 import buildFullPath from 'axios/unsafe/core/buildFullPath';
+import { getErrorInfo } from './helpers';
 
 Axios.prototype.submitForm = function (url, fields, options) {
   const action = buildFullPath(this.defaults.baseURL, url);
@@ -23,7 +24,15 @@ Object.defineProperty(client, 'base', {
   },
 });
 
-const isAuthError = (err) => [401, 403].includes(err.response?.status);
+const isAuthError = (err: any) => {
+  const status = err.response?.status;
+  return [401, 403].includes(status);
+};
+
+const isRateLimitError = (err: any) => {
+  const status = err.response?.status;
+  return status === 429;
+};
 
 client.interceptors.response.use(
   (res) => res,
@@ -36,6 +45,16 @@ client.interceptors.response.use(
       if (import.meta.server) return navigateTo(authRoute);
       return window.location.replace(authRoute);
     }
+    const errInfo = getErrorInfo(err);
+    // Handle rate limiting errors
+    if (isRateLimitError(err)) {
+      console.warn('Rate limit exceeded:', errInfo);
+    }
+    // Enhance error object with semantic information
+    err.errorCode = errInfo.code;
+    err.errorType = errInfo.type;
+    err.semanticMessage = errInfo.message;
+    err.errorDetails = errInfo.details;
     throw err;
   },
 );
