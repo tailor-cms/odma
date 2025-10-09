@@ -71,7 +71,6 @@
 <script lang="ts" setup>
 import { object, string } from 'yup';
 import { useForm } from 'vee-validate';
-
 import { useAuthStore } from '@/stores/auth';
 import { useConfigStore } from '@/stores/config';
 

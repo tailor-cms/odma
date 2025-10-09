@@ -1,0 +1,43 @@
+{
+  "name": "api-client-generator",
+  "version": "1.0.0",
+  "description": "Generates API clients from OpenAPI specifications",
+  "type": "module",
+  "main": "src/index.js",
+  "bin": {
+    "build-client": "./bin/build-client.js",
+    "watch-client": "./bin/watch-client.js"
+  },
+  "exports": {
+    ".": {
+      "import": "./src/index.js"
+    }
+  },
+  "files": [
+    "bin/",
+    "src/"
+  ],
+  "scripts": {
+    "build": "echo 'No build step required for this package'",
+    "test": "echo 'No tests defined yet'"
+  },
+  "dependencies": {
+    "lodash": "^4.17.21",
+    "chokidar": "^4.0.0",
+    "package-up": "^5.0.0",
+    "minimist": "^1.2.8",
+    "common-tags": "^1.8.2"
+  },
+  "keywords": [
+    "api",
+    "client",
+    "generator",
+    "openapi",
+    "axios",
+    "nestjs"
+  ],
+  "license": "MIT",
+  "engines": {
+    "node": ">=18"
+  }
+}

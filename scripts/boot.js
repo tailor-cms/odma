@@ -73,7 +73,14 @@ await testDatabaseConnection(dbConfig, 10, 3000);
 dbConnectionLoader.stop();
 
 const appCommands = await Promise.all(
-  ['backend', 'frontend'].map(async (name, index) => {
+  ['backend', 'frontend', 'api-client'].map(async (name, index) => {
+    if (name === 'api-client') {
+      return {
+        name,
+        prefixColor: 'yellow',
+        command: `pnpm api:client:watch`,
+      };
+    }
     return {
       name,
       prefixColor: ['blue', 'green'][index],

@@ -1,5 +1,5 @@
 import { ClassSerializerInterceptor, ValidationPipe } from '@nestjs/common';
-import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
+import { SwaggerModule } from '@nestjs/swagger';
 import { NestFactory, Reflector } from '@nestjs/core';
 import { AllExceptionsFilter } from './common/filters/all-exceptions.filter';
 import { AppModule } from './app.module';
@@ -10,7 +10,7 @@ import { LoggingInterceptor } from './common/interceptors/logging.interceptor';
 import { ResponseInterceptor } from './common/interceptors/response.interceptor';
 import { ThrottlerExceptionFilter } from './common/filters/throttler-exception.filter';
 import { ValidationExceptionFilter } from './common/filters/validation-exception.filter';
-
+import { generateOpenApiDocument, saveOpenApiSpec } from './utils/openapi';
 import cookieParser from 'cookie-parser';
 import helmet from 'helmet';
 
@@ -53,17 +53,10 @@ async function bootstrap() {
     app.get(ThrottlerExceptionFilter),  // 1st: ThrottlerException
   );
   if (!config.get<string>('isProduction')) {
-    const apiDocConfig = new DocumentBuilder()
-      .setTitle('API')
-      .setDescription('API documentation')
-      .setVersion('1.0')
-      .addBearerAuth()
-      .addTag('auth', 'Authentication endpoints')
-      .addTag('me', 'Current user profile endpoints')
-      .addTag('users', 'User management endpoints')
-      .addTag('health', 'Health check endpoints')
-      .build();
-    const document = SwaggerModule.createDocument(app, apiDocConfig);
+    const document = generateOpenApiDocument(app);
+    // Save OpenAPI spec to file
+    // for offline access and build-time client generation
+    saveOpenApiSpec(document);
     SwaggerModule.setup('api/docs', app, document, {
       swaggerOptions: {
         persistAuthorization: true,

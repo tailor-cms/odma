@@ -7,6 +7,7 @@
   "license": "MIT",
   "scripts": {
     "build": "nest build",
+    "openapi:generate": "node scripts/generate-openapi.js",
     "dev": "nest start --watch",
     "start": "node dist/src/main",
     "start:dev": "nest start --watch",

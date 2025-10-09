@@ -30,6 +30,7 @@
     "@vee-validate/i18n": "^4.15.1",
     "@vee-validate/rules": "^4.15.1",
     "@vueuse/core": "^13.9.0",
+    "app-api-client": "workspace:*",
     "axios": "^1.12.2",
     "bluebird": "^3.7.2",
     "compressorjs": "^1.2.1",
