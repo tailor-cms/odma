@@ -125,8 +125,8 @@ onMounted(async () => {
   // Make sure the loader is visible for at least 1 second
   await delay(1000);
   try {
-    await api.auth.validateResetToken.raw({ 
-      data: { token: route.params.token }
+    await api.auth.validateResetToken.raw({
+      data: { token: route.params.token },
     });
   } catch {
     isError.value = true;

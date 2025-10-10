@@ -161,7 +161,10 @@ const showUserDialog = (user = null) => {
 const fetch = async (opts = {}) => {
   Object.assign(dataTable, opts);
   isLoading.value = true;
-  const { data, body: { meta }} = await api.user.fetch({
+  const {
+    data,
+    body: { meta },
+  } = await api.user.fetch({
     query: {
       sortBy: dataTable.sortBy?.[0]?.key || 'createdAt',
       sortOrder: dataTable.sortBy[0]?.order === 'desc' ? 'DESC' : 'ASC',

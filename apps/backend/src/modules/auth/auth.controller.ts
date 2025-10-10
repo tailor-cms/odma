@@ -35,7 +35,7 @@ export class AuthController {
   @ApiResponse({
     status: 200,
     description: 'User logged in successfully',
-    type: LoginResponseDto
+    type: LoginResponseDto,
   })
   @ApiResponse({ status: 401, description: 'Invalid credentials' })
   @Public()
@@ -75,7 +75,7 @@ export class AuthController {
   @ApiResponse({
     status: 200,
     description: 'Password changed successfully',
-    type: ChangePasswordResponseDto
+    type: ChangePasswordResponseDto,
   })
   @ApiResponse({ status: 401, description: 'Current password is incorrect!' })
   @Post('change-password')
