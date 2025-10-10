@@ -74,7 +74,7 @@ const image = computed(() => (store.user as any).imgUrl);
 const isGravatar = computed(() => /gravatar.com/.test(image.value));
 
 const updateAvatar = (imgUrl?: string) => {
-  return store.updateInfo({ imgUrl }).then(() => {
+  return store.updateCurrentUser({ imgUrl }).then(() => {
     notify('Your profile picture has been updated!', { immediate: true });
   });
 };

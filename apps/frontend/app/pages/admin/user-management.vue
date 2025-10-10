@@ -105,9 +105,9 @@
 <script lang="ts" setup>
 import { formatDate } from 'date-fns/format';
 import humanize from 'humanize-string';
-import type { User } from '@app/interfaces/user';
+import type { UserDto } from 'app-api-client';
 
-import { user as api } from '~/api';
+import { apiClient as api } from '~/api';
 import { useAuthStore } from '~/stores/auth';
 import UserDialog from '@/components/admin/UserDialog.vue';
 
@@ -138,12 +138,12 @@ const headers = [
 ];
 
 const actions = {
-  archive: (user: any) => api.remove(user),
-  restore: (user: any) => api.restore(user),
+  archive: (user: any) => api.user.remove({ path: { id: user.id } }),
+  restore: (user: any) => api.user.restore({ path: { id: user.id } }),
 };
 
 const isLoading = ref(true);
-const users = ref<User[]>([]);
+const users = ref<UserDto[]>([]);
 const dataTable = reactive(defaultPage());
 const totalItems = ref(0);
 const filter = ref('');
@@ -161,16 +161,18 @@ const showUserDialog = (user = null) => {
 const fetch = async (opts = {}) => {
   Object.assign(dataTable, opts);
   isLoading.value = true;
-  const { data: items, total } = await api.fetch({
-    sortBy: dataTable.sortBy[0].key,
-    sortOrder: dataTable.sortBy[0].order === 'desc' ? 'DESC' : 'ASC',
-    page: dataTable.page,
-    limit: dataTable.itemsPerPage,
-    search: filter.value,
-    includeArchived: showArchiveToggle.value || undefined,
+  const { data, body: { meta }} = await api.user.fetch({
+    query: {
+      sortBy: dataTable.sortBy?.[0]?.key || 'createdAt',
+      sortOrder: dataTable.sortBy[0]?.order === 'desc' ? 'DESC' : 'ASC',
+      page: dataTable.page,
+      limit: dataTable.itemsPerPage,
+      search: filter.value,
+      includeArchived: showArchiveToggle.value || undefined,
+    },
   });
-  users.value = items;
-  totalItems.value = total;
+  users.value = data;
+  totalItems.value = meta?.pagination?.total || 0;
   isLoading.value = false;
 };
 

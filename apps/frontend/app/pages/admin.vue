@@ -34,7 +34,7 @@ const authStore = useAuthStore();
 
 onBeforeMount(async () => {
   // Refetch user info to get the latest permissions
-  await authStore.fetchUserInfo();
+  await authStore.me();
   if (authStore.isAdmin) return;
   navigateTo({ name: 'catalog' });
 });

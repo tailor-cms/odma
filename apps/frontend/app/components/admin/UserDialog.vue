@@ -86,7 +86,7 @@ import { role } from '@app/config';
 import { useForm } from 'vee-validate';
 import type { User } from '@app/interfaces/user';
 
-import { user as api } from '~/api';
+import { apiClient as api } from '@/api';
 import AppDialog from '@/components/common/AppDialog.vue';
 
 const UserRole = role.user;
@@ -136,7 +136,9 @@ const { defineField, errors, handleSubmit, resetForm } = useForm({
         test: (email) => {
           if (!isNewUser.value) return true;
           if (props.userData.email === email) return true;
-          return api.fetch({ email }).then(({ total }) => !total);
+          return api.user
+            .fetch({ query: { email } })
+            .then((response) => !response.data.total);
         },
       }),
     firstName: string().min(2).required(),
@@ -168,22 +170,29 @@ const close = () => {
 };
 
 const submit = handleSubmit(async () => {
-  const action = isNewUser.value ? 'create' : 'update';
-  await api[action]({
-    id: props.userData?.id,
+  const body = {
     email: emailInput.value,
     firstName: firstNameInput.value,
     lastName: lastNameInput.value,
     role: roleInput.value,
-  });
-  emit(`${action}d`);
+  };
+  if (isNewUser.value) {
+    await api.user.create({ body });
+    emit('created');
+  } else {
+    await api.user.update({
+      path: { id: props.userData.id },
+      body,
+    });
+    emit('updated');
+  }
   close();
 });
 
 const reinvite = () => {
   isReinviting.value = true;
-  api
-    .reinvite({ id: props.userData.id })
+  api.user
+    .reinvite({ path: { id: props.userData.id } })
     .finally(() => (isReinviting.value = false));
 };
 </script>

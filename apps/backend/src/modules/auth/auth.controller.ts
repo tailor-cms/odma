@@ -13,6 +13,8 @@ import {
   ForgotPasswordDto,
   LoginDto,
   ResetPasswordDto,
+  LoginResponseDto,
+  ChangePasswordResponseDto,
 } from './dto';
 import { AuthService } from './auth.service';
 import { ConfigService } from '@nestjs/config';
@@ -30,7 +32,11 @@ export class AuthController {
 
   @ApiOperation({ summary: 'User login' })
   @ApiBody({ type: LoginDto })
-  @ApiResponse({ status: 200, description: 'User logged in successfully' })
+  @ApiResponse({
+    status: 200,
+    description: 'User logged in successfully',
+    type: LoginResponseDto
+  })
   @ApiResponse({ status: 401, description: 'Invalid credentials' })
   @Public()
   @Post('login')
@@ -66,7 +72,11 @@ export class AuthController {
 
   @ApiOperation({ summary: 'Change current password' })
   @ApiBody({ type: ChangePasswordDto })
-  @ApiResponse({ status: 200, description: 'Password changed successfully' })
+  @ApiResponse({
+    status: 200,
+    description: 'Password changed successfully',
+    type: ChangePasswordResponseDto
+  })
   @ApiResponse({ status: 401, description: 'Current password is incorrect!' })
   @Post('change-password')
   @HttpCode(HttpStatus.OK)

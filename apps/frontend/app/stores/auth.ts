@@ -1,9 +1,9 @@
-import type { User } from '@app/interfaces/user';
+import type { LoginDto, UserDto } from 'app-api-client';
 
-import { auth as api } from '@/api';
+import { apiClient as api } from '@/api';
 
 export const useAuthStore = defineStore('auth', () => {
-  const user = ref<User | null>(null);
+  const user = ref<UserDto | null>(null);
   const strategy = ref<string | null>(null);
 
   const isAdmin = computed(() => user.value?.role === 'ADMIN');
@@ -11,28 +11,27 @@ export const useAuthStore = defineStore('auth', () => {
   const isOidcActive = computed(() => strategy.value === 'oidc');
 
   function $reset(
-    userData: User | null = null,
+    userData: UserDto | null = null,
     authStrategy: string | null = null,
   ) {
     user.value = userData;
     strategy.value = authStrategy;
   }
 
-  function login(credentials: {
-    email: string;
-    password: string;
-  }): Promise<void> {
-    return api.login(credentials).then(({ user, authData }) => {
-      $reset(user, authData?.strategy || 'local');
+  function login(credentials: LoginDto): Promise<void> {
+    return api.auth.login({ body: credentials }).then(({ data }) => {
+      const userData = data.user;
+      const authStrategy = 'local';
+      $reset(userData, authStrategy);
     });
   }
 
   function logout() {
-    return api.logout().then(() => $reset());
+    return api.auth.logout().then(() => $reset());
   }
 
   function forgotPassword({ email }: { email: string }) {
-    return api.forgotPassword(email);
+    return api.auth.forgotPassword({ body: { email } });
   }
 
   function resetPassword({
@@ -42,7 +41,7 @@ export const useAuthStore = defineStore('auth', () => {
     password: string;
     token: string;
   }) {
-    return api.resetPassword(token, password);
+    return api.auth.resetPassword({ body: { token, newPassword: password } });
   }
 
   function changePassword({
@@ -52,25 +51,24 @@ export const useAuthStore = defineStore('auth', () => {
     currentPassword: string;
     newPassword: string;
   }) {
-    return api.changePassword(currentPassword, newPassword);
+    return api.auth.changePassword({ body: { currentPassword, newPassword } });
   }
 
-  function fetchUserInfo() {
-    return api
-      .getUserInfo()
-      .then(({ user, authData }) => $reset(user, authData?.strategy || 'local'))
+  function me() {
+    return api.currentUser
+      .get()
+      .then((res) => {
+        const authStrategy = 'local';
+        $reset(res.data, authStrategy);
+      })
       .catch(() => $reset());
   }
 
-  function updateInfo(payload: any) {
-    return api
-      .updateUserInfo(payload)
-      .then((response) => {
-        if (response.success && response.data) {
-          user.value = response.data.user || response.data;
-        }
-        return response;
-      });
+  function updateCurrentUser(payload: any) {
+    return api.currentUser.update({ body: payload }).then((res) => {
+      user.value = res.data;
+      return res;
+    });
   }
 
   return {
@@ -83,8 +81,8 @@ export const useAuthStore = defineStore('auth', () => {
     forgotPassword,
     resetPassword,
     changePassword,
-    fetchUserInfo,
-    updateInfo,
+    me,
+    updateCurrentUser,
     $reset,
   };
 });

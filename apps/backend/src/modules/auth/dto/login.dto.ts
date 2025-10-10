@@ -2,6 +2,8 @@ import { ApiProperty } from '@nestjs/swagger';
 import { IsEmail, IsNotEmpty, IsString, MinLength } from 'class-validator';
 import { Transform } from 'class-transformer';
 
+import { UserDto } from '@/modules/user/dto/user-response.dto';
+
 export class LoginDto {
   @ApiProperty({
     description: 'User email address',
@@ -21,4 +23,15 @@ export class LoginDto {
   @IsNotEmpty()
   @MinLength(8)
   password: string;
+}
+
+export class LoginResponseDto {
+  @ApiProperty({ type: UserDto })
+  user: UserDto;
+
+  @ApiProperty({ description: 'JWT access token' })
+  accessToken: string;
+
+  @ApiProperty({ description: 'Token expiration time in milliseconds' })
+  expiresInMs: number;
 }

@@ -48,7 +48,7 @@ import { object, string } from 'yup';
 import pick from 'lodash/pick';
 import { useForm } from 'vee-validate';
 
-import { user as api } from '@/api';
+import { apiClient as api } from '@/api';
 import { useAuthStore } from '@/stores/auth';
 
 const store = useAuthStore();
@@ -64,7 +64,9 @@ const { defineField, errors, handleSubmit, resetForm, meta } = useForm({
         message: 'Email is already taken',
         test: (email) => {
           if (store.user && email === (store.user as any).email) return true;
-          return api.fetch({ email }).then(({ total }) => !total);
+          return api.user
+            .fetch({ query: { email } })
+            .then((response) => !response.data.total);
         },
       }),
     firstName: string().required().min(2),
@@ -78,7 +80,7 @@ const [lastNameInput] = defineField('lastName');
 
 const submit = handleSubmit(() => {
   store
-    .updateInfo({
+    .updateCurrentUser({
       email: emailInput.value,
       firstName: firstNameInput.value,
       lastName: lastNameInput.value,

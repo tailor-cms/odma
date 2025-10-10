@@ -128,7 +128,7 @@ const signIn = handleSubmit(({ email, password }) => {
     .then(async () => {
       const isAuthenticated = useCookie('is-authenticated');
       isAuthenticated.value = 'true';
-      await authStore.fetchUserInfo();
+      await authStore.me();
       navigateTo('/');
     })
     .catch((err) => {

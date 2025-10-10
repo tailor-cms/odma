@@ -131,7 +131,21 @@ export function generateBaseInterfaces() {
     export interface ApiResponse<T = any> {
       statusCode: number;
       headers: any;
-      body: T;
+      body: {
+        success: boolean;
+        data: T;
+        meta?: {
+          pagination?: {
+            total: number;
+            limit: number;
+            page: number;
+            totalPages: number;
+            hasPrevious: boolean;
+            hasNext: boolean;
+          };
+        };
+        error?: any;
+      };
       data: T;
     }
 

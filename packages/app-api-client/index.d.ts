@@ -12,12 +12,51 @@ export interface LoginDto {
   password: string;
 }
 
+export interface UserDto {
+  id: number;
+
+  email: string;
+
+  role: 'ADMIN' | 'USER';
+
+  firstName: string;
+
+  lastName: string;
+
+  fullName: string;
+
+  label: string;
+
+  imgUrl: string;
+
+  createdAt: string;
+
+  updatedAt: string;
+
+  deletedAt: string;
+}
+
+export interface LoginResponseDto {
+  user: UserDto;
+
+  /** JWT access token */
+  accessToken: string;
+
+  /** Token expiration time in milliseconds */
+  expiresInMs: number;
+}
+
 export interface ChangePasswordDto {
   /** Current password */
   currentPassword: string;
 
   /** New password */
   newPassword: string;
+}
+
+export interface ChangePasswordResponseDto {
+  /** Success message */
+  message: string;
 }
 
 export interface ForgotPasswordDto {
@@ -45,30 +84,6 @@ export interface UpdateProfileDto {
 
   /** User avatar base64 image URL */
   imgUrl?: string;
-}
-
-export interface UserDto {
-  id: number;
-
-  email: string;
-
-  role: 'ADMIN' | 'USER';
-
-  firstName: string;
-
-  lastName: string;
-
-  fullName: string;
-
-  label: string;
-
-  imgUrl: string;
-
-  createdAt: string;
-
-  updatedAt: string;
-
-  deletedAt: string;
 }
 
 export interface PaginatedUsersDto {
@@ -127,7 +142,21 @@ export interface UpdateUserDto {
 export interface ApiResponse<T = any> {
   statusCode: number;
   headers: any;
-  body: T;
+  body: {
+    success: boolean;
+    data: T;
+    meta?: {
+      pagination?: {
+        total: number;
+        limit: number;
+        page: number;
+        totalPages: number;
+        hasPrevious: boolean;
+        hasNext: boolean;
+      };
+    };
+    error?: any;
+  };
   data: T;
 }
 
@@ -154,7 +183,7 @@ export interface AuthNamespace {
   /**
    * User login
    */
-  login: ApiMethod<{ body: LoginDto }, any>;
+  login: ApiMethod<{ body: LoginDto }, LoginResponseDto>;
   /**
    * User logout
    */
@@ -162,7 +191,10 @@ export interface AuthNamespace {
   /**
    * Change current password
    */
-  changePassword: ApiMethod<{ body: ChangePasswordDto }, any>;
+  changePassword: ApiMethod<
+    { body: ChangePasswordDto },
+    ChangePasswordResponseDto
+  >;
   /**
    * Request password reset
    */
@@ -180,11 +212,11 @@ export interface CurrentUserNamespace {
   /**
    * Get current user profile
    */
-  get: ApiMethod<{}, any>;
+  get: ApiMethod<{}, UserDto>;
   /**
    * Update user profile
    */
-  update: ApiMethod<{ body: UpdateProfileDto }, any>;
+  update: ApiMethod<{ body: UpdateProfileDto }, UserDto>;
 }
 export interface HealthNamespace {
   /**
@@ -222,7 +254,7 @@ export interface UserNamespace {
         sortOrder?: 'ASC' | 'DESC';
       };
     },
-    PaginatedUsersDto
+    Array<UserDto>
   >;
   /**
    * Create or invite user (Admin only)

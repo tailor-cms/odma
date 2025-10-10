@@ -70,3 +70,8 @@ export class ChangePasswordDto {
   @Matches(PW_REGEX, { message: PW_REGEX_MESSAGE })
   newPassword: string;
 }
+
+export class ChangePasswordResponseDto {
+  @ApiProperty({ description: 'Success message' })
+  message: string;
+}

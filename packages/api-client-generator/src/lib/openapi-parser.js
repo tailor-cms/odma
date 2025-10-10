@@ -128,9 +128,25 @@ export class OpenAPIParser {
       responses['200'] || responses['201'] || responses['202'];
     let responseType = 'any';
     if (successResponse?.content?.['application/json']?.schema) {
+      const schemaRef = successResponse.content['application/json'].schema.$ref;
       responseType = this.getPropertyType(
         successResponse.content['application/json'].schema,
       );
+      // Handle paginated responses - ResponseInterceptor unwraps them
+      if (schemaRef) {
+        const schema = this.schemas[schemaRef.split('/').pop()];
+        // Check if this is a paginated response
+        // (has data array and pagination fields)
+        if (
+          schema?.properties?.data?.type === 'array' &&
+          (schema.properties.total ||
+            schema.properties.limit ||
+            schema.properties.page)
+        ) {
+          // For paginated responses, the actual data type is the array inside
+          responseType = `Array<${this.getPropertyType(schema.properties.data.items)}>`;
+        }
+      }
     }
     return { requestType, responseType };
   }
