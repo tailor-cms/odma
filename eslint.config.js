@@ -13,6 +13,8 @@ export default createConfigForNuxt({
     },
   },
 }).append({
+  ignores: ['packages/app-api-client/**'],
+}).append({
   rules: {
     'max-len': ['error', { code: 90, comments: 100, ignoreUrls: true }],
     'vue/multi-word-component-names': 'off',

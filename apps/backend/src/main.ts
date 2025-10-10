@@ -47,10 +47,10 @@ async function bootstrap() {
   // Registered in reverse order of execution
   // Order: Most specific → Most general
   app.useGlobalFilters(
-    app.get(AllExceptionsFilter),       // 4th: Catch-all for non-HTTP exceptions
-    app.get(HttpExceptionFilter),       // 3rd: General HTTP exceptions
+    app.get(AllExceptionsFilter), // 4th: Catch-all for non-HTTP exceptions
+    app.get(HttpExceptionFilter), // 3rd: General HTTP exceptions
     app.get(ValidationExceptionFilter), // 2nd: BadRequestException (validation)
-    app.get(ThrottlerExceptionFilter),  // 1st: ThrottlerException
+    app.get(ThrottlerExceptionFilter), // 1st: ThrottlerException
   );
   if (!config.get<string>('isProduction')) {
     const document = generateOpenApiDocument(app);

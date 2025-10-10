@@ -28,7 +28,7 @@ export function formatValidationDetails(validationErrors: any[]): any[] {
   if (!validationErrors || !Array.isArray(validationErrors)) {
     return [];
   }
-  return validationErrors.map(error => {
+  return validationErrors.map((error) => {
     if (typeof error === 'string') {
       return { message: error };
     }

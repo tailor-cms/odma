@@ -13,9 +13,7 @@ import { map } from 'rxjs/operators';
 // special cases like pagination and providing useful metadata like performance
 // timing.
 @Injectable()
-export class ResponseInterceptor<T>
-  implements NestInterceptor<T, SuccessResponse<T>>
-{
+export class ResponseInterceptor<T> implements NestInterceptor<T, SuccessResponse<T>> {
   intercept(
     context: ExecutionContext,
     next: CallHandler,

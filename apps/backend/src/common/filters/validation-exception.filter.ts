@@ -29,14 +29,11 @@ export class ValidationExceptionFilter implements ExceptionFilter {
     // Sanitize user data for logging
     const sanitizedUser = sanitizeUser(request.user);
     const sanitizedBody = sanitizeRequestBody(request.body);
-    this.logger.warn(
-      `Validation Error: ${request.method} ${request.url}`,
-      {
-        user: sanitizedUser,
-        body: sanitizedBody,
-        validationErrors: errors
-      },
-    );
+    this.logger.warn(`Validation Error: ${request.method} ${request.url}`, {
+      user: sanitizedUser,
+      body: sanitizedBody,
+      validationErrors: errors,
+    });
     const errorResponse: ErrorResponse = {
       success: false,
       error: {

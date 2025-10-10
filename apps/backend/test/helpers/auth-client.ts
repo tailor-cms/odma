@@ -65,8 +65,9 @@ export class AuthClient {
   /**
    * Login and create a session (cookies automatically stored)
    */
-  async login(email: string, pw: string): Promise<LoginResponse>;
+  // eslint-disable-next-line @typescript-eslint/unified-signatures
   async login(email: string, pw: string, status: 200): Promise<LoginResponse>;
+  async login(email: string, pw: string): Promise<LoginResponse>;
   async login(email: string, pw: string, status: number): Promise<AuthResponse>;
   async login(
     email: string,

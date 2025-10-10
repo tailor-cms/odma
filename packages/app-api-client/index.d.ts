@@ -3,7 +3,7 @@
  */
 import type { AxiosInstance, AxiosResponse } from 'axios';
 
-      // Auto-generated schema types from OpenAPI spec
+// Auto-generated schema types from OpenAPI spec
 export interface LoginDto {
   /** User email address */
   email: string;
@@ -123,7 +123,7 @@ export interface UpdateUserDto {
   /** User role (admin only) */
   role?: 'ADMIN' | 'USER';
 }
-      // Response wrapper interface
+// Response wrapper interface
 export interface ApiResponse<T = any> {
   statusCode: number;
   headers: any;
@@ -149,89 +149,116 @@ export interface ResponseHelpers {
   extractPaginationMeta(res: AxiosResponse): any;
 }
 
-      // Namespace interfaces
-      export interface AuthNamespace { /**
- * User login
- */
-login: ApiMethod<{body: LoginDto}, any>;
-/**
- * User logout
- */
-logout: ApiMethod<{}, any>;
-/**
- * Change current password
- */
-changePassword: ApiMethod<{body: ChangePasswordDto}, any>;
-/**
- * Request password reset
- */
-forgotPassword: ApiMethod<{body: ForgotPasswordDto}, any>;
-/**
- * Reset password with token
- */
-resetPassword: ApiMethod<{body: ResetPasswordDto}, any>;
-/**
- * Validate reset token
- */
-validateResetToken: ApiMethod<{}, any>; }
-export interface CurrentUserNamespace { /**
- * Get current user profile
- */
-get: ApiMethod<{}, any>;
-/**
- * Update user profile
- */
-update: ApiMethod<{body: UpdateProfileDto}, any>; }
-export interface HealthNamespace { /**
- * Basic health check
- */
-healthCheck: ApiMethod<{}, any>;
-/**
- * Liveness probe
- */
-liveness: ApiMethod<{}, any>;
-/**
- * Readiness probe
- */
-readiness: ApiMethod<{}, any>; }
-export interface UserNamespace { /**
- * List users (Admin only)
- */
-fetch: ApiMethod<{query?: {email?: string; search?: string; includeArchived?: boolean; page?: number; limit?: number; sortBy?: 'id' | 'email' | 'firstName' | 'lastName' | 'createdAt' | 'updatedAt'; sortOrder?: 'ASC' | 'DESC'}}, PaginatedUsersDto>;
-/**
- * Create or invite user (Admin only)
- */
-create: ApiMethod<{body: CreateUserDto}, UserDto>;
-/**
- * Get user by ID (Admin only)
- */
-get: ApiMethod<{path: {id: string}}, UserDto>;
-/**
- * Update user by ID
- */
-update: ApiMethod<{path: {id: string}; body: UpdateUserDto}, UserDto>;
-/**
- * Delete user (Admin only)
- */
-remove: ApiMethod<{path: {id: string}}, any>;
-/**
- * Restore soft-deleted user (Admin only)
- */
-restore: ApiMethod<{path: {id: string}}, UserDto>;
-/**
- * Reinvite user (Admin only)
- */
-reinvite: ApiMethod<{path: {id: string}}, any>; }
+// Namespace interfaces
+export interface AuthNamespace {
+  /**
+   * User login
+   */
+  login: ApiMethod<{ body: LoginDto }, any>;
+  /**
+   * User logout
+   */
+  logout: ApiMethod<{}, any>;
+  /**
+   * Change current password
+   */
+  changePassword: ApiMethod<{ body: ChangePasswordDto }, any>;
+  /**
+   * Request password reset
+   */
+  forgotPassword: ApiMethod<{ body: ForgotPasswordDto }, any>;
+  /**
+   * Reset password with token
+   */
+  resetPassword: ApiMethod<{ body: ResetPasswordDto }, any>;
+  /**
+   * Validate reset token
+   */
+  validateResetToken: ApiMethod<{}, any>;
+}
+export interface CurrentUserNamespace {
+  /**
+   * Get current user profile
+   */
+  get: ApiMethod<{}, any>;
+  /**
+   * Update user profile
+   */
+  update: ApiMethod<{ body: UpdateProfileDto }, any>;
+}
+export interface HealthNamespace {
+  /**
+   * Basic health check
+   */
+  healthCheck: ApiMethod<{}, any>;
+  /**
+   * Liveness probe
+   */
+  liveness: ApiMethod<{}, any>;
+  /**
+   * Readiness probe
+   */
+  readiness: ApiMethod<{}, any>;
+}
+export interface UserNamespace {
+  /**
+   * List users (Admin only)
+   */
+  fetch: ApiMethod<
+    {
+      query?: {
+        email?: string;
+        search?: string;
+        includeArchived?: boolean;
+        page?: number;
+        limit?: number;
+        sortBy?:
+          | 'id'
+          | 'email'
+          | 'firstName'
+          | 'lastName'
+          | 'createdAt'
+          | 'updatedAt';
+        sortOrder?: 'ASC' | 'DESC';
+      };
+    },
+    PaginatedUsersDto
+  >;
+  /**
+   * Create or invite user (Admin only)
+   */
+  create: ApiMethod<{ body: CreateUserDto }, UserDto>;
+  /**
+   * Get user by ID (Admin only)
+   */
+  get: ApiMethod<{ path: { id: string } }, UserDto>;
+  /**
+   * Update user by ID
+   */
+  update: ApiMethod<{ path: { id: string }; body: UpdateUserDto }, UserDto>;
+  /**
+   * Delete user (Admin only)
+   */
+  remove: ApiMethod<{ path: { id: string } }, any>;
+  /**
+   * Restore soft-deleted user (Admin only)
+   */
+  restore: ApiMethod<{ path: { id: string } }, UserDto>;
+  /**
+   * Reinvite user (Admin only)
+   */
+  reinvite: ApiMethod<{ path: { id: string } }, any>;
+}
 
-      // Main client interface
-      export interface ApiClient extends ResponseHelpers {
-          auth: AuthNamespace;
+// Main client interface
+export interface ApiClient extends ResponseHelpers {
+  auth: AuthNamespace;
   currentUser: CurrentUserNamespace;
   health: HealthNamespace;
   user: UserNamespace;
-        _axiosClient: AxiosInstance;
-      }
-      // Client creation options
+  _axiosClient: AxiosInstance;
+}
+// Client creation options
 export interface CreateAcOpts {
   axiosClient: AxiosInstance;
   [key: string]: any;

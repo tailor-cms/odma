@@ -26,7 +26,6 @@ export const getEnvVariables = (db: studion.Database) => [
     name: 'CORS_ALLOWED_ORIGINS',
     value: `https://${dnsConfig.require('domain')}`,
   },
-  
   // Database configuration
   { name: 'DATABASE_HOST', value: db.instance.address },
   {
@@ -37,13 +36,11 @@ export const getEnvVariables = (db: studion.Database) => [
   { name: 'DATABASE_USERNAME', value: db.instance.username },
   { name: 'DATABASE_SSL', value: 'true' },
   { name: 'DATABASE_LOGGING', value: 'false' },
-  
   // Authentication configuration
   { name: 'AUTH_JWT_ISSUER', value: 'App' },
   { name: 'AUTH_JWT_EXPIRES_IN', value: '7d' },
   { name: 'AUTH_COOKIE_NAME', value: 'access_token' },
   { name: 'AUTH_SALT_ROUNDS', value: '12' },
-  
   // Mail configuration
   { name: 'MAIL_HOST', value: mailConfig.require('host') },
   { name: 'MAIL_PORT', value: '587' },

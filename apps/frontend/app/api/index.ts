@@ -9,5 +9,5 @@ export { extractData } from './helpers';
 // Pass the axios client to the API client factory
 export const apiClient = await createApiClient({
   url: '',
-  axiosClient
+  axiosClient,
 });

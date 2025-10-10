@@ -33,4 +33,3 @@ export const getErrorType = (status: number): string => {
   }
   return ErrorTypes.HTTP;
 };
-
