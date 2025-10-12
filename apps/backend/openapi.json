@@ -565,6 +565,36 @@
           "health"
         ]
       }
+    },
+    "/api/sentry/debug": {
+      "get": {
+        "operationId": "Health_sentryDebug",
+        "parameters": [],
+        "responses": {
+          "500": {
+            "description": "Test error thrown for Sentry"
+          }
+        },
+        "summary": "Test Sentry error capture (development only)",
+        "tags": [
+          "health"
+        ]
+      }
+    },
+    "/api/sentry/message": {
+      "get": {
+        "operationId": "Health_sentryMessage",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Test message sent to Sentry"
+          }
+        },
+        "summary": "Test Sentry message capture (development only)",
+        "tags": [
+          "health"
+        ]
+      }
     }
   },
   "info": {

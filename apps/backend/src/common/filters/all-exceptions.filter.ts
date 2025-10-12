@@ -4,6 +4,7 @@ import type { Request, Response } from 'express';
 import type { ErrorResponse } from '../interfaces/response.interface';
 import { ErrorTypes } from '../constants/error-codes';
 import { PinoLogger } from 'nestjs-pino';
+import { SentryExceptionCaptured } from '@sentry/nestjs';
 import { formatDevelopmentDetails } from '../utils/format-error-details.util';
 import { sanitizeRequestBody } from '../utils/sanitize-request-body.util';
 import { sanitizeUser } from '../utils/sanitize-user.util';
@@ -14,6 +15,7 @@ export class AllExceptionsFilter implements ExceptionFilter {
     this.logger.setContext(AllExceptionsFilter.name);
   }
 
+  @SentryExceptionCaptured()
   catch(exception: unknown, host: ArgumentsHost) {
     const ctx = host.switchToHttp();
     const response = ctx.getResponse<Response>();

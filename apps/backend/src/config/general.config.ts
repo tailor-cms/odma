@@ -14,6 +14,7 @@ export const generalValidationSchema = {
     .valid('trace', 'debug', 'info', 'warn', 'error', 'fatal')
     .default('info'),
   CORS_ALLOWED_ORIGINS: Joi.string().default('http://localhost:3000'),
+  SENTRY_DSN: Joi.string().optional().allow(''),
 };
 
 export interface GeneralConfig {
@@ -25,6 +26,7 @@ export interface GeneralConfig {
   isProduction: boolean;
   logLevel: string;
   corsAllowedOrigins: string[];
+  sentryDsn?: string;
 }
 
 export default () => {
@@ -41,5 +43,6 @@ export default () => {
       .split(',')
       .filter((s) => s)
       .map((s) => s.trim()),
+    sentryDsn: env.SENTRY_DSN,
   };
 };

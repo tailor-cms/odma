@@ -54,6 +54,7 @@ export const getSecrets = (db: studion.Database) => [
     'AUTH_JWT_SECRET',
     'MAIL_USER',
     'MAIL_PASSWORD',
+    'SENTRY_DSN',
   ].map((name) => ({ name, valueFrom: getSsmParam(name) })),
   { name: 'DATABASE_PASSWORD', valueFrom: db.password.secret.arn },
 ];

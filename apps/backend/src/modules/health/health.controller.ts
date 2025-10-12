@@ -1,12 +1,17 @@
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { Controller, Get, ServiceUnavailableException } from '@nestjs/common';
 import { EntityManager } from '@mikro-orm/core';
+import { ConfigService } from '@nestjs/config';
 import { Public } from '@/modules/auth/decorators';
+import * as Sentry from '@sentry/nestjs';
 
 @ApiTags('health')
 @Controller()
 export class HealthController {
-  constructor(private readonly em: EntityManager) {}
+  constructor(
+    private readonly em: EntityManager,
+    private readonly config: ConfigService,
+  ) {}
 
   @ApiOperation({ summary: 'Basic health check' })
   @ApiResponse({ status: 200, description: 'Service is healthy' })
@@ -46,5 +51,34 @@ export class HealthController {
         error: error instanceof Error ? error.message : 'Unknown db error',
       });
     }
+  }
+
+  @ApiOperation({ summary: 'Test Sentry error capture (development only)' })
+  @ApiResponse({ status: 500, description: 'Test error thrown for Sentry' })
+  @Public()
+  @Get('sentry/debug')
+  sentryDebug() {
+    const isProduction = this.config.get<boolean>('isProduction', false);
+    if (isProduction) {
+      return { error: 'Debug endpoint disabled in production' };
+    }
+    // Test Sentry error capture
+    throw new Error('Test error for Sentry integration verification');
+  }
+
+  @ApiOperation({ summary: 'Test Sentry message capture (development only)' })
+  @ApiResponse({ status: 200, description: 'Test message sent to Sentry' })
+  @Public()
+  @Get('sentry/message')
+  sentryMessage() {
+    const isProduction = this.config.get<boolean>('isProduction', false);
+    if (isProduction) {
+      return { error: 'Debug endpoint disabled in production' };
+    }
+    Sentry.captureMessage('Test message from NestJS health endpoint', 'info');
+    return {
+      status: 'Message sent to Sentry',
+      timestamp: new Date().toISOString()
+    };
   }
 }

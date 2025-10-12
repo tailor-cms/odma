@@ -1,3 +1,6 @@
+// Sentry must be imported FIRST, before any other modules
+import './instrument';
+
 import { ClassSerializerInterceptor, ValidationPipe } from '@nestjs/common';
 import { SwaggerModule } from '@nestjs/swagger';
 import { NestFactory, Reflector } from '@nestjs/core';

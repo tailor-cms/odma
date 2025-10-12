@@ -10,6 +10,7 @@ import { MikroOrmModule } from '@mikro-orm/nestjs';
 import { Module } from '@nestjs/common';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { UserModule } from './modules/user/user.module';
+import { SentryModule } from '@sentry/nestjs/setup';
 
 import authConfig from './config/auth.config';
 import dbConfig from './config/db.config';
@@ -44,6 +45,7 @@ import { validationSchema } from './config/validation';
       exclude: ['/api*', '/api/**'],
       serveRoot: '/',
     }),
+    SentryModule.forRoot(),
     MikroOrmModule.forRootAsync({
       inject: [ConfigService],
       useFactory: async (configService: ConfigService) => {

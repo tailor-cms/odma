@@ -1,6 +1,6 @@
 /**
  * Auto-generated axios-based API client
- * Generated from: 2025-10-10T10:22:59.435Z
+ * Generated from: 2025-10-10T17:12:14.283Z
  * Usage:
  *   import { createApiClient } from 'app-api-client'
  *   const api = await createApiClient({ axiosClient })
@@ -412,6 +412,38 @@ export async function createApiClient(opts = {}) {
   // Add raw method that returns full axios response
   index.health.readiness.raw = async (request = {}) => {
     const axiosConfig = buildAxiosConfig(request, '/health/ready', 'GET');
+    return await axiosClient.request(axiosConfig);
+  };
+  // Test Sentry error capture (development only)
+  index.health.sentryDebug = async (request = {}) => {
+    const axiosConfig = buildAxiosConfig(request, '/sentry/debug', 'GET');
+    const response = await axiosClient.request(axiosConfig);
+    return {
+      statusCode: response.status,
+      headers: response.headers,
+      body: response.data,
+      data: extractData(response),
+    };
+  };
+  // Add raw method that returns full axios response
+  index.health.sentryDebug.raw = async (request = {}) => {
+    const axiosConfig = buildAxiosConfig(request, '/sentry/debug', 'GET');
+    return await axiosClient.request(axiosConfig);
+  };
+  // Test Sentry message capture (development only)
+  index.health.sentryMessage = async (request = {}) => {
+    const axiosConfig = buildAxiosConfig(request, '/sentry/message', 'GET');
+    const response = await axiosClient.request(axiosConfig);
+    return {
+      statusCode: response.status,
+      headers: response.headers,
+      body: response.data,
+      data: extractData(response),
+    };
+  };
+  // Add raw method that returns full axios response
+  index.health.sentryMessage.raw = async (request = {}) => {
+    const axiosConfig = buildAxiosConfig(request, '/sentry/message', 'GET');
     return await axiosClient.request(axiosConfig);
   };
   return index;

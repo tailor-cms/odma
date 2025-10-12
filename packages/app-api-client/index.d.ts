@@ -231,6 +231,14 @@ export interface HealthNamespace {
    * Readiness probe
    */
   readiness: ApiMethod<{}, any>;
+  /**
+   * Test Sentry error capture (development only)
+   */
+  sentryDebug: ApiMethod<{}, any>;
+  /**
+   * Test Sentry message capture (development only)
+   */
+  sentryMessage: ApiMethod<{}, any>;
 }
 export interface UserNamespace {
   /**
