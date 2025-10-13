@@ -1,7 +1,7 @@
 # Odma
 
 <div align="center">
-  <img src="docs/public/logo.png" alt="Odma Logo" width="120" height="120">
+  <img src="apps/frontend/public/img/default-logo-animated.svg" alt="Odma Logo" width="120" height="120">
   
   **Full-Stack Application Template**
   
