@@ -32,9 +32,9 @@ runs:
   - name: Configure env and build
     shell: bash
     run: pnpm setup:dev --ci
-  - name: Migrate DB
+  - name: Reset DB
     shell: bash
-    run: pnpm db:migrate
+    run: pnpm db:reset
   - name: Seed DB
     shell: bash
     run: pnpm seed
