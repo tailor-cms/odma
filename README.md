@@ -1,351 +1,522 @@
+# Odma
+
 <div align="center">
-  <img src="apps/frontend/public/img/default-logo-full.svg" alt="Odma" width="120">
-  <h1>Odma</h1>
-  <p><strong>Production-ready full-stack application starter with enterprise-grade tooling</strong></p>
+  <img src="docs/public/logo.png" alt="Odma Logo" width="120" height="120">
   
-  [![CI](https://github.com/tailor-cms/odma/workflows/PR%20checks/badge.svg)](https://github.com/tailor-cms/odma/actions)
-  [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-  [![Node.js](https://img.shields.io/badge/Node.js-22.x-green.svg)](https://nodejs.org/)
-  [![TypeScript](https://img.shields.io/badge/TypeScript-5.x-blue.svg)](https://www.typescriptlang.org/)
+  **Full-Stack Application Template**
+  
+  *Get productive right away with auth, user mgm, and API-first architecture*
+  
+  > **Odma** means "right away" in Dalmatian
+
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.9.2-blue)](https://www.typescriptlang.org/)
+[![NestJS](https://img.shields.io/badge/NestJS-11.1.6-red)](https://nestjs.com/)
+[![Nuxt](https://img.shields.io/badge/Nuxt-4.1.2-green)](https://nuxt.com/)
+[![PostgreSQL](https://img.shields.io/badge/PostgreSQL-16-blue)](https://www.postgresql.org/)
+
 </div>
 
 ---
 
-## 🚀 Overview
+## What This Is
 
-**Odma** is a comprehensive full-stack application template built with modern technologies and enterprise-grade practices. It provides a solid foundation for building scalable web applications with authentication, user management, and production deployment capabilities.
+Odma is a full-stack application starter that includes all the foundational 
+components most modern applications need. Rather than starting from scratch,
+you get a working system that demonstrates best practices for building scalable
+web applications with proper architecture, security, testing, and deployment
+infrastructure.
 
-### **🏗️ Architecture**
+The user management module serves as a practical showcase of how all the pieces
+work together - from database design and API endpoints to frontend interfaces
+and testing strategies.
 
-- **Backend**: NestJS + TypeScript + PostgreSQL + MikroORM
-- **Frontend**: Nuxt 3 + Vue 3 + Vuetify 3 + Pinia
-- **Testing**: Playwright E2E + Jest API + Visual + A11y
-- **Infrastructure**: Docker + AWS + Pulumi IaC
-- **Monorepo**: PNPM workspaces with shared packages
+### What You Get
 
-### **✨ Key Features**
-
-- 🔐 **Authentication System**: JWT + OIDC (Google, etc.) support
-- 👥 **User Management**: Admin panel with role-based access control
-- 📧 **Email System**: Template-based emails with Handlebars
-- 🛡️ **Security First**: Input validation, XSS prevention, secure headers
-- 🧪 **Comprehensive Testing**: E2E, API, visual regression, accessibility
-- 🚀 **Production Ready**: Docker, CI/CD, monitoring, logging
-- 📱 **Responsive UI**: Material Design 3 with Vuetify
-- 🔧 **Developer Experience**: Hot reload, TypeScript, ESLint, automated setup
+- **Basic Auth System** - Local login/signup, JWT sessions, role-based access
+- **User Management Example** - Full CRUD operations, user invitations, role management
+- **API-First Architecture** - OpenAPI specification with auto-generated typed client
+- **Production Security** - Input validation, rate limiting, secure headers, audit logging
+- **Comprehensive Testing** - Backend API tests, E2E browser testing, visual regression, a11y
+- **Monitoring & Observability** - Sentry error tracking, performance profiling, structured logging
+- **Infrastructure as Code** - Docker containers, AWS deployment scripts, health monitoring
+- **Development Tools** - Hot reload, type safety, automated API client generation, one-command setup
 
 ---
 
-## 🏃‍♂️ Quick Start
+## Technology Stack
+
+### Backend (`/apps/backend`)
+
+- **[NestJS](https://nestjs.com/)** - Node.js framework with dependency injection, decorators, and module system
+- **[PostgreSQL](https://www.postgresql.org/)** - Primary database with full ACID compliance
+- **[MikroORM](https://mikro-orm.io/)** - TypeScript ORM handling migrations, entities, and query building
+- **[Passport.js](https://www.passportjs.org/)** - Authentication strategies for JWT tokens and local credentials
+- **[Pino](https://getpino.io/)** - JSON logging with request correlation IDs
+- **[Swagger/OpenAPI](https://swagger.io/)** - API specification generation from TypeScript decorators
+- **[Sentry](https://sentry.io/)** - Exception tracking, performance profiling, and alerting
+
+### Frontend (`/apps/frontend`)
+
+- **[Nuxt](https://nuxt.com/)** - Vue.js meta-framework running in SPA mode
+- **[Vue](https://vuejs.org/)** - Component framework with Composition API
+- **[Vuetify](https://vuetifyjs.com/)** - Material Design component library with theming
+- **[Pinia](https://pinia.vuejs.org/)** - Client-side state management with TypeScript support
+- **[VeeValidate](https://vee-validate.logaretm.com/)** - Form validation integrated with Yup schemas
+- **[Axios](https://axios-http.com/)** - HTTP client with request/response interceptors
+
+### Testing (`/tests`)
+
+- **[Playwright](https://playwright.dev/)** - Browser automation for user workflow testing
+- **[Jest](https://jestjs.io/)** - Backend API integration testing with database cleanup
+- **[Percy](https://percy.io/)** - Visual diff testing for UI regression detection
+- **[axe-core](https://github.com/dequelabs/axe-core)** - Automated a11y compliance checking
+
+### Infrastructure
+
+- **[Docker](https://www.docker.com/)** - Containerization with multi-stage builds for optimized images
+- **[Pulumi](https://www.pulumi.com/)** - TypeScript-based infrastructure provisioning for AWS
+
+### Tooling
+
+- **[PNPM](https://pnpm.io/)** - Package manager with workspace support and efficient storage
+- **[ESLint](https://eslint.org/)** + **[Prettier](https://prettier.io/)** - Code linting and formatting
+
+---
+
+## Getting Started
 
 ### Prerequisites
 
-- **Node.js** 22.x or higher
-- **PNPM** 10.17.1 or higher
-- **PostgreSQL** 14+ (or use Docker Compose)
-- **Git**
+- Node.js 18+ and PNPM 8+
+- Docker and Docker Compose
+- PostgreSQL 16+ (or use Docker)
 
-### 1. Clone & Setup
+### Automated Setup
 
 ```bash
-git clone https://github.com/tailor-cms/odma.git
+git clone <repository-url>
 cd odma
-
-# Interactive setup (creates .env, sets up database, etc.)
 pnpm setup:dev
 ```
 
-### 2. Start Development
+This script will:
+
+- Install all dependencies across workspaces
+- Generate environment configuration
+- Start required services (PostgreSQL, Redis)
+- Run database migrations and seeding
+- Launch development servers
+
+### Manual Setup
 
 ```bash
-# Start both backend and frontend with hot reload
+# Install dependencies
+pnpm i
+
+# Configure environment
+cp .env.example .env
+# Edit .env with your database credentials and API keys
+
+# Start services
+docker-compose -f docker-compose.dev.yaml up -d
+
+# Setup database
+pnpm --filter backend migration:up
+pnpm --filter backend seeder:run
+
+# Start development
 pnpm dev
 ```
 
-🎉 **That's it!** Your app is now running:
-- **Frontend**: http://localhost:3001
-- **Backend API**: http://localhost:3000/api
-- **API Docs**: http://localhost:3000/api/docs
+### Access Points
 
-### 3. Login
-
-Default admin user (created during setup):
-- **Email**: admin@example.com
-- **Password**: (set during interactive setup)
+- **Frontend**: http://localhost:8080
+- **Backend API**: http://localhost:3000
+- **API Documentation**: http://localhost:3000/api/docs
+- **Database**: postgresql://dev:dev@localhost:5432/app_starter
 
 ---
 
-## 📂 Project Structure
+## Authentication & Security
+
+### Authentication Methods
+
+- **Local Auth** - Email/password with JWT tokens
+- **Session Management** - HTTP-only cookies with CSRF protection
+
+### Security Features
+
+- **Role-Based Access Control** - ADMIN and USER roles with guards
+- **Input Validation** - Global validation pipes with class-validator
+- **Rate Limiting** - 100 requests per minute throttling
+- **XSS Protection** - Input sanitization and secure headers
+- **CORS Configuration**
+
+### Default Users (Development)
+
+```
+Admin: admin@example.com / admin123!
+```
+
+---
+
+## API-First Development
+
+### OpenAPI Specification
+
+The backend automatically generates OpenAPI specifications from NestJS decorators, providing:
+
+- **Live Documentation** at `/api/docs` with Swagger UI
+- **Type-safe API contracts** from TypeScript DTOs
+- **Request/response validation** at runtime
+
+### Custom API Client Generator
+
+One of the key innovations is the custom-built API client generator (`packages/api-client-generator`) that:
+
+- **Reads OpenAPI specs** from the backend and generates TypeScript clients
+- **Creates typed methods** for every API endpoint with full parameter types
+- **Provides both standard and raw responses** for flexibility
+- **Watches for changes** in development for automatic regeneration
+- **Generates TypeScript interfaces** for all DTOs and responses
+
+```typescript
+// Auto-generated typed client with full IntelliSense
+import { createApiClient } from 'app-api-client';
+
+const api = await createApiClient({ axiosClient });
+
+// Typed method calls with parameter validation
+const user = await api.auth.login({
+  body: { email: 'user@example.com', password: 'password123' },
+});
+
+// Access raw Axios responses when needed
+const response = await api.auth.login.raw({ body: credentials });
+
+// Automatic error handling with typed errors
+try {
+  await api.user.update({ path: { id: '123' }, body: updateData });
+} catch (error) {
+  console.log(error.code, error.details); // Typed error properties
+}
+```
+
+### API Client Generation
+
+```bash
+# Generate API client from OpenAPI spec
+pnpm api:client:generate
+
+# Watch mode for development
+pnpm api:client:watch
+```
+
+---
+
+## Testing
+
+This project uses a multi-layered testing approach that validates functionality from the database layer up through complete user workflows in browsers.
+
+### Testing Architecture
+
+The testing system is designed around two main areas:
+
+1. **Backend integration testing** (`/apps/backend/test`) - Tests the API endpoints, business logic, and database interactions
+2. **E2E testing** (`/tests`) - Tests complete user workflows through browser automation
+
+### Backend Integration Testing (Jest)
+
+```bash
+# Integration tests with database
+pnpm --filter backend test:e2e
+
+# Watch mode during development
+pnpm --filter backend test:watch
+
+# Coverage report
+pnpm --filter backend test:cov
+```
+
+**Test coverage includes:**
+
+- **Authentication API** - Login, JWT validation, password reset flows
+- **User management** - CRUD operations, role assignments, soft deletion
+- **Access control** - Role-based permissions and admin-only endpoints
+- **Data validation** - Input sanitization and database constraints
+- **Email workflows** - Password reset and invitation email sending
+
+**Test patterns:**
+
+- Each test gets a fresh database instance
+- Test fixtures provide reusable authentication and user data
+- API requests are made using supertest with cookie session handling
+- Database state is validated alongside API responses
+
+### Frontend E2E Testing (Playwright)
+
+Browser tests validate complete user workflows across multiple browsers:
+
+```bash
+# Run all E2E tests
+pnpm test:e2e
+
+# Run specific test file
+pnpm test:e2e tests/specs/file.ts
+```
+
+**Test coverage includes:**
+
+- **Authentication flows** - Login, logout, forgot password workflows
+- **Users domain** - User management, role changes, user invitations
+
+### Visual & Accessibility Testing
+
+Additional test layers ensure UI consistency and compliance:
+
+```bash
+# Visual regression testing
+pnpm test:visual
+
+# Accessibility compliance
+pnpm test:a11y
+```
+
+**Visual testing:**
+
+- Screenshots are captured during E2E tests
+- Percy compares against baseline images
+- Flags visual regressions across browsers and viewports
+
+**Accessibility testing:**
+
+- axe-core runs automated compliance checks
+- Tests against WCAG 2.1 guidelines
+- Validates keyboard navigation and screen reader support
+
+### Test Infrastructure
+
+**Database management:**
+
+- Each backend test gets an isolated database
+- Migrations run automatically before tests
+- Database cleanup happens after each test suite
+
+**Email testing:**
+
+- Mailtrap catches all outbound emails during testing
+- Email content and delivery are validated in tests
+- No actual emails are sent during test runs
+
+### CI/CD Integration
+
+The test infrastructure supports:
+
+- **Parallel job execution** for faster CI runs
+- **Database services** in GitHub Actions
+- **Cross-browser testing** with Playwright
+- **Test artifacts** and reporting
+
+---
+
+## Docker & Containerization
+
+### Development Services
+
+```bash
+# Start all development services
+docker-compose -f docker-compose.dev.yaml up
+
+# Services included:
+# - PostgreSQL 16 (port 5432)
+# - Redis 7.4 (port 6379)
+```
+
+## Infrastructure & Deployment
+
+### AWS Infrastructure with Pulumi
+
+```bash
+cd infrastructure
+
+# Configure AWS credentials
+aws configure
+
+# Deploy infrastructure
+pulumi up
+
+# Outputs: VPC, RDS, Load Balancer, ECS Services
+```
+
+### Infrastructure Components
+
+- **🌐 VPC** - Isolated network with public/private subnets
+- **🗄️ RDS PostgreSQL** - Managed database with backups
+- **⚖️ Application Load Balancer** - SSL termination and routing
+- **🚀 ECS Fargate** - Serverless container deployment
+- **🔒 Security Groups** - Network-level security
+
+### Environment Management
+
+- **🏠 Development** - Local Docker services
+- **🚀 Staging/Production** - AWS ECS with RDS
+- **🔧 Configuration** - Environment-specific variables
+- **🗝️ Secrets** - AWS Systems Manager Parameter Store
+
+---
+
+## Monitoring & Observability
+
+### Sentry Integration
+
+- **🐛 Error Tracking** - Real-time exception monitoring
+- **📈 Performance Monitoring** - Request duration and database query tracking
+- **🔍 Profiling** - CPU profiling for performance bottlenecks
+- **🚨 Alerting** - Email and Slack notifications
+
+### Health Monitoring
+
+- **❤️ Health Checks** - `/api/health/live` and `/api/health/ready`
+- **📊 Metrics** - Application and infrastructure metrics
+- **🔍 Request Tracing** - Correlation IDs for debugging
+
+---
+
+## Documentation
+
+### VitePress Documentation Site
+
+```bash
+# Start documentation server
+pnpm docs:dev
+
+# Build documentation
+pnpm docs:build
+```
+
+---
+
+## Project Structure
 
 ```
 odma/
-├── apps/
-│   ├── backend/           # NestJS API server
-│   └── frontend/          # Nuxt 3 SPA client
-├── packages/              # Shared libraries
-│   ├── app-config/        # Environment & URL utilities
-│   ├── app-interfaces/    # TypeScript interfaces
-│   ├── app-vue-components/# Reusable Vue components
-│   └── app-seed/          # Database seeding data
-├── tests/                 # E2E Playwright tests
-├── scripts/               # Development automation
-├── infrastructure/        # Pulumi IaC for AWS
-├── docs/                  # VitePress documentation
-└── .github/workflows/     # CI/CD pipelines
+├── 📱 apps/
+│   ├── backend/          # NestJS API server
+│   └── frontend/         # Nuxt 3 SPA client
+├── 📦 packages/          # Shared libraries
+│   ├── api-client-generator/  # Custom OpenAPI client generator
+│   ├── app-api-client/   # Generated API client
+│   ├── app-config/       # Environment configuration
+│   ├── app-interfaces/   # Shared TypeScript types
+│   ├── app-vue-components/  # Reusable Vue components
+│   └── app-seed/         # Database seeding utilities
+├── 🧪 tests/             # Playwright E2E tests
+├── 🏗️ infrastructure/    # Pulumi AWS infrastructure
+├── 📚 docs/              # VitePress documentation
+├── 🛠️ scripts/           # Development automation
+└── 🐳 docker-compose.*.yaml  # Development services
 ```
 
 ---
 
-## 🛠️ Development Commands
+### Development Features
+
+- **🔥 Hot Reload** - Backend and frontend auto-restart
+- **🔍 Type Safety** - End-to-end TypeScript
+- **📝 Auto-completion** - Full IntelliSense support
+- **🚫 Pre-commit Hooks** - Automated code quality checks
+- **📊 Bundle Analysis** - Frontend build optimization
+
+---
+
+## Configuration
+
+### Environment Variables
+
+Copy `.env.example` to `.env` and configure:
+
+---
+
+## Troubleshooting
+
+### Common Issues
+
+**Port already in use:**
 
 ```bash
-# Development
-pnpm dev                   # Start backend + frontend
-pnpm dc                    # Start with Docker Compose + dev servers
-
-# Building
-pnpm build                 # Build all apps and packages
-pnpm start                 # Start production server
-
-# Database
-pnpm seed                  # Seed database with test data
-pnpm db:migrate            # Run database migrations
-pnpm db:reset              # Reset database schema
-
-# Testing
-pnpm e2e:functional        # Run functional E2E tests
-pnpm e2e:visual            # Run visual regression tests
-pnpm e2e:a11y              # Run accessibility tests
-pnpm lint                  # Run ESLint
-
-# Documentation
-pnpm docs:dev              # Start documentation server
-pnpm docs:build            # Build documentation
+# Kill process on port 3000 or 3001
+lsof -ti:3000 | xargs kill -9
+lsof -ti:3001 | xargs kill -9
 ```
 
----
+**Database connection errors:**
 
-## 🏢 Backend (NestJS)
+```bash
+# Ensure PostgreSQL is running
+docker-compose -f docker-compose.dev.yaml up -d
 
-**Location**: `apps/backend/`
-
-### **Core Technologies**
-- **NestJS** 11.1.6 with TypeScript
-- **MikroORM** 6.5.6 with PostgreSQL
-- **Passport.js** (JWT + Local strategies)
-- **Pino** structured logging
-- **Jest** with comprehensive E2E tests
-
-### **Key Modules**
-- **Auth**: JWT authentication, login/logout, password reset
-- **User**: CRUD operations, profile management, admin controls
-- **Mail**: Email templates with Handlebars
-- **Health**: Monitoring endpoints
-
-### **Security Features**
-- Global JWT authentication guard
-- Role-based access control (ADMIN/USER)
-- Input validation with class-validator
-- Helmet.js security headers
-- Rate limiting with Throttler
-- XSS protection and password hashing
-
-[📖 **Backend Documentation**](apps/backend/README.md)
-
----
-
-## 🎨 Frontend (Nuxt 3)
-
-**Location**: `apps/frontend/`
-
-### **Core Technologies**
-- **Nuxt 3** 4.1.2 with Vue 3.5.22
-- **Vuetify 3** 3.10.3 (Material Design 3)
-- **Pinia** for state management
-- **VeeValidate** + Yup for forms
-- **Axios** with interceptors
-
-### **Key Features**
-- **Authentication**: Local login + OIDC support
-- **Admin Panel**: User management interface
-- **Responsive Design**: Material Design 3 theming
-- **Form Validation**: Client-side validation with Yup
-- **Notifications**: Event bus-based system
-
-### **Architecture**
-- SPA mode with API proxy
-- File-based routing
-- Layout system (main/auth)
-- Middleware for auth guards
-- Plugin system for services
-
----
-
-## 🧪 Testing Strategy
-
-**Location**: `tests/`
-
-### **Testing Types**
-- **Functional**: User flows and feature testing
-- **Visual**: Screenshot comparison with Percy
-- **Accessibility**: axe-core compliance testing
-- **API**: Backend Jest E2E test suite
-
-### **Tools & Framework**
-- **Playwright** 1.55.1 for E2E automation
-- **Percy** for visual regression
-- **Axe** for accessibility validation
-- **Mailtrap** for email testing
-
-### **Test Organization**
-```
-tests/
-├── specs/
-│   ├── functional/        # User workflow tests
-│   ├── visual/           # Visual regression tests
-│   └── a11y/             # Accessibility tests
-├── pom/                  # Page Object Models
-├── api/                  # API client utilities
-└── fixtures/             # Test data and assets
+# Reset database if corrupted
+pnpm --filter backend schema:drop
+pnpm --filter backend migration:up
+pnpm --filter backend seeder:run
 ```
 
----
+**API client out of sync:**
 
-## 🚀 Deployment & Infrastructure
+```bash
+# Regenerate API client after backend changes
+pnpm api:client:generate
 
-### **Docker**
-- **Multi-stage builds** with Node.js Alpine
-- **Production optimized** with PNPM caching
-- **Environment-based** configuration
+# Or run in watch mode during development
+pnpm api:client:watch
+```
 
-### **CI/CD Pipeline**
-- **GitHub Actions** for automated testing
-- **Docker image** building and publishing to GHCR
-- **Pulumi deployment** to AWS infrastructure
-- **Documentation** deployment to GitHub Pages
+**TypeScript errors after dependency updates:**
 
-### **Infrastructure as Code**
-**Location**: `infrastructure/`
+```bash
+# Clear all caches and reinstall
+pnpm store prune
+rm -rf node_modules pnpm-lock.yaml
+pnpm install
+```
 
-- **Pulumi** TypeScript for AWS provisioning
-- **Automated deployment** via GitHub Actions
-- **Environment-specific** configurations
+**Sentry not working:**
 
-### **Production Features**
-- Health check endpoints for load balancers
-- Structured logging with Pino
-- Error monitoring and handling
-- Security headers and CORS configuration
-- Rate limiting and throttling
+- Check that `SENTRY_DSN` is set in your `.env` file
+- Verify the DSN is valid from your Sentry project settings
+- In development, check logs for "Sentry instrumentation initialized"
 
----
+**Email not sending:**
 
-## 📦 Shared Packages
-
-### **@app/config**
-Environment configuration and URL utilities
-- Localhost detection
-- URL parsing and validation
-- Environment-based settings
-
-### **@app/interfaces**
-TypeScript type definitions shared across applications
-- User interfaces and enums
-- API request/response types
-- Common data structures
-
-### **@app/vue-components**
-Reusable Vue.js components library
-- UI components (dialogs, avatars, etc.)
-- Form utilities and validation
-- SCSS mixins and styles
-
-### **@app/seed**
-Database seeding utilities and test data
-- User fixtures and factories
-- Development data sets
-- Test environment setup
+- Verify Mailtrap credentials in `.env`
+- Check `MAIL_HOST`, `MAIL_USER`, and `MAIL_PASSWORD` are correct
+- For production, configure your SMTP provider
 
 ---
 
-## 🔧 Configuration
-
-### **Environment Variables**
-The application uses environment-based configuration with validation.
-
-**Key Configuration Areas**:
-- Database connection and pooling
-- JWT secrets and authentication
-- SMTP email settings
-- OIDC provider configuration
-- CORS and security settings
-- Logging levels and formats
-
-### **Setup Process**
-Run `pnpm setup:dev` for interactive configuration that will:
-1. Create environment files
-2. Set up database connection
-3. Configure admin user
-4. Install dependencies
-5. Run initial migrations
-
----
-
-## 📚 Documentation
-
-**Location**: `docs/` | **Framework**: VitePress
-
-### **Available Documentation**
-- [🚀 **Setup Guide**](docs/dev/general/setup.md)
-- [🧪 **Testing Guide**](docs/dev/general/testing.md)
-- [🚀 **Deployment Guide**](docs/dev/general/deployment.md)
-
-### **Documentation Features**
-- **VitePress** powered documentation
-- **GitHub Pages** deployment
-- **Automated builds** via GitHub Actions
-- **Searchable content** with full-text search
-
----
-
-## 🤝 Contributing
-
-### **Development Workflow**
-1. Fork the repository
-2. Create a feature branch
-3. Make your changes with tests
-4. Run the full test suite
-5. Submit a pull request
-
-### **Code Standards**
-- **ESLint** with Nuxt configuration
-- **TypeScript** strict mode
-- **90%+ test coverage** requirement
-- **Conventional commits** for clarity
-
-### **Pull Request Process**
-- Automated CI checks (linting, testing)
-- Code review requirements
-- Documentation updates if needed
-- Security review for sensitive changes
-
----
-
-## 📄 License
+## License
 
 This project is licensed under the **MIT License** - see the [LICENSE](LICENSE) file for details.
 
 ---
 
-## 🆘 Support
+## Acknowledgments
 
-- 📖 **Documentation**: [View Docs](https://your-org.github.io/app-starter)
-- 🐛 **Bug Reports**: [GitHub Issues](https://github.com/your-org/app-starter/issues)
-- 💬 **Discussions**: [GitHub Discussions](https://github.com/your-org/app-starter/discussions)
+Built with ❤️ using modern open-source technologies:
+
+- [NestJS](https://nestjs.com/) for the robust backend framework
+- [Nuxt](https://nuxt.com/) for the powerful frontend framework
+- [Vuetify](https://vuetifyjs.com/) for the beautiful Material Design components
+- [Playwright](https://playwright.dev/) for reliable end-to-end testing
 
 ---
 
 <div align="center">
-  <p>Made with ❤️ by <a href="https://github.com/tailor-cms">Tailor CMS</a></p>
-  <p>⭐ <strong>Star this repository if it helped you!</strong></p>
+  <p><strong>Happy coding! 🚀</strong></p>
+  <p>
+    <a href="#quick-start">Get Started</a> •
+    <a href="docs/">Documentation</a> •
+    <a href="/apps/backend/README.md">Backend Guide</a> •
+    <a href="/apps/frontend/README.md">Frontend Guide</a>
+  </p>
 </div>
