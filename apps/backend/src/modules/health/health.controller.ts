@@ -78,7 +78,7 @@ export class HealthController {
     Sentry.captureMessage('Test message from NestJS health endpoint', 'info');
     return {
       status: 'Message sent to Sentry',
-      timestamp: new Date().toISOString()
+      timestamp: new Date().toISOString(),
     };
   }
 }
