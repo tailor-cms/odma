@@ -3,6 +3,6 @@ config:
   dns:domain: api.tailor-cms.com
   dns:hostedZoneId: my_hosted_zone_id
   mail:host: email-smtp.us-east-1.amazonaws.com
-  mail:senderAddress: me@app_starter.com
+  mail:senderAddress: me@odma.com
   ssm:keyPrefix: app/dev
   app-starter:resourceNamePrefix: app-starter

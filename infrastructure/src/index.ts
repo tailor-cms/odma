@@ -31,8 +31,8 @@ const vpc = new awsx.ec2.Vpc(`${PROJECT_NAME}-vpc`, {
 
 const db = new studion.Database(`${fullPrefix}-app-starter-db`, {
   instanceClass: 'db.t4g.micro',
-  dbName: 'app_starter',
-  username: 'app_starter',
+  dbName: 'odma',
+  username: 'odma',
   vpcId: vpc.vpcId,
   vpcCidrBlock: vpc.vpc.cidrBlock,
   isolatedSubnetIds: vpc.isolatedSubnetIds,

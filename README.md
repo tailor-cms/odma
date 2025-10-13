@@ -133,7 +133,7 @@ pnpm dev
 - **Frontend**: http://localhost:8080
 - **Backend API**: http://localhost:3000
 - **API Documentation**: http://localhost:3000/api/docs
-- **Database**: postgresql://dev:dev@localhost:5432/app_starter
+- **Database**: postgresql://dev:dev@localhost:5432/odma
 
 ---
 

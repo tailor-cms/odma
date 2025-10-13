@@ -4,7 +4,7 @@ services:
     container_name: "app-starter-postgres"
     image: "postgres:15.1"
     environment:
-      POSTGRES_DB: "app_starter"
+      POSTGRES_DB: "odma"
       POSTGRES_USER: "dev"
       POSTGRES_PASSWORD: "dev"
     expose:

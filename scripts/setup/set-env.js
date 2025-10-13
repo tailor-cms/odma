@@ -34,7 +34,7 @@ export default async function ({ dbPrefix }) {
   try {
     const dbConfig = await getDatabaseClient();
     const configs = [
-      setAppEnv({ ...dbConfig, dbName: getDBName('app_starter', dbPrefix) }),
+      setAppEnv({ ...dbConfig, dbName: getDBName('odma', dbPrefix) }),
     ];
     const afterHooks = [];
     await Promise.all(
