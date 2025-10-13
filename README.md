@@ -5,7 +5,7 @@
   
   **Full-Stack Application Template**
   
-  *Get productive right away with auth, user mgm, and API-first architecture*
+  *Get productive right away with auth, user management, and API-first architecture*
   
   > **Odma** means "right away" in Dalmatian
 
