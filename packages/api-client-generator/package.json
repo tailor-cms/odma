@@ -23,7 +23,7 @@
   },
   "dependencies": {
     "lodash": "^4.17.21",
-    "chokidar": "^4.0.0",
+    "chokidar": "^4.0.3",
     "package-up": "^5.0.0",
     "minimist": "^1.2.8",
     "common-tags": "^1.8.2"
