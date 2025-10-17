@@ -12,7 +12,11 @@
 
 <script lang="ts" setup>
 definePageMeta({
-  name: 'catalog',
+  name: 'home',
   middleware: ['auth'],
+});
+
+useHead({
+  title: 'Home',
 });
 </script>

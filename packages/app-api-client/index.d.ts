@@ -82,7 +82,7 @@ export interface UpdateProfileDto {
   /** User last name */
   lastName?: string;
 
-  /** User avatar base64 image URL */
+  /** User avatar as data URL (base64 encoded image) */
   imgUrl?: string;
 }
 
@@ -132,11 +132,19 @@ export interface UpdateUserDto {
   /** User last name */
   lastName?: string;
 
-  /** User avatar base64 image URL */
+  /** User avatar as data URL (base64 encoded image) */
   imgUrl?: string;
 
   /** User role (admin only) */
   role?: 'ADMIN' | 'USER';
+}
+
+export interface SeedResponseDto {
+  /** Result message */
+  message: string;
+
+  /** Response data */
+  data?: object;
 }
       // Response wrapper interface
 export interface ApiResponse<T = any> {
@@ -231,6 +239,14 @@ sentryDebug: ApiMethod<{}, any>;
  * Test Sentry message capture (development only)
  */
 sentryMessage: ApiMethod<{}, any>; }
+export interface SeedNamespace { /**
+ * Reset database with base seed data
+ */
+resetDatabase: ApiMethod<{}, SeedResponseDto>;
+/**
+ * Create a single test user
+ */
+seedUser: ApiMethod<{}, SeedResponseDto>; }
 export interface UserNamespace { /**
  * List users (Admin only)
  */
@@ -265,6 +281,7 @@ reinvite: ApiMethod<{path: {id: string}}, any>; }
           auth: AuthNamespace;
   currentUser: CurrentUserNamespace;
   health: HealthNamespace;
+  seed: SeedNamespace;
   user: UserNamespace;
         _axiosClient: AxiosInstance;
       }

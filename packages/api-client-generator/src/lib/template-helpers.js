@@ -68,13 +68,44 @@ export function generateAxiosMethod(operation) {
     index.${operation.namespace}.${operation.method} = async (request = {}) => {
       const axiosConfig =
         buildAxiosConfig(request, '${cleanPath}', '${operation.httpMethod}');
-      const response = await axiosClient.request(axiosConfig);
-      return {
-        statusCode: response.status,
-        headers: response.headers,
-        body: response.data,
-        data: extractData(response)
-      };
+      try {
+        const response = await axiosClient.request(axiosConfig);
+        return {
+          statusCode: response.status,
+          headers: response.headers,
+          body: response.data,
+          data: extractData(response)
+        };
+      } catch (err) {
+        // Debug: log the error structure
+        console.log('API Client Error:', {
+          hasResponse: !!err.response,
+          hasRequest: !!err.request,
+          status: err.response?.status,
+          message: err.message,
+          errorKeys: Object.keys(err)
+        });
+        // Handle axios errors (4xx, 5xx status codes)
+        if (err.response) {
+          return {
+            statusCode: err.response.status,
+            headers: err.response.headers || {},
+            body: err.response.data,
+            data: err.response.data // Use raw error response data instead of extractData
+          };
+        }
+        // Handle request errors (no response received)
+        if (err.request) {
+          return {
+            statusCode: 0,
+            headers: {},
+            body: null,
+            data: { error: 'No response received from server' }
+          };
+        }
+        // Re-throw other errors (network errors, etc.)
+        throw err;
+      }
     };
     // Add raw method that returns full axios response
     index.${operation.namespace}.${operation.method}.raw =

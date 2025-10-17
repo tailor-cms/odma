@@ -67,6 +67,7 @@
 
 <script lang="ts" setup>
 import { object, string, ref as yupRef } from 'yup';
+import { useAuthStore } from '@/stores/auth';
 import { useForm } from 'vee-validate';
 
 import { apiClient as api } from '@/api';
@@ -109,7 +110,7 @@ const submit = handleSubmit(async ({ password }) => {
   try {
     await authStore.resetPassword({
       password,
-      token: route.params.token as string,
+      token: route.query.token as string,
     });
     isError.value = false;
     notificationText.value = 'Password changed successfully. Redirecting...';
@@ -122,12 +123,20 @@ const submit = handleSubmit(async ({ password }) => {
 });
 
 onMounted(async () => {
+  // Check if token exists in query
+  if (!route.query.token) {
+    isError.value = true;
+    notificationText.value = ERRORS.resetToken;
+    isLoading.value = false;
+    return;
+  }
   // Make sure the loader is visible for at least 1 second
   await delay(1000);
   try {
-    await api.auth.validateResetToken.raw({
-      data: { token: route.params.token },
+    const res = await api.auth.validateResetToken({
+      body: { token: route.query.token },
     });
+    if (res.statusCode !== 202) throw new Error('Invalid token');
   } catch {
     isError.value = true;
     notificationText.value = ERRORS.resetToken;

@@ -51,7 +51,9 @@ export class AuthService {
     const user = await this.validateCredentials(email, password);
     if (!user) {
       this.logger.info(`Login attempt failed: ${email}`);
-      throw new UnauthorizedException('Invalid credentials');
+      throw new UnauthorizedException(
+        'The email or password you entered is incorrect.',
+      );
     }
     const { accessToken, expiresInMs } = await this.createAccessToken(user);
     this.logger.debug(`Login success for email: ${email}`);
@@ -93,7 +95,7 @@ export class AuthService {
     const isValid = await user.validatePassword(currentPassword);
     if (!isValid) {
       this.logger.debug(`Invalid current password for email: ${user.email}`);
-      throw new UnauthorizedException('Password is incorrect');
+      throw new BadRequestException('Current password is incorrect');
     }
     user.password = await this.hashPassword(newPassword);
     await this.em.flush();
@@ -120,8 +122,8 @@ export class AuthService {
       }
       const user = await this.userRepository.get(payload.sub);
       if (!user || user.isDeleted) {
-        this.logger.debug('No user found for reset token');
-        throw new BadRequestException('Invalid reset token');
+        this.logger.debug('No user found for token');
+        throw new BadRequestException('Invalid token');
       }
       const secret = this.getTokenSecret(user);
       await this.jwtService.verify(token, { secret });
@@ -176,7 +178,9 @@ export class AuthService {
   private async createInvitationToken(user: User): Promise<string> {
     this.logger.debug(`Creating invitation token for user: ${user.email}`);
     const secret = this.getTokenSecret(user);
-    const token = await this.createToken(user, Audience.INVITATION, {
+    // Reset tokens are used for invitations as well
+    // This allows the same endpoint to be used for both
+    const token = await this.createToken(user, Audience.RESET, {
       secret,
       expiresInMs: ms('7d'),
     });

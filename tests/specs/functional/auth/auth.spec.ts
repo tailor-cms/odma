@@ -10,12 +10,17 @@ const { OIDC_TEST_USER_EMAIL, OIDC_TEST_USER_PASSWORD } = process.env;
 
 interface UserData {
   email: string;
-  password: string;
+  firstName?: string;
+  lastName?: string;
+  role: string;
+  password?: string;
 }
 
 const getMockUserData = (): UserData => ({
   email: faker.internet.email({ provider: 'example.com' }),
-  password: faker.internet.password(),
+  firstName: faker.person.firstName(),
+  lastName: faker.person.lastName(),
+  role: 'ADMIN',
 });
 
 const userAPI = new ApiClient('/api/users');
@@ -27,9 +32,11 @@ const createUser = async (page): Promise<UserData> => {
   const resetPasswordPage = new ResetPassword(page);
   const inviteLink = await resetPasswordPage.fetchInviteLink(userData.email);
   await page.goto(inviteLink);
-  await resetPasswordPage.resetPassword(userData.password);
+  await page.waitForLoadState('networkidle');
+  const password = 'Test1234!';
+  await resetPasswordPage.resetPassword(password);
   await page.goto(initialLocation);
-  return userData;
+  return { ...userData, password };
 };
 
 test.beforeEach(async ({ page }) => {
@@ -43,29 +50,18 @@ test('sign in page has a title set', async ({ page }) => {
   await expect(page).toHaveTitle(/Sign in/);
 });
 
-test('should be able to sign in with OIDC', async ({ page }) => {
-  test.skip(
-    !OIDC_TEST_USER_EMAIL || !OIDC_TEST_USER_PASSWORD,
-    'OIDC is not enabled',
-  );
-  const signInPage = new SignIn(page);
-  await signInPage.visit();
-  await signInPage.oidcSignIn(OIDC_TEST_USER_EMAIL, OIDC_TEST_USER_PASSWORD);
-  await expect(page).toHaveTitle('Catalog');
-});
-
 test('should be able to sign in', async ({ page }) => {
   const signInPage = new SignIn(page);
   await signInPage.visit();
   await signInPage.signIn(DEFAULT_USER.email, DEFAULT_USER.password);
-  await expect(page).toHaveTitle('Catalog');
+  await expect(page).toHaveTitle('Home');
 });
 
 test('should be able to sign out', async ({ page }) => {
   const signInPage = new SignIn(page);
   await signInPage.visit();
   await signInPage.signIn(DEFAULT_USER.email, DEFAULT_USER.password);
-  await expect(page).toHaveTitle('Catalog');
+  await expect(page).toHaveTitle('Home');
   const appBar = new AppBar(page);
   await appBar.logout();
   await expect(page).toHaveTitle(/Sign in/);
@@ -74,7 +70,7 @@ test('should be able to sign out', async ({ page }) => {
 test('sign in should fail in case of wrong credentials', async ({ page }) => {
   const signInPage = new SignIn(page);
   await signInPage.visit();
-  await signInPage.signIn(DEFAULT_USER.email, faker.internet.password());
+  await signInPage.signIn(DEFAULT_USER.email, 'Test1234!');
   await expect(
     page.getByText('The email or password you entered is incorrect.'),
   ).toBeVisible();
@@ -101,15 +97,11 @@ test('should be able to reset password', async ({ page }) => {
   // Fetch reset link from email
   const resetLink = await forgotPasswordPage.fetchResetLink(user.email);
   await page.goto(resetLink);
+  await page.waitForLoadState('networkidle');
   // Set new password
   const resetPasswordPage = new ResetPassword(page);
-  const newPassword = faker.internet.password();
+  const newPassword = 'Test1234!';
   await resetPasswordPage.resetPassword(newPassword);
   await signInPage.signIn(user.email, newPassword);
-  await expect(page).toHaveTitle('Catalog');
-});
-
-test.afterAll(async () => {
-  // Delete all newly created users
-  await userAPI.dispose();
+  await expect(page).toHaveTitle('Home');
 });

@@ -6,6 +6,7 @@ import { LoggerModule } from 'nestjs-pino';
 import { MailModule } from '../src/modules/mail/mail.module';
 import { MikroOrmModule } from '@mikro-orm/nestjs';
 import { Module } from '@nestjs/common';
+import { SeedModule } from '../src/modules/seed/seed.module';
 import { UserModule } from '../src/modules/user/user.module';
 
 import authConfig from '../src/config/auth.config';
@@ -29,6 +30,7 @@ import mikroOrmConfig from './mikro-orm.config';
     AuthModule,
     HealthModule,
     MailModule,
+    SeedModule,
     UserModule,
   ],
 })

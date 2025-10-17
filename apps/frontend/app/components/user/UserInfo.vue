@@ -66,7 +66,7 @@ const { defineField, errors, handleSubmit, resetForm, meta } = useForm({
           if (store.user && email === (store.user as any).email) return true;
           return api.user
             .fetch({ query: { email } })
-            .then((response) => !response.data.total);
+            .then((response) => !response?.body?.meta?.pagination?.total);
         },
       }),
     firstName: string().required().min(2),

@@ -64,6 +64,7 @@
 <script lang="ts" setup>
 import { object, string } from 'yup';
 import Promise from 'bluebird';
+import { useAuthStore } from '@/stores/auth';
 import { useForm } from 'vee-validate';
 
 definePageMeta({

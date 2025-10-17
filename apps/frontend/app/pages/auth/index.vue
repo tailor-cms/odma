@@ -1,7 +1,7 @@
 <template>
   <NuxtLayout name="auth" title="Sign in">
     <VAlert
-      v-if="errorMessage"
+      v-if="!!errorMessage"
       class="mb-7 text-left"
       color="pink-lighten-4"
       density="compact"
@@ -70,14 +70,11 @@
 
 <script lang="ts" setup>
 import { object, string } from 'yup';
-import { useForm } from 'vee-validate';
 import { useAuthStore } from '@/stores/auth';
+import { useForm } from 'vee-validate';
 import { useConfigStore } from '@/stores/config';
 
 const LOGIN_ERR_MESSAGE = 'The email or password you entered is incorrect.';
-const TOO_MANY_REQ_CODE = 429;
-const TOO_MANY_REQ_ERR_MESSAGE =
-  'Too many login attempts. Please try again later.';
 
 const getOidcErrorMessage = (email: any, buttonLabel: string) =>
   `Account with email ${email} does not exist.
@@ -132,11 +129,7 @@ const signIn = handleSubmit(({ email, password }) => {
       navigateTo('/');
     })
     .catch((err) => {
-      const code = err?.response?.status;
-      localError.value =
-        code === TOO_MANY_REQ_CODE
-          ? TOO_MANY_REQ_ERR_MESSAGE
-          : LOGIN_ERR_MESSAGE;
+      localError.value = err?.message || LOGIN_ERR_MESSAGE;
     });
 });
 </script>

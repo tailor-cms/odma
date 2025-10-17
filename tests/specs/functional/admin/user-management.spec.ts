@@ -7,12 +7,20 @@ import {
   UserManagement,
 } from '../../../pom/admin/UserManagement.ts';
 import SeedClient from '../../../api/SeedClient.ts';
+import { SignIn } from '../../../pom/auth/index.ts';
+import { TEST_USER } from '../../../fixtures/auth.ts';
 
 const DEFAULT_USERS_PER_PAGE = 10;
 
 test.beforeEach(async ({ page }) => {
   await SeedClient.resetDatabase();
+  // Re-authenticate after database reset
+  const authPage = new SignIn(page);
+  await authPage.visit();
+  await authPage.signIn(TEST_USER.email, TEST_USER.password);
+  await page.waitForLoadState('networkidle');
   await page.goto(UserManagement.route);
+  await page.waitForLoadState('networkidle');
 });
 
 test('should be able to add new user to the platform', async ({ page }) => {

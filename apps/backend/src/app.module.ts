@@ -9,6 +9,7 @@ import { MailModule } from './modules/mail/mail.module';
 import { MikroOrmModule } from '@mikro-orm/nestjs';
 import { Module } from '@nestjs/common';
 import { ServeStaticModule } from '@nestjs/serve-static';
+import { SeedModule } from './modules/seed/seed.module';
 import { UserModule } from './modules/user/user.module';
 import { SentryModule } from '@sentry/nestjs/setup';
 
@@ -20,6 +21,8 @@ import mailConfig from './config/mail.config';
 import mikroOrmConfig from './config/mikro-orm.config';
 import pinoConfig from './config/lib/pino.config';
 import { validationSchema } from './config/validation';
+
+const isProduction = process.env.NODE_ENV === 'production';
 
 @Module({
   imports: [
@@ -42,7 +45,7 @@ import { validationSchema } from './config/validation';
     }),
     ServeStaticModule.forRoot({
       rootPath: join(__dirname, '../../..', 'frontend/.output/public'),
-      exclude: ['/api*', '/api/**'],
+      exclude: ['/api*'],
       serveRoot: '/',
     }),
     SentryModule.forRoot(),
@@ -65,6 +68,7 @@ import { validationSchema } from './config/validation';
     HealthModule,
     MailModule,
     UserModule,
+    ...(!isProduction ? [SeedModule] : []),
   ],
   providers: [
     {

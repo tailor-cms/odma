@@ -5,7 +5,8 @@ import {
   closeTestingApp,
   createTestUser,
   createTestingApp,
-  seedTestUsers, getEntityManager,
+  seedTestUsers,
+  getEntityManager,
 } from '../../helpers/test.helpers';
 import { INestApplication } from '@nestjs/common';
 import { User } from '@/database/entities';
@@ -92,13 +93,17 @@ describe('Auth login', () => {
   describe('POST /auth/login - Invalid credentials', () => {
     it('should fail with incorrect password', async () => {
       const response = await apiClient.login(user.email, 'WrongPw123!', 401);
-      expect(response.body.message).toContain('Invalid credentials');
+      expect(response.body.message).toContain(
+        'The email or password you entered is incorrect.',
+      );
       expect(response.headers['set-cookie']).toBeUndefined();
     });
 
     it('should fail with non-existent email', async () => {
       const response = await apiClient.login('test@test.co', 'AnyPw123!', 401);
-      expect(response.body.message).toContain('Invalid credentials');
+      expect(response.body.message).toContain(
+        'The email or password you entered is incorrect.',
+      );
     });
 
     it('should not reveal whether email exists', async () => {
@@ -136,7 +141,9 @@ describe('Auth login', () => {
       const password = 'Password123!';
       await createTestUser({ email, password, deletedAt: new Date() });
       const response = await apiClient.login(email, password, 401);
-      expect(response.body.message).toContain('Invalid credentials');
+      expect(response.body.message).toContain(
+        'The email or password you entered is incorrect.',
+      );
     });
   });
 

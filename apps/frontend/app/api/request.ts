@@ -40,10 +40,17 @@ client.interceptors.response.use(
     if (isAuthError(err)) {
       const isAuthenticated = useCookie('is-authenticated');
       isAuthenticated.value = false;
+      // Remove trailing slash for consistency
+      const pathname = window.location.pathname.replace(/\/$/, '');
       const authRoute = '/auth';
-      if (window.location.pathname === authRoute) return;
-      if (import.meta.server) return navigateTo(authRoute);
-      return window.location.replace(authRoute);
+      if (
+        pathname === authRoute ||
+        err?.meta?.path === '/api/auth/change-password'
+      )
+        throw err;
+      if (import.meta.server) navigateTo(authRoute);
+      window.location.replace(authRoute);
+      throw err;
     }
     const errInfo = getErrorInfo(err);
     // Handle rate limiting errors

@@ -29,8 +29,8 @@ export class UserController {
   constructor(private readonly userService: UserService) {}
 
   @Get()
-  @Roles(UserRole.ADMIN)
-  @ApiOperation({ summary: 'List users (Admin only)' })
+  @Roles(UserRole.ADMIN, UserRole.USER)
+  @ApiOperation({ summary: 'List users' })
   @ApiResponse({
     description: 'List of users',
     status: 200,

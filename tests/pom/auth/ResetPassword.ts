@@ -26,13 +26,14 @@ export class ResetPassword {
   }
 
   async resetPassword(password: string) {
+    await expect(this.passwordInput).toBeVisible();
     await this.fillPassword(password);
     await this.fillPasswordConfirmation(password);
     await this.submitBtn.click();
   }
 
   async fetchInviteLink(email: string) {
-    const linkTitle = 'Complete registration';
+    const linkTitle = 'Set Up Account';
     const resetLink = await getAnchorFromLastRecievedEmail(email, linkTitle);
     expect(resetLink.textContent).toBe(linkTitle);
     return resetLink.href;

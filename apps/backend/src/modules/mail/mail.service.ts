@@ -33,7 +33,7 @@ export class MailService {
 
   async sendPasswordResetEmail(user: User, token: string): Promise<void> {
     await this.logger.info(`Sending password reset email to: ${user.email}`);
-    const resetUrl = `${this.origin}/auth/reset-password/${token}`;
+    const resetUrl = `${this.origin}/auth/reset-password?token=${encodeURIComponent(token)}`;
     const variables = {
       resetUrl,
       title: 'Password Reset Request',
@@ -77,7 +77,7 @@ export class MailService {
 
   async sendInvitationEmail(user: User, token: string): Promise<void> {
     await this.logger.info(`Sending invitation email to: ${user.email}`);
-    const inviteUrl = `${this.origin}/auth/reset-password/${token}`;
+    const inviteUrl = `${this.origin}/auth/reset-password?token=${encodeURIComponent(token)}`;
     const variables = {
       inviteUrl,
       title: 'You\'re Invited!',

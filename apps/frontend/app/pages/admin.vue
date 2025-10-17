@@ -36,6 +36,6 @@ onBeforeMount(async () => {
   // Refetch user info to get the latest permissions
   await authStore.me();
   if (authStore.isAdmin) return;
-  navigateTo({ name: 'catalog' });
+  navigateTo({ name: 'home' });
 });
 </script>

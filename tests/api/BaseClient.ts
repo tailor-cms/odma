@@ -25,9 +25,18 @@ export default class BaseClient {
   private signIn = async () => {
     const { email, password } = TEST_USER;
     BaseClient.req = await Playwright.request.newContext();
-    await BaseClient.req.post(new URL('/api/users/login', this.baseURL).href, {
-      headers: { 'Content-Type': 'application/json' },
-      data: { email, password },
-    });
+    const response = await BaseClient.req.post(
+      new URL('/api/auth/login', this.baseURL).href,
+      {
+        headers: { 'Content-Type': 'application/json' },
+        data: { email, password },
+      },
+    );
+    if (!response.ok()) {
+      const responseText = await response.text();
+      throw new Error(
+        `Authentication failed: ${response.status()} ${responseText}`,
+      );
+    }
   };
 }

@@ -19,10 +19,18 @@ export const useAuthStore = defineStore('auth', () => {
   }
 
   function login(credentials: LoginDto): Promise<void> {
-    return api.auth.login({ body: credentials }).then(({ data }) => {
-      const userData = data.user;
-      const authStrategy = 'local';
-      $reset(userData, authStrategy);
+    return api.auth.login({ body: credentials }).then((response) => {
+      if (
+        response.statusCode >= 200 &&
+        response.statusCode < 300 &&
+        response.data
+      ) {
+        const { user } = response.data;
+        const authStrategy = 'local';
+        $reset(user, authStrategy);
+        return;
+      }
+      throw new Error(response?.body?.error?.message || 'Login failed');
     });
   }
 
@@ -51,7 +59,12 @@ export const useAuthStore = defineStore('auth', () => {
     currentPassword: string;
     newPassword: string;
   }) {
-    return api.auth.changePassword({ body: { currentPassword, newPassword } });
+    return api.auth
+      .changePassword({ body: { currentPassword, newPassword } })
+      .then((res) => {
+        if (res.statusCode === 200) return res;
+        throw new Error(res?.body?.error?.message || 'Change password failed');
+      });
   }
 
   function me() {

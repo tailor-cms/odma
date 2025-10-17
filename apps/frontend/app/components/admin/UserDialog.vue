@@ -138,7 +138,8 @@ const { defineField, errors, handleSubmit, resetForm } = useForm({
           if (props.userData.email === email) return true;
           return api.user
             .fetch({ query: { email } })
-            .then((response) => !response.data.total);
+            .then((response) => !response.data.total)
+            .catch(() => false);
         },
       }),
     firstName: string().min(2).required(),

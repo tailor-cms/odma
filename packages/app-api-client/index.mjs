@@ -1,6 +1,6 @@
 /**
  * Auto-generated axios-based API client
- * Generated from: 2025-10-13T09:25:23.824Z
+ * Generated from: 2025-10-15T12:02:19.394Z
  * Usage:
  *   import { createApiClient } from 'app-api-client'
  *   const api = await createApiClient({ axiosClient })
@@ -70,6 +70,7 @@ function buildAxiosConfig(request, path, method) {
               auth: {},
     currentUser: {},
     health: {},
+    seed: {},
     user: {},
           _axiosClient: axiosClient,
           extractData,
@@ -82,13 +83,45 @@ function buildAxiosConfig(request, path, method) {
 index.auth.login = async (request = {}) => {
   const axiosConfig =
     buildAxiosConfig(request, '/auth/login', 'POST');
-  const response = await axiosClient.request(axiosConfig);
-  return {
-    statusCode: response.status,
-    headers: response.headers,
-    body: response.data,
-    data: extractData(response)
-  };
+  try {
+    const response = await axiosClient.request(axiosConfig);
+    return {
+      statusCode: response.status,
+      headers: response.headers,
+      body: response.data,
+      data: extractData(response)
+    };
+  } catch (err) {
+    // Debug: log the error structure
+    console.log('API Client Error:', {
+      hasResponse: !!err.response,
+      hasRequest: !!err.request,
+      status: err.response?.status,
+      message: err.message,
+      errorKeys: Object.keys(err)
+    });
+    
+    // Handle axios errors (4xx, 5xx status codes)
+    if (err.response) {
+      return {
+        statusCode: err.response.status,
+        headers: err.response.headers || {},
+        body: err.response.data,
+        data: err.response.data // Use raw error response data instead of extractData
+      };
+    }
+    // Handle request errors (no response received)
+    if (err.request) {
+      return {
+        statusCode: 0,
+        headers: {},
+        body: null,
+        data: { error: 'No response received from server' }
+      };
+    }
+    // Re-throw other errors (network errors, etc.)
+    throw err;
+  }
 };
 // Add raw method that returns full axios response
 index.auth.login.raw =
@@ -103,13 +136,45 @@ index.auth.login.raw =
 index.auth.logout = async (request = {}) => {
   const axiosConfig =
     buildAxiosConfig(request, '/auth/logout', 'GET');
-  const response = await axiosClient.request(axiosConfig);
-  return {
-    statusCode: response.status,
-    headers: response.headers,
-    body: response.data,
-    data: extractData(response)
-  };
+  try {
+    const response = await axiosClient.request(axiosConfig);
+    return {
+      statusCode: response.status,
+      headers: response.headers,
+      body: response.data,
+      data: extractData(response)
+    };
+  } catch (err) {
+    // Debug: log the error structure
+    console.log('API Client Error:', {
+      hasResponse: !!err.response,
+      hasRequest: !!err.request,
+      status: err.response?.status,
+      message: err.message,
+      errorKeys: Object.keys(err)
+    });
+    
+    // Handle axios errors (4xx, 5xx status codes)
+    if (err.response) {
+      return {
+        statusCode: err.response.status,
+        headers: err.response.headers || {},
+        body: err.response.data,
+        data: err.response.data // Use raw error response data instead of extractData
+      };
+    }
+    // Handle request errors (no response received)
+    if (err.request) {
+      return {
+        statusCode: 0,
+        headers: {},
+        body: null,
+        data: { error: 'No response received from server' }
+      };
+    }
+    // Re-throw other errors (network errors, etc.)
+    throw err;
+  }
 };
 // Add raw method that returns full axios response
 index.auth.logout.raw =
@@ -124,13 +189,45 @@ index.auth.logout.raw =
 index.auth.changePassword = async (request = {}) => {
   const axiosConfig =
     buildAxiosConfig(request, '/auth/change-password', 'POST');
-  const response = await axiosClient.request(axiosConfig);
-  return {
-    statusCode: response.status,
-    headers: response.headers,
-    body: response.data,
-    data: extractData(response)
-  };
+  try {
+    const response = await axiosClient.request(axiosConfig);
+    return {
+      statusCode: response.status,
+      headers: response.headers,
+      body: response.data,
+      data: extractData(response)
+    };
+  } catch (err) {
+    // Debug: log the error structure
+    console.log('API Client Error:', {
+      hasResponse: !!err.response,
+      hasRequest: !!err.request,
+      status: err.response?.status,
+      message: err.message,
+      errorKeys: Object.keys(err)
+    });
+    
+    // Handle axios errors (4xx, 5xx status codes)
+    if (err.response) {
+      return {
+        statusCode: err.response.status,
+        headers: err.response.headers || {},
+        body: err.response.data,
+        data: err.response.data // Use raw error response data instead of extractData
+      };
+    }
+    // Handle request errors (no response received)
+    if (err.request) {
+      return {
+        statusCode: 0,
+        headers: {},
+        body: null,
+        data: { error: 'No response received from server' }
+      };
+    }
+    // Re-throw other errors (network errors, etc.)
+    throw err;
+  }
 };
 // Add raw method that returns full axios response
 index.auth.changePassword.raw =
@@ -145,13 +242,45 @@ index.auth.changePassword.raw =
 index.auth.forgotPassword = async (request = {}) => {
   const axiosConfig =
     buildAxiosConfig(request, '/auth/forgot-password', 'POST');
-  const response = await axiosClient.request(axiosConfig);
-  return {
-    statusCode: response.status,
-    headers: response.headers,
-    body: response.data,
-    data: extractData(response)
-  };
+  try {
+    const response = await axiosClient.request(axiosConfig);
+    return {
+      statusCode: response.status,
+      headers: response.headers,
+      body: response.data,
+      data: extractData(response)
+    };
+  } catch (err) {
+    // Debug: log the error structure
+    console.log('API Client Error:', {
+      hasResponse: !!err.response,
+      hasRequest: !!err.request,
+      status: err.response?.status,
+      message: err.message,
+      errorKeys: Object.keys(err)
+    });
+    
+    // Handle axios errors (4xx, 5xx status codes)
+    if (err.response) {
+      return {
+        statusCode: err.response.status,
+        headers: err.response.headers || {},
+        body: err.response.data,
+        data: err.response.data // Use raw error response data instead of extractData
+      };
+    }
+    // Handle request errors (no response received)
+    if (err.request) {
+      return {
+        statusCode: 0,
+        headers: {},
+        body: null,
+        data: { error: 'No response received from server' }
+      };
+    }
+    // Re-throw other errors (network errors, etc.)
+    throw err;
+  }
 };
 // Add raw method that returns full axios response
 index.auth.forgotPassword.raw =
@@ -166,13 +295,45 @@ index.auth.forgotPassword.raw =
 index.auth.resetPassword = async (request = {}) => {
   const axiosConfig =
     buildAxiosConfig(request, '/auth/reset-password', 'POST');
-  const response = await axiosClient.request(axiosConfig);
-  return {
-    statusCode: response.status,
-    headers: response.headers,
-    body: response.data,
-    data: extractData(response)
-  };
+  try {
+    const response = await axiosClient.request(axiosConfig);
+    return {
+      statusCode: response.status,
+      headers: response.headers,
+      body: response.data,
+      data: extractData(response)
+    };
+  } catch (err) {
+    // Debug: log the error structure
+    console.log('API Client Error:', {
+      hasResponse: !!err.response,
+      hasRequest: !!err.request,
+      status: err.response?.status,
+      message: err.message,
+      errorKeys: Object.keys(err)
+    });
+    
+    // Handle axios errors (4xx, 5xx status codes)
+    if (err.response) {
+      return {
+        statusCode: err.response.status,
+        headers: err.response.headers || {},
+        body: err.response.data,
+        data: err.response.data // Use raw error response data instead of extractData
+      };
+    }
+    // Handle request errors (no response received)
+    if (err.request) {
+      return {
+        statusCode: 0,
+        headers: {},
+        body: null,
+        data: { error: 'No response received from server' }
+      };
+    }
+    // Re-throw other errors (network errors, etc.)
+    throw err;
+  }
 };
 // Add raw method that returns full axios response
 index.auth.resetPassword.raw =
@@ -187,13 +348,45 @@ index.auth.resetPassword.raw =
 index.auth.validateResetToken = async (request = {}) => {
   const axiosConfig =
     buildAxiosConfig(request, '/auth/reset-password/token-status', 'POST');
-  const response = await axiosClient.request(axiosConfig);
-  return {
-    statusCode: response.status,
-    headers: response.headers,
-    body: response.data,
-    data: extractData(response)
-  };
+  try {
+    const response = await axiosClient.request(axiosConfig);
+    return {
+      statusCode: response.status,
+      headers: response.headers,
+      body: response.data,
+      data: extractData(response)
+    };
+  } catch (err) {
+    // Debug: log the error structure
+    console.log('API Client Error:', {
+      hasResponse: !!err.response,
+      hasRequest: !!err.request,
+      status: err.response?.status,
+      message: err.message,
+      errorKeys: Object.keys(err)
+    });
+    
+    // Handle axios errors (4xx, 5xx status codes)
+    if (err.response) {
+      return {
+        statusCode: err.response.status,
+        headers: err.response.headers || {},
+        body: err.response.data,
+        data: err.response.data // Use raw error response data instead of extractData
+      };
+    }
+    // Handle request errors (no response received)
+    if (err.request) {
+      return {
+        statusCode: 0,
+        headers: {},
+        body: null,
+        data: { error: 'No response received from server' }
+      };
+    }
+    // Re-throw other errors (network errors, etc.)
+    throw err;
+  }
 };
 // Add raw method that returns full axios response
 index.auth.validateResetToken.raw =
@@ -208,13 +401,45 @@ index.auth.validateResetToken.raw =
 index.currentUser.get = async (request = {}) => {
   const axiosConfig =
     buildAxiosConfig(request, '/me', 'GET');
-  const response = await axiosClient.request(axiosConfig);
-  return {
-    statusCode: response.status,
-    headers: response.headers,
-    body: response.data,
-    data: extractData(response)
-  };
+  try {
+    const response = await axiosClient.request(axiosConfig);
+    return {
+      statusCode: response.status,
+      headers: response.headers,
+      body: response.data,
+      data: extractData(response)
+    };
+  } catch (err) {
+    // Debug: log the error structure
+    console.log('API Client Error:', {
+      hasResponse: !!err.response,
+      hasRequest: !!err.request,
+      status: err.response?.status,
+      message: err.message,
+      errorKeys: Object.keys(err)
+    });
+    
+    // Handle axios errors (4xx, 5xx status codes)
+    if (err.response) {
+      return {
+        statusCode: err.response.status,
+        headers: err.response.headers || {},
+        body: err.response.data,
+        data: err.response.data // Use raw error response data instead of extractData
+      };
+    }
+    // Handle request errors (no response received)
+    if (err.request) {
+      return {
+        statusCode: 0,
+        headers: {},
+        body: null,
+        data: { error: 'No response received from server' }
+      };
+    }
+    // Re-throw other errors (network errors, etc.)
+    throw err;
+  }
 };
 // Add raw method that returns full axios response
 index.currentUser.get.raw =
@@ -229,13 +454,45 @@ index.currentUser.get.raw =
 index.currentUser.update = async (request = {}) => {
   const axiosConfig =
     buildAxiosConfig(request, '/me', 'PATCH');
-  const response = await axiosClient.request(axiosConfig);
-  return {
-    statusCode: response.status,
-    headers: response.headers,
-    body: response.data,
-    data: extractData(response)
-  };
+  try {
+    const response = await axiosClient.request(axiosConfig);
+    return {
+      statusCode: response.status,
+      headers: response.headers,
+      body: response.data,
+      data: extractData(response)
+    };
+  } catch (err) {
+    // Debug: log the error structure
+    console.log('API Client Error:', {
+      hasResponse: !!err.response,
+      hasRequest: !!err.request,
+      status: err.response?.status,
+      message: err.message,
+      errorKeys: Object.keys(err)
+    });
+    
+    // Handle axios errors (4xx, 5xx status codes)
+    if (err.response) {
+      return {
+        statusCode: err.response.status,
+        headers: err.response.headers || {},
+        body: err.response.data,
+        data: err.response.data // Use raw error response data instead of extractData
+      };
+    }
+    // Handle request errors (no response received)
+    if (err.request) {
+      return {
+        statusCode: 0,
+        headers: {},
+        body: null,
+        data: { error: 'No response received from server' }
+      };
+    }
+    // Re-throw other errors (network errors, etc.)
+    throw err;
+  }
 };
 // Add raw method that returns full axios response
 index.currentUser.update.raw =
@@ -250,13 +507,45 @@ index.currentUser.update.raw =
 index.user.fetch = async (request = {}) => {
   const axiosConfig =
     buildAxiosConfig(request, '/users', 'GET');
-  const response = await axiosClient.request(axiosConfig);
-  return {
-    statusCode: response.status,
-    headers: response.headers,
-    body: response.data,
-    data: extractData(response)
-  };
+  try {
+    const response = await axiosClient.request(axiosConfig);
+    return {
+      statusCode: response.status,
+      headers: response.headers,
+      body: response.data,
+      data: extractData(response)
+    };
+  } catch (err) {
+    // Debug: log the error structure
+    console.log('API Client Error:', {
+      hasResponse: !!err.response,
+      hasRequest: !!err.request,
+      status: err.response?.status,
+      message: err.message,
+      errorKeys: Object.keys(err)
+    });
+    
+    // Handle axios errors (4xx, 5xx status codes)
+    if (err.response) {
+      return {
+        statusCode: err.response.status,
+        headers: err.response.headers || {},
+        body: err.response.data,
+        data: err.response.data // Use raw error response data instead of extractData
+      };
+    }
+    // Handle request errors (no response received)
+    if (err.request) {
+      return {
+        statusCode: 0,
+        headers: {},
+        body: null,
+        data: { error: 'No response received from server' }
+      };
+    }
+    // Re-throw other errors (network errors, etc.)
+    throw err;
+  }
 };
 // Add raw method that returns full axios response
 index.user.fetch.raw =
@@ -271,13 +560,45 @@ index.user.fetch.raw =
 index.user.create = async (request = {}) => {
   const axiosConfig =
     buildAxiosConfig(request, '/users', 'POST');
-  const response = await axiosClient.request(axiosConfig);
-  return {
-    statusCode: response.status,
-    headers: response.headers,
-    body: response.data,
-    data: extractData(response)
-  };
+  try {
+    const response = await axiosClient.request(axiosConfig);
+    return {
+      statusCode: response.status,
+      headers: response.headers,
+      body: response.data,
+      data: extractData(response)
+    };
+  } catch (err) {
+    // Debug: log the error structure
+    console.log('API Client Error:', {
+      hasResponse: !!err.response,
+      hasRequest: !!err.request,
+      status: err.response?.status,
+      message: err.message,
+      errorKeys: Object.keys(err)
+    });
+    
+    // Handle axios errors (4xx, 5xx status codes)
+    if (err.response) {
+      return {
+        statusCode: err.response.status,
+        headers: err.response.headers || {},
+        body: err.response.data,
+        data: err.response.data // Use raw error response data instead of extractData
+      };
+    }
+    // Handle request errors (no response received)
+    if (err.request) {
+      return {
+        statusCode: 0,
+        headers: {},
+        body: null,
+        data: { error: 'No response received from server' }
+      };
+    }
+    // Re-throw other errors (network errors, etc.)
+    throw err;
+  }
 };
 // Add raw method that returns full axios response
 index.user.create.raw =
@@ -292,13 +613,45 @@ index.user.create.raw =
 index.user.get = async (request = {}) => {
   const axiosConfig =
     buildAxiosConfig(request, '/users/{id}', 'GET');
-  const response = await axiosClient.request(axiosConfig);
-  return {
-    statusCode: response.status,
-    headers: response.headers,
-    body: response.data,
-    data: extractData(response)
-  };
+  try {
+    const response = await axiosClient.request(axiosConfig);
+    return {
+      statusCode: response.status,
+      headers: response.headers,
+      body: response.data,
+      data: extractData(response)
+    };
+  } catch (err) {
+    // Debug: log the error structure
+    console.log('API Client Error:', {
+      hasResponse: !!err.response,
+      hasRequest: !!err.request,
+      status: err.response?.status,
+      message: err.message,
+      errorKeys: Object.keys(err)
+    });
+    
+    // Handle axios errors (4xx, 5xx status codes)
+    if (err.response) {
+      return {
+        statusCode: err.response.status,
+        headers: err.response.headers || {},
+        body: err.response.data,
+        data: err.response.data // Use raw error response data instead of extractData
+      };
+    }
+    // Handle request errors (no response received)
+    if (err.request) {
+      return {
+        statusCode: 0,
+        headers: {},
+        body: null,
+        data: { error: 'No response received from server' }
+      };
+    }
+    // Re-throw other errors (network errors, etc.)
+    throw err;
+  }
 };
 // Add raw method that returns full axios response
 index.user.get.raw =
@@ -313,13 +666,45 @@ index.user.get.raw =
 index.user.update = async (request = {}) => {
   const axiosConfig =
     buildAxiosConfig(request, '/users/{id}', 'PATCH');
-  const response = await axiosClient.request(axiosConfig);
-  return {
-    statusCode: response.status,
-    headers: response.headers,
-    body: response.data,
-    data: extractData(response)
-  };
+  try {
+    const response = await axiosClient.request(axiosConfig);
+    return {
+      statusCode: response.status,
+      headers: response.headers,
+      body: response.data,
+      data: extractData(response)
+    };
+  } catch (err) {
+    // Debug: log the error structure
+    console.log('API Client Error:', {
+      hasResponse: !!err.response,
+      hasRequest: !!err.request,
+      status: err.response?.status,
+      message: err.message,
+      errorKeys: Object.keys(err)
+    });
+    
+    // Handle axios errors (4xx, 5xx status codes)
+    if (err.response) {
+      return {
+        statusCode: err.response.status,
+        headers: err.response.headers || {},
+        body: err.response.data,
+        data: err.response.data // Use raw error response data instead of extractData
+      };
+    }
+    // Handle request errors (no response received)
+    if (err.request) {
+      return {
+        statusCode: 0,
+        headers: {},
+        body: null,
+        data: { error: 'No response received from server' }
+      };
+    }
+    // Re-throw other errors (network errors, etc.)
+    throw err;
+  }
 };
 // Add raw method that returns full axios response
 index.user.update.raw =
@@ -334,13 +719,45 @@ index.user.update.raw =
 index.user.remove = async (request = {}) => {
   const axiosConfig =
     buildAxiosConfig(request, '/users/{id}', 'DELETE');
-  const response = await axiosClient.request(axiosConfig);
-  return {
-    statusCode: response.status,
-    headers: response.headers,
-    body: response.data,
-    data: extractData(response)
-  };
+  try {
+    const response = await axiosClient.request(axiosConfig);
+    return {
+      statusCode: response.status,
+      headers: response.headers,
+      body: response.data,
+      data: extractData(response)
+    };
+  } catch (err) {
+    // Debug: log the error structure
+    console.log('API Client Error:', {
+      hasResponse: !!err.response,
+      hasRequest: !!err.request,
+      status: err.response?.status,
+      message: err.message,
+      errorKeys: Object.keys(err)
+    });
+    
+    // Handle axios errors (4xx, 5xx status codes)
+    if (err.response) {
+      return {
+        statusCode: err.response.status,
+        headers: err.response.headers || {},
+        body: err.response.data,
+        data: err.response.data // Use raw error response data instead of extractData
+      };
+    }
+    // Handle request errors (no response received)
+    if (err.request) {
+      return {
+        statusCode: 0,
+        headers: {},
+        body: null,
+        data: { error: 'No response received from server' }
+      };
+    }
+    // Re-throw other errors (network errors, etc.)
+    throw err;
+  }
 };
 // Add raw method that returns full axios response
 index.user.remove.raw =
@@ -355,13 +772,45 @@ index.user.remove.raw =
 index.user.restore = async (request = {}) => {
   const axiosConfig =
     buildAxiosConfig(request, '/users/{id}/restore', 'POST');
-  const response = await axiosClient.request(axiosConfig);
-  return {
-    statusCode: response.status,
-    headers: response.headers,
-    body: response.data,
-    data: extractData(response)
-  };
+  try {
+    const response = await axiosClient.request(axiosConfig);
+    return {
+      statusCode: response.status,
+      headers: response.headers,
+      body: response.data,
+      data: extractData(response)
+    };
+  } catch (err) {
+    // Debug: log the error structure
+    console.log('API Client Error:', {
+      hasResponse: !!err.response,
+      hasRequest: !!err.request,
+      status: err.response?.status,
+      message: err.message,
+      errorKeys: Object.keys(err)
+    });
+    
+    // Handle axios errors (4xx, 5xx status codes)
+    if (err.response) {
+      return {
+        statusCode: err.response.status,
+        headers: err.response.headers || {},
+        body: err.response.data,
+        data: err.response.data // Use raw error response data instead of extractData
+      };
+    }
+    // Handle request errors (no response received)
+    if (err.request) {
+      return {
+        statusCode: 0,
+        headers: {},
+        body: null,
+        data: { error: 'No response received from server' }
+      };
+    }
+    // Re-throw other errors (network errors, etc.)
+    throw err;
+  }
 };
 // Add raw method that returns full axios response
 index.user.restore.raw =
@@ -376,13 +825,45 @@ index.user.restore.raw =
 index.user.reinvite = async (request = {}) => {
   const axiosConfig =
     buildAxiosConfig(request, '/users/{id}/reinvite', 'POST');
-  const response = await axiosClient.request(axiosConfig);
-  return {
-    statusCode: response.status,
-    headers: response.headers,
-    body: response.data,
-    data: extractData(response)
-  };
+  try {
+    const response = await axiosClient.request(axiosConfig);
+    return {
+      statusCode: response.status,
+      headers: response.headers,
+      body: response.data,
+      data: extractData(response)
+    };
+  } catch (err) {
+    // Debug: log the error structure
+    console.log('API Client Error:', {
+      hasResponse: !!err.response,
+      hasRequest: !!err.request,
+      status: err.response?.status,
+      message: err.message,
+      errorKeys: Object.keys(err)
+    });
+    
+    // Handle axios errors (4xx, 5xx status codes)
+    if (err.response) {
+      return {
+        statusCode: err.response.status,
+        headers: err.response.headers || {},
+        body: err.response.data,
+        data: err.response.data // Use raw error response data instead of extractData
+      };
+    }
+    // Handle request errors (no response received)
+    if (err.request) {
+      return {
+        statusCode: 0,
+        headers: {},
+        body: null,
+        data: { error: 'No response received from server' }
+      };
+    }
+    // Re-throw other errors (network errors, etc.)
+    throw err;
+  }
 };
 // Add raw method that returns full axios response
 index.user.reinvite.raw =
@@ -397,13 +878,45 @@ index.user.reinvite.raw =
 index.health.healthCheck = async (request = {}) => {
   const axiosConfig =
     buildAxiosConfig(request, '/healthcheck', 'GET');
-  const response = await axiosClient.request(axiosConfig);
-  return {
-    statusCode: response.status,
-    headers: response.headers,
-    body: response.data,
-    data: extractData(response)
-  };
+  try {
+    const response = await axiosClient.request(axiosConfig);
+    return {
+      statusCode: response.status,
+      headers: response.headers,
+      body: response.data,
+      data: extractData(response)
+    };
+  } catch (err) {
+    // Debug: log the error structure
+    console.log('API Client Error:', {
+      hasResponse: !!err.response,
+      hasRequest: !!err.request,
+      status: err.response?.status,
+      message: err.message,
+      errorKeys: Object.keys(err)
+    });
+    
+    // Handle axios errors (4xx, 5xx status codes)
+    if (err.response) {
+      return {
+        statusCode: err.response.status,
+        headers: err.response.headers || {},
+        body: err.response.data,
+        data: err.response.data // Use raw error response data instead of extractData
+      };
+    }
+    // Handle request errors (no response received)
+    if (err.request) {
+      return {
+        statusCode: 0,
+        headers: {},
+        body: null,
+        data: { error: 'No response received from server' }
+      };
+    }
+    // Re-throw other errors (network errors, etc.)
+    throw err;
+  }
 };
 // Add raw method that returns full axios response
 index.health.healthCheck.raw =
@@ -418,13 +931,45 @@ index.health.healthCheck.raw =
 index.health.liveness = async (request = {}) => {
   const axiosConfig =
     buildAxiosConfig(request, '/health/live', 'GET');
-  const response = await axiosClient.request(axiosConfig);
-  return {
-    statusCode: response.status,
-    headers: response.headers,
-    body: response.data,
-    data: extractData(response)
-  };
+  try {
+    const response = await axiosClient.request(axiosConfig);
+    return {
+      statusCode: response.status,
+      headers: response.headers,
+      body: response.data,
+      data: extractData(response)
+    };
+  } catch (err) {
+    // Debug: log the error structure
+    console.log('API Client Error:', {
+      hasResponse: !!err.response,
+      hasRequest: !!err.request,
+      status: err.response?.status,
+      message: err.message,
+      errorKeys: Object.keys(err)
+    });
+    
+    // Handle axios errors (4xx, 5xx status codes)
+    if (err.response) {
+      return {
+        statusCode: err.response.status,
+        headers: err.response.headers || {},
+        body: err.response.data,
+        data: err.response.data // Use raw error response data instead of extractData
+      };
+    }
+    // Handle request errors (no response received)
+    if (err.request) {
+      return {
+        statusCode: 0,
+        headers: {},
+        body: null,
+        data: { error: 'No response received from server' }
+      };
+    }
+    // Re-throw other errors (network errors, etc.)
+    throw err;
+  }
 };
 // Add raw method that returns full axios response
 index.health.liveness.raw =
@@ -439,13 +984,45 @@ index.health.liveness.raw =
 index.health.readiness = async (request = {}) => {
   const axiosConfig =
     buildAxiosConfig(request, '/health/ready', 'GET');
-  const response = await axiosClient.request(axiosConfig);
-  return {
-    statusCode: response.status,
-    headers: response.headers,
-    body: response.data,
-    data: extractData(response)
-  };
+  try {
+    const response = await axiosClient.request(axiosConfig);
+    return {
+      statusCode: response.status,
+      headers: response.headers,
+      body: response.data,
+      data: extractData(response)
+    };
+  } catch (err) {
+    // Debug: log the error structure
+    console.log('API Client Error:', {
+      hasResponse: !!err.response,
+      hasRequest: !!err.request,
+      status: err.response?.status,
+      message: err.message,
+      errorKeys: Object.keys(err)
+    });
+    
+    // Handle axios errors (4xx, 5xx status codes)
+    if (err.response) {
+      return {
+        statusCode: err.response.status,
+        headers: err.response.headers || {},
+        body: err.response.data,
+        data: err.response.data // Use raw error response data instead of extractData
+      };
+    }
+    // Handle request errors (no response received)
+    if (err.request) {
+      return {
+        statusCode: 0,
+        headers: {},
+        body: null,
+        data: { error: 'No response received from server' }
+      };
+    }
+    // Re-throw other errors (network errors, etc.)
+    throw err;
+  }
 };
 // Add raw method that returns full axios response
 index.health.readiness.raw =
@@ -460,13 +1037,45 @@ index.health.readiness.raw =
 index.health.sentryDebug = async (request = {}) => {
   const axiosConfig =
     buildAxiosConfig(request, '/sentry/debug', 'GET');
-  const response = await axiosClient.request(axiosConfig);
-  return {
-    statusCode: response.status,
-    headers: response.headers,
-    body: response.data,
-    data: extractData(response)
-  };
+  try {
+    const response = await axiosClient.request(axiosConfig);
+    return {
+      statusCode: response.status,
+      headers: response.headers,
+      body: response.data,
+      data: extractData(response)
+    };
+  } catch (err) {
+    // Debug: log the error structure
+    console.log('API Client Error:', {
+      hasResponse: !!err.response,
+      hasRequest: !!err.request,
+      status: err.response?.status,
+      message: err.message,
+      errorKeys: Object.keys(err)
+    });
+    
+    // Handle axios errors (4xx, 5xx status codes)
+    if (err.response) {
+      return {
+        statusCode: err.response.status,
+        headers: err.response.headers || {},
+        body: err.response.data,
+        data: err.response.data // Use raw error response data instead of extractData
+      };
+    }
+    // Handle request errors (no response received)
+    if (err.request) {
+      return {
+        statusCode: 0,
+        headers: {},
+        body: null,
+        data: { error: 'No response received from server' }
+      };
+    }
+    // Re-throw other errors (network errors, etc.)
+    throw err;
+  }
 };
 // Add raw method that returns full axios response
 index.health.sentryDebug.raw =
@@ -481,13 +1090,45 @@ index.health.sentryDebug.raw =
 index.health.sentryMessage = async (request = {}) => {
   const axiosConfig =
     buildAxiosConfig(request, '/sentry/message', 'GET');
-  const response = await axiosClient.request(axiosConfig);
-  return {
-    statusCode: response.status,
-    headers: response.headers,
-    body: response.data,
-    data: extractData(response)
-  };
+  try {
+    const response = await axiosClient.request(axiosConfig);
+    return {
+      statusCode: response.status,
+      headers: response.headers,
+      body: response.data,
+      data: extractData(response)
+    };
+  } catch (err) {
+    // Debug: log the error structure
+    console.log('API Client Error:', {
+      hasResponse: !!err.response,
+      hasRequest: !!err.request,
+      status: err.response?.status,
+      message: err.message,
+      errorKeys: Object.keys(err)
+    });
+    
+    // Handle axios errors (4xx, 5xx status codes)
+    if (err.response) {
+      return {
+        statusCode: err.response.status,
+        headers: err.response.headers || {},
+        body: err.response.data,
+        data: err.response.data // Use raw error response data instead of extractData
+      };
+    }
+    // Handle request errors (no response received)
+    if (err.request) {
+      return {
+        statusCode: 0,
+        headers: {},
+        body: null,
+        data: { error: 'No response received from server' }
+      };
+    }
+    // Re-throw other errors (network errors, etc.)
+    throw err;
+  }
 };
 // Add raw method that returns full axios response
 index.health.sentryMessage.raw =
@@ -496,6 +1137,112 @@ index.health.sentryMessage.raw =
       request,
       '/sentry/message',
       'GET');
+    return await axiosClient.request(axiosConfig);
+};
+// Reset database with base seed data
+index.seed.resetDatabase = async (request = {}) => {
+  const axiosConfig =
+    buildAxiosConfig(request, '/seed/reset', 'POST');
+  try {
+    const response = await axiosClient.request(axiosConfig);
+    return {
+      statusCode: response.status,
+      headers: response.headers,
+      body: response.data,
+      data: extractData(response)
+    };
+  } catch (err) {
+    // Debug: log the error structure
+    console.log('API Client Error:', {
+      hasResponse: !!err.response,
+      hasRequest: !!err.request,
+      status: err.response?.status,
+      message: err.message,
+      errorKeys: Object.keys(err)
+    });
+    
+    // Handle axios errors (4xx, 5xx status codes)
+    if (err.response) {
+      return {
+        statusCode: err.response.status,
+        headers: err.response.headers || {},
+        body: err.response.data,
+        data: err.response.data // Use raw error response data instead of extractData
+      };
+    }
+    // Handle request errors (no response received)
+    if (err.request) {
+      return {
+        statusCode: 0,
+        headers: {},
+        body: null,
+        data: { error: 'No response received from server' }
+      };
+    }
+    // Re-throw other errors (network errors, etc.)
+    throw err;
+  }
+};
+// Add raw method that returns full axios response
+index.seed.resetDatabase.raw =
+  async (request = {}) => {
+    const axiosConfig = buildAxiosConfig(
+      request,
+      '/seed/reset',
+      'POST');
+    return await axiosClient.request(axiosConfig);
+};
+// Create a single test user
+index.seed.seedUser = async (request = {}) => {
+  const axiosConfig =
+    buildAxiosConfig(request, '/seed/user', 'POST');
+  try {
+    const response = await axiosClient.request(axiosConfig);
+    return {
+      statusCode: response.status,
+      headers: response.headers,
+      body: response.data,
+      data: extractData(response)
+    };
+  } catch (err) {
+    // Debug: log the error structure
+    console.log('API Client Error:', {
+      hasResponse: !!err.response,
+      hasRequest: !!err.request,
+      status: err.response?.status,
+      message: err.message,
+      errorKeys: Object.keys(err)
+    });
+    
+    // Handle axios errors (4xx, 5xx status codes)
+    if (err.response) {
+      return {
+        statusCode: err.response.status,
+        headers: err.response.headers || {},
+        body: err.response.data,
+        data: err.response.data // Use raw error response data instead of extractData
+      };
+    }
+    // Handle request errors (no response received)
+    if (err.request) {
+      return {
+        statusCode: 0,
+        headers: {},
+        body: null,
+        data: { error: 'No response received from server' }
+      };
+    }
+    // Re-throw other errors (network errors, etc.)
+    throw err;
+  }
+};
+// Add raw method that returns full axios response
+index.seed.seedUser.raw =
+  async (request = {}) => {
+    const axiosConfig = buildAxiosConfig(
+      request,
+      '/seed/user',
+      'POST');
     return await axiosClient.request(axiosConfig);
 };
         return index;
