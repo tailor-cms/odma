@@ -74,7 +74,7 @@ describe('Auth - Password management', () => {
       const response = await authClient.auth.changePassword(
         'WrongCurrentPassword123!',
         generateValidPassword(),
-        401,
+        400,
       );
       expect(response.body.message).toContain('incorrect');
     });

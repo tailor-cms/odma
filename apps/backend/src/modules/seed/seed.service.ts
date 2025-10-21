@@ -4,7 +4,7 @@ import { DatabaseSeeder } from '@/database/seeders/DatabaseSeeder';
 import { Injectable } from '@nestjs/common';
 import { PinoLogger } from 'nestjs-pino';
 import { UserService } from '@/modules/user/user.service';
-import { faker } from '@faker-js/faker';
+import casual from 'casual';
 
 @Injectable()
 export class SeedService {
@@ -28,9 +28,9 @@ export class SeedService {
   async createTestUser(): Promise<User> {
     this.logger.debug('Creating test user');
     const userData = {
-      email: faker.internet.email().toLowerCase(),
-      firstName: faker.person.firstName(),
-      lastName: faker.person.lastName(),
+      email: casual.email.toLowerCase(),
+      firstName: casual.first_name,
+      lastName: casual.last_name,
       role: UserRole.USER,
     };
     const user = await this.userService.create(userData);

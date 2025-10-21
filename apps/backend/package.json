@@ -56,6 +56,7 @@
     "@sentry/profiling-node": "^10.19.0",
     "@types/handlebars": "^4.1.0",
     "bcrypt": "^6.0.0",
+    "casual": "^1.6.2",
     "class-transformer": "^0.5.1",
     "class-validator": "^0.14.2",
     "common-tags": "^1.8.2",
@@ -78,7 +79,6 @@
     "yn": "^5.1.0"
   },
   "devDependencies": {
-    "@faker-js/faker": "^10.0.0",
     "@libsql/client": "^0.15.15",
     "@mikro-orm/libsql": "^6.5.8",
     "@nestjs/cli": "^11.0.10",
@@ -97,7 +97,6 @@
     "@types/set-cookie-parser": "^2.4.10",
     "@types/supertest": "^6.0.3",
     "@types/uuid": "^11.0.0",
-    "casual": "^1.6.2",
     "dotenv-cli": "^10.0.0",
     "jest": "^30.2.0",
     "jsonwebtoken": "^9.0.2",

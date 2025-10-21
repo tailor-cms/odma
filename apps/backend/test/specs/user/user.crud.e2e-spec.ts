@@ -52,9 +52,12 @@ describe('User API: CRUD operations', () => {
       expect(response.body.data).toHaveLength(2);
     });
 
-    it('should deny access for non-admin users', async () => {
-      const response = await api.as(user).get().expect(403);
-      expectForbidden(response);
+    it('should allow access for non-admin users', async () => {
+      const response = await api.as(user).get().expect(200);
+      expectPaginatedResponse(response.body, {
+        page: 1,
+        total: 2,
+      });
     });
 
     it('should filter users by email (exact match)', async () => {

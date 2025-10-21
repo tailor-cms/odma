@@ -62,7 +62,7 @@ describe('Auth login', () => {
         .get('/api/me')
         .set('Authorization', `Bearer ${accessToken}`)
         .expect(200);
-      expect(meResponse.body.user.email).toBe(user.email);
+      expect(meResponse.body.email).toBe(user.email);
     });
 
     it('should update lastLoginAt timestamp', async () => {

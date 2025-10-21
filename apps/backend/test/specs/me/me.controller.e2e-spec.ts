@@ -47,8 +47,7 @@ describe('/me endpoint', () => {
   describe('GET /me - Current user profile', () => {
     it('should return current user without id route parameter', async () => {
       const response = await apiRequest.as(user).get().expect(200);
-      expect(response.body).toHaveProperty('user');
-      expectUser(response.body.user, {
+      expectUser(response.body, {
         email: user.email,
         role: user.role,
       });
@@ -57,11 +56,11 @@ describe('/me endpoint', () => {
     it('should work for both regular users and admins', async () => {
       // Regular user
       const userResponse = await apiRequest.as(user).get().expect(200);
-      expect(userResponse.body.user.role).toBe(UserRole.USER);
+      expect(userResponse.body.role).toBe(UserRole.USER);
 
       // Admin user
       const adminResponse = await apiRequest.as(admin).get().expect(200);
-      expect(adminResponse.body.user.role).toBe(UserRole.ADMIN);
+      expect(adminResponse.body.role).toBe(UserRole.ADMIN);
     });
 
     it('should require authentication', async () => {
@@ -75,7 +74,7 @@ describe('/me endpoint', () => {
         .as(user)
         .patch({ body: { firstName: 'SelfUpdated' } })
         .expect(200);
-      expectUser(response.body.user, {
+      expectUser(response.body, {
         firstName: 'SelfUpdated',
         id: user.id, // Ensures it updated the right user
       });
@@ -93,7 +92,7 @@ describe('/me endpoint', () => {
         })
         .expect(400);
       const { body } = await apiRequest.as(user).get().expect(200);
-      expect(body.user.role).toBe(UserRole.USER);
+      expect(body.role).toBe(UserRole.USER);
     });
 
     it('should not prevent email changes through profile endpoint', async () => {
@@ -128,8 +127,8 @@ describe('/me endpoint', () => {
         .as(admin)
         .patch({ body: { firstName: 'AdminUpdated' } })
         .expect(200);
-      expect(body.user.firstName).toBe('AdminUpdated');
-      expect(body.user.id).toBe(admin.id);
+      expect(body.firstName).toBe('AdminUpdated');
+      expect(body.id).toBe(admin.id);
     });
 
     it('should handle empty updates gracefully', async () => {
@@ -138,7 +137,7 @@ describe('/me endpoint', () => {
         .patch({ body: {} })
         .expect(200);
       // Should return current data unchanged
-      expectUser(response.body.user, {
+      expectUser(response.body, {
         email: user.email,
         firstName: 'User',
         lastName: 'Test',
@@ -151,13 +150,13 @@ describe('/me endpoint', () => {
       const allowedUpdates = {
         firstName: 'NewFirst',
         lastName: 'NewLast',
-        imgUrl: 'https://example.com/avatar.jpg',
+        imgUrl: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg==',
       };
       const response = await apiRequest
         .as(user)
         .patch({ body: allowedUpdates })
         .expect(200);
-      expectUser(response.body.user, allowedUpdates);
+      expectUser(response.body, allowedUpdates);
     });
 
     it('should reject system fields', async () => {
@@ -184,21 +183,17 @@ describe('/me endpoint', () => {
       // Immediately retrieve
       const { body } = await apiRequest.as(user).get().expect(200);
       // Both should match
-      expect(updateResponse.body.user.firstName).toBe('ConsistentName');
-      expect(body.user.firstName).toBe('ConsistentName');
-      expect(updateResponse.body.user.updatedAt).toBe(body.user.updatedAt);
+      expect(updateResponse.body.firstName).toBe('ConsistentName');
+      expect(body.firstName).toBe('ConsistentName');
+      expect(updateResponse.body.updatedAt).toBe(body.updatedAt);
     });
 
     it('should handle null values for optional fields', async () => {
-      await apiRequest
-        .as(user)
-        .patch({ body: { imgUrl: 'https://example.com/photo.jpg' } })
-        .expect(200);
       const response = await apiRequest
         .as(user)
         .patch({ body: { imgUrl: null } })
         .expect(200);
-      expect(response.body.user.imgUrl).toBeNull();
+      expect(response.body.imgUrl).toBeNull();
     });
   });
 

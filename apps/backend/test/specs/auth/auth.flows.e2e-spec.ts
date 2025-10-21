@@ -50,7 +50,7 @@ describe('AuthController - Integration flows', () => {
       // 2. Access protected endpoint
       const meResponse = await authClient.get('/api/me');
       expect(meResponse.status).toBe(200);
-      expect(meResponse.body.user.email).toBe(user.email);
+      expect(meResponse.body.email).toBe(user.email);
       // 3. Change password
       const newPassword = generateValidPassword();
       await authClient.auth.changePassword(user.password, newPassword);
@@ -78,7 +78,7 @@ describe('AuthController - Integration flows', () => {
           .get('/api/me')
           .set('Authorization', `Bearer ${token}`);
         expect(response.status).toBe(200);
-        expect(response.body.user.email).toBe(user.email);
+        expect(response.body.email).toBe(user.email);
       }
     });
   });
