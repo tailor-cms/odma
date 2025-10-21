@@ -51,6 +51,9 @@ jobs:
           url: http://localhost:3001/api/healthcheck
           method: "GET"
           accept: 200
+      - name: Run integration (API) tests
+        shell: bash
+        run: cd ./apps/backend && pnpm test:e2e
       # Disabled until configuration is provided
       # - name: Run functional tests
       #   shell: bash
