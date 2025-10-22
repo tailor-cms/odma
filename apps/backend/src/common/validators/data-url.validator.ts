@@ -12,7 +12,7 @@ const dataUrlValidator = (value: any, _args: ValidationArguments) => {
 
   // Check if it's a valid data URL format
   const dataUrlPattern =
-    /^data:([a-zA-Z0-9][a-zA-Z0-9\/+]*);base64,([A-Za-z0-9+/=]+)$/;
+    /^data:([a-zA-Z0-9][a-zA-Z0-9/+]*);base64,([A-Za-z0-9+/=]+)$/;
   if (!dataUrlPattern.test(value)) return false;
 
   // Extract the MIME type

@@ -6,7 +6,10 @@ import ApiClient from '../../../api/ApiClient';
 import { AppBar } from '../../../pom/common/AppBar';
 import { TEST_USER as DEFAULT_USER } from '../../../fixtures/auth';
 
-const { OIDC_TEST_USER_EMAIL, OIDC_TEST_USER_PASSWORD } = process.env;
+const {
+  OIDC_TEST_USER_EMAIL: _OIDC_TEST_USER_EMAIL,
+  OIDC_TEST_USER_PASSWORD: _OIDC_TEST_USER_PASSWORD,
+} = process.env;
 
 interface UserData {
   email: string;

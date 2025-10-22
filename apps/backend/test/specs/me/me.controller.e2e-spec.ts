@@ -150,7 +150,9 @@ describe('/me endpoint', () => {
       const allowedUpdates = {
         firstName: 'NewFirst',
         lastName: 'NewLast',
-        imgUrl: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg==',
+        imgUrl:
+          // eslint-disable-next-line max-len
+          'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg==',
       };
       const response = await apiRequest
         .as(user)
