@@ -77,19 +77,19 @@ jobs:
       - name: Run integration (API) tests
         shell: bash
         run: cd ./apps/backend && pnpm test:e2e
-      # Disabled until configuration is provided
-      # - name: Run functional tests
-      #   shell: bash
-      #   run: pnpm e2e:functional
+      - name: Run functional tests
+        shell: bash
+        run: pnpm e2e:functional
+      # Disabled until credentials for Percy are provided
       # - name: Run visual tests
       #   shell: bash
       #   run: pnpm e2e:visual
-      # - name: Run a11y tests
-      #   shell: bash
-      #   run: pnpm e2e:a11y
-      # - uses: actions/upload-artifact@v3
-      #   if: always()
-      #   with:
-      #     name: playwright-report
-      #     path: ./tests/playwright-report/
-      #     retention-days: 1
+      - name: Run a11y tests
+        shell: bash
+        run: pnpm e2e:a11y
+      - uses: actions/upload-artifact@v3
+        if: always()
+        with:
+          name: playwright-report
+          path: ./tests/playwright-report/
+          retention-days: 1
