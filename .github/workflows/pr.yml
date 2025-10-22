@@ -30,16 +30,31 @@ jobs:
       - name: Setup app .env
         run: |
           touch .env
-          echo "EMAIL_SENDER_NAME=App" >> .env
-          echo "EMAIL_SENDER_ADDRESS=app@myappdomain.com" >> .env
-          echo "EMAIL_USER=${{ secrets.EMAIL_USER }}" >> .env
-          echo "EMAIL_PASSWORD=${{ secrets.EMAIL_PASSWORD }}" >> .env
-          echo "EMAIL_HOST=sandbox.smtp.mailtrap.io" >> .env
+          echo "HOSTNAME=localhost" >> .env
+          echo "PORT=3000" >> .env
+          echo "REVERSE_PROXY_PORT=3000" >> .env
+          echo "NODE_ENV=production" >> .env
+          echo "LOG_LEVEL=debug" >> .env
+          echo "CORS_ALLOWED_ORIGINS=http://localhost:3000" >> .env
+          echo "DATABASE_HOST=localhost" >> .env
+          echo "DATABASE_PORT=5432" >> .env
+          echo "DATABASE_NAME=app" >> .env
+          echo "DATABASE_USERNAME=dev" >> .env
+          echo "DATABASE_PASSWORD=dev" >> .env
+          echo "DATABASE_SSL=false" >> .env
+          echo "DATABASE_LOGGING=false" >> .env
           echo "AUTH_SALT_ROUNDS=10" >> .env
           echo "AUTH_JWT_ISSUER=App" >> .env
           echo "AUTH_JWT_SECRET=auth-jwt-secret" >> .env
           echo "AUTH_JWT_EXPIRES_IN=7d" >> .env
           echo "AUTH_COOKIE_NAME=access_token" >> .env
+          echo "MAIL_FROM_NAME=App" >> .env
+          echo "MAIL_FROM_EMAIL=app@myappdomain.com" >> .env
+          echo "MAIL_USER=${{ secrets.EMAIL_USER }}" >> .env
+          echo "MAIL_PASSWORD=${{ secrets.EMAIL_PASSWORD }}" >> .env
+          echo "MAIL_HOST=sandbox.smtp.mailtrap.io" >> .env
+          echo "MAIL_PORT=587" >> .env
+          echo "MAIL_SECURE=false" >> .env
       - name: Setup E2E .env
         run: |
           touch ./tests/.env
