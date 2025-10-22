@@ -35,6 +35,11 @@ jobs:
           echo "EMAIL_USER=${{ secrets.EMAIL_USER }}" >> .env
           echo "EMAIL_PASSWORD=${{ secrets.EMAIL_PASSWORD }}" >> .env
           echo "EMAIL_HOST=sandbox.smtp.mailtrap.io" >> .env
+          echo "AUTH_SALT_ROUNDS=10" >> .env
+          echo "AUTH_JWT_ISSUER=App" >> .env
+          echo "AUTH_JWT_SECRET=auth-jwt-secret" >> .env
+          echo "AUTH_JWT_EXPIRES_IN=7d" >> .env
+          echo "AUTH_COOKIE_NAME=access_token" >> .env
       - name: Setup E2E .env
         run: |
           touch ./tests/.env
