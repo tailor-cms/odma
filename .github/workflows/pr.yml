@@ -65,7 +65,7 @@ jobs:
           echo "PERCY_TOKEN=${{ secrets.PERCY_TOKEN }}" >> ./tests/.env
       - name: Setup backend test .env
         run: |
-          cp ./apps/backend/.env.test.example ./apps/backend/.env.test
+          cp ./apps/backend/test.env.example ./apps/backend/.env.test
       - name: Install, build, seed, and start server
         uses: ./.github/actions/run
       - name: Check if platform is running
