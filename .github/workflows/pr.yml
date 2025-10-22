@@ -53,7 +53,7 @@ jobs:
           echo "MAIL_USER=${{ secrets.EMAIL_USER }}" >> .env
           echo "MAIL_PASSWORD=${{ secrets.EMAIL_PASSWORD }}" >> .env
           echo "MAIL_HOST=sandbox.smtp.mailtrap.io" >> .env
-          echo "MAIL_PORT=587" >> .env
+          echo "MAIL_PORT=2525" >> .env
           echo "MAIL_SECURE=false" >> .env
       - name: Setup E2E .env
         run: |
