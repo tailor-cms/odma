@@ -1,5 +1,5 @@
 {
-  "name": "odma-frontend",
+  "name": "odma/frontend",
   "type": "module",
   "scripts": {
     "dev": "nuxt dev",

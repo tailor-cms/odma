@@ -1,2 +1,2 @@
 export * from './base.entity';
-export * from './user.entity';
+export * from '@/modules/user/entities/user.entity';

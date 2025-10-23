@@ -1,6 +1,6 @@
 /**
  * Auto-generated axios-based API client
- * Generated from: 2025-10-23T10:25:46.287Z
+ * Generated from: 2025-10-23T13:43:29.515Z
  * Usage:
  *   import { createApiClient } from 'app-api-client'
  *   const api = await createApiClient({ axiosClient })

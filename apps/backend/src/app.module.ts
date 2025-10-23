@@ -19,7 +19,7 @@ import generalConfig from './config/general.config';
 import { join } from 'path';
 import mailConfig from './config/mail.config';
 import mikroOrmConfig from './config/mikro-orm.config';
-import pinoConfig from './config/lib/pino.config';
+import pinoConfig from './config/pino.config';
 import { validationSchema } from './config/validation';
 
 const isProduction = process.env.NODE_ENV === 'production';
