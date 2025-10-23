@@ -21,7 +21,6 @@ const setAppEnv = (opts) => ({
       DATABASE_NAME: opts.dbName,
       DATABASE_USER: opts.user,
       DATABASE_PASSWORD: opts.password,
-      STORAGE_PATH: `${PROJECT_DIR}/apps/backend/data`,
     };
     return {
       env,
