@@ -1,0 +1,37 @@
+{
+  "name": "app-api-client",
+  "version": "1.0.0",
+  "description": "Auto-generated API client for the app",
+  "type": "module",
+  "main": "index.mjs",
+  "types": "index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./index.d.ts",
+      "import": "./index.mjs"
+    },
+    "./response-dtos": {
+      "types": "./response-dtos.d.ts"
+    },
+    "./typed-methods": {
+      "types": "./typed-methods.d.ts",
+      "import": "./typed-methods.js"
+    }
+  },
+  "files": [
+    "index.mjs",
+    "index.d.ts",
+    "api-client.mjs",
+    "api-client-types.d.ts",
+    "response-dtos.d.ts"
+  ],
+  "keywords": [
+    "api",
+    "client",
+    "auto-generated"
+  ],
+  "license": "MIT",
+  "engines": {
+    "node": ">=18"
+  }
+}

@@ -13,6 +13,8 @@ export default createConfigForNuxt({
     },
   },
 }).append({
+  ignores: ['packages/app-api-client/**'],
+}).append({
   rules: {
     'max-len': ['error', { code: 90, comments: 100, ignoreUrls: true }],
     'vue/multi-word-component-names': 'off',
@@ -33,5 +35,11 @@ export default createConfigForNuxt({
     '@stylistic/operator-linebreak': 'off',
     '@stylistic/indent-binary-ops': 'off',
     '@typescript-eslint/no-explicit-any': 'off',
+  },
+}).append({
+  files: ['apps/backend/**/*.ts'],
+  rules: {
+    '@typescript-eslint/no-extraneous-class': 'off',
+    '@typescript-eslint/consistent-type-imports': 'off',
   },
 });

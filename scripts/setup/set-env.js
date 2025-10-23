@@ -21,7 +21,6 @@ const setAppEnv = (opts) => ({
       DATABASE_NAME: opts.dbName,
       DATABASE_USER: opts.user,
       DATABASE_PASSWORD: opts.password,
-      STORAGE_PATH: `${PROJECT_DIR}/apps/backend/data`,
     };
     return {
       env,
@@ -34,7 +33,7 @@ export default async function ({ dbPrefix }) {
   try {
     const dbConfig = await getDatabaseClient();
     const configs = [
-      setAppEnv({ ...dbConfig, dbName: getDBName('app_starter', dbPrefix) }),
+      setAppEnv({ ...dbConfig, dbName: getDBName('odma', dbPrefix) }),
     ];
     const afterHooks = [];
     await Promise.all(

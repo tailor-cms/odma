@@ -5,7 +5,7 @@ runs:
   - uses: pnpm/action-setup@v4
   - uses: actions/setup-node@v4
     with:
-      node-version: 22.11.0
+      node-version: 24.10.0
       cache: 'pnpm'
       cache-dependency-path: './pnpm-lock.yaml'
   - name: Install dependencies
@@ -32,9 +32,9 @@ runs:
   - name: Configure env and build
     shell: bash
     run: pnpm setup:dev --ci
-  - name: Migrate DB
+  - name: Reset DB
     shell: bash
-    run: pnpm db:migrate
+    run: pnpm db:reset
   - name: Seed DB
     shell: bash
     run: pnpm seed

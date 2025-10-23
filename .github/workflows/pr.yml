@@ -1,6 +1,6 @@
 name: PR checks
 env:
-  PLAYWRIGHT_VERSION: 1.46.1
+  PLAYWRIGHT_VERSION: 1.56.0
 on:
   push:
     branches: [ main, develop ]
@@ -30,52 +30,66 @@ jobs:
       - name: Setup app .env
         run: |
           touch .env
-          echo "EMAIL_SENDER_NAME=App" >> .env
-          echo "EMAIL_SENDER_ADDRESS=app@myappdomain.com" >> .env
-          echo "EMAIL_USER=${{ secrets.EMAIL_USER }}" >> .env
-          echo "EMAIL_PASSWORD=${{ secrets.EMAIL_PASSWORD }}" >> .env
-          echo "EMAIL_HOST=sandbox.smtp.mailtrap.io" >> .env
-          echo "NUXT_PUBLIC_OIDC_ENABLED=${{ vars.NUXT_PUBLIC_OIDC_ENABLED }}" >> .env
-          echo "OIDC_ALLOW_SIGNUP=${{ vars.OIDC_ALLOW_SIGNUP }}" >> .env
-          echo "OIDC_CLIENT_ID=${{ secrets.OIDC_CLIENT_ID }}" >> .env
-          echo "OIDC_CLIENT_SECRET=${{ secrets.OIDC_CLIENT_SECRET }}" >> .env
-          echo "OIDC_ISSUER=${{ vars.OIDC_ISSUER }}" >> .env
-          echo "OIDC_JWKS_URL=${{ vars.OIDC_JWKS_URL }}" >> .env
-          echo "OIDC_AUTHORIZATION_ENDPOINT=${{ vars.OIDC_AUTHORIZATION_ENDPOINT }}" >> .env
-          echo "OIDC_TOKEN_ENDPOINT=${{ vars.OIDC_TOKEN_ENDPOINT }}" >> .env
-          echo "OIDC_USERINFO_ENDPOINT=${{ vars.OIDC_USERINFO_ENDPOINT }}" >> .env
-          echo "OIDC_SESSION_SECRET=${{ secrets.OIDC_SESSION_SECRET }}" >> .env
+          echo "HOSTNAME=localhost" >> .env
+          echo "PORT=3000" >> .env
+          echo "REVERSE_PROXY_PORT=3000" >> .env
+          echo "NODE_ENV=production" >> .env
+          echo "LOG_LEVEL=debug" >> .env
+          echo "CORS_ALLOWED_ORIGINS=http://localhost:3000" >> .env
+          echo "DATABASE_HOST=localhost" >> .env
+          echo "DATABASE_PORT=5432" >> .env
+          echo "DATABASE_NAME=app" >> .env
+          echo "DATABASE_USERNAME=dev" >> .env
+          echo "DATABASE_PASSWORD=dev" >> .env
+          echo "DATABASE_SSL=false" >> .env
+          echo "DATABASE_LOGGING=false" >> .env
+          echo "AUTH_SALT_ROUNDS=10" >> .env
+          echo "AUTH_JWT_ISSUER=App" >> .env
+          echo "AUTH_JWT_SECRET=auth-jwt-secret" >> .env
+          echo "AUTH_JWT_EXPIRES_IN=7d" >> .env
+          echo "AUTH_COOKIE_NAME=access_token" >> .env
+          echo "MAIL_FROM_NAME=App" >> .env
+          echo "MAIL_FROM_EMAIL=app@myappdomain.com" >> .env
+          echo "MAIL_USER=${{ secrets.MAIL_USER }}" >> .env
+          echo "MAIL_PASSWORD=${{ secrets.MAIL_PASSWORD }}" >> .env
+          echo "MAIL_HOST=sandbox.smtp.mailtrap.io" >> .env
+          echo "MAIL_PORT=2525" >> .env
+          echo "MAIL_SECURE=false" >> .env
       - name: Setup E2E .env
         run: |
           touch ./tests/.env
           echo "MAILTRAP_ACCOUNT_ID=${{ secrets.MAILTRAP_ACCOUNT_ID }}" >> ./tests/.env
           echo "MAILTRAP_TOKEN=${{ secrets.MAILTRAP_TOKEN }}" >> ./tests/.env
           echo "MAILTRAP_INBOX_ID=${{ secrets.MAILTRAP_INBOX_ID }}" >> ./tests/.env
-          echo "MAILTRAP_INBOX_NAME=e2e" >> ./tests/.env
+          echo "MAILTRAP_INBOX_NAME=odma-e2e" >> ./tests/.env
           echo "PERCY_TOKEN=${{ secrets.PERCY_TOKEN }}" >> ./tests/.env
-          echo "OIDC_TEST_USER_EMAIL=${{ secrets.OIDC_TEST_USER_EMAIL }}" >> ./tests/.env
-          echo "OIDC_TEST_USER_PASSWORD=${{ secrets.OIDC_TEST_USER_PASSWORD }}" >> ./tests/.env
+      - name: Setup backend test .env
+        run: |
+          cp ./apps/backend/test.env.example ./apps/backend/.env.test
       - name: Install, build, seed, and start server
         uses: ./.github/actions/run
       - name: Check if platform is running
         uses: indiesdev/curl@v1.1
         with:
-          url: http://localhost:3001/api/healthcheck
+          url: http://localhost:3000/api/healthcheck
           method: "GET"
           accept: 200
-      # Disabled until configuration is provided
-      # - name: Run functional tests
-      #   shell: bash
-      #   run: pnpm e2e:functional
+      - name: Run integration (API) tests
+        shell: bash
+        run: cd ./apps/backend && pnpm test:e2e
+      - name: Run functional tests
+        shell: bash
+        run: pnpm e2e:functional
+      # Disabled until credentials for Percy are provided
       # - name: Run visual tests
       #   shell: bash
       #   run: pnpm e2e:visual
-      # - name: Run a11y tests
-      #   shell: bash
-      #   run: pnpm e2e:a11y
-      # - uses: actions/upload-artifact@v3
-      #   if: always()
-      #   with:
-      #     name: playwright-report
-      #     path: ./tests/playwright-report/
-      #     retention-days: 1
+      - name: Run a11y tests
+        shell: bash
+        run: pnpm e2e:a11y
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: playwright-report
+          path: ./tests/playwright-report/
+          retention-days: 1

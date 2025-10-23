@@ -1,4 +1,4 @@
-import injectConfigHeaders from './lib/vite-plugins/injectConfigHeaders';
+import injectConfigHeaders from './app/lib/vite-plugins/injectConfigHeaders';
 
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({

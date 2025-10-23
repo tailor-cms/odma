@@ -4,7 +4,7 @@ services:
     container_name: "postgres"
     image: "postgres:15.1"
     environment:
-      POSTGRES_DB: "app_starter"
+      POSTGRES_DB: "odma"
       POSTGRES_USER: "dev"
       POSTGRES_PASSWORD: "dev"
     expose:
@@ -33,7 +33,7 @@ services:
       PORT: 3000
       REVERSE_PROXY_PORT: 3000
       DATABASE_HOST: "postgres"
-      DATABASE_NAME: "app_starter"
+      DATABASE_NAME: "odma"
       DATABASE_USER: "dev"
       DATABASE_PASSWORD: "dev"
     restart: "no"

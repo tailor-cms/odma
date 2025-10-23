@@ -4,13 +4,13 @@ export class AppBar {
   readonly page: Page;
   readonly el: Locator;
   readonly adminLink: Locator;
-  readonly catalogLink: Locator;
+  readonly homeLink: Locator;
   readonly userMenu: Locator;
 
   constructor(page: Page) {
     this.page = page;
     this.el = page.locator('#mainAppBar');
-    this.catalogLink = this.el.getByRole('link', { name: 'Catalog' });
+    this.homeLink = this.el.getByRole('link', { name: 'Home' });
     this.adminLink = this.el.getByRole('link', { name: 'Admin' });
     this.userMenu = this.el.getByLabel('User menu');
   }

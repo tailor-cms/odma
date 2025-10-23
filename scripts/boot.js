@@ -65,7 +65,7 @@ const dbConfig = env.DATABASE_URI
   : {
       host: env.DATABASE_HOST || 'localhost',
       port: env.DATABASE_PORT || 5432,
-      user: env.DATABASE_USER,
+      user: env.DATABASE_USERNAME,
       password: env.DATABASE_PASSWORD,
       database: env.DATABASE_NAME,
     };
@@ -73,7 +73,14 @@ await testDatabaseConnection(dbConfig, 10, 3000);
 dbConnectionLoader.stop();
 
 const appCommands = await Promise.all(
-  ['backend', 'frontend'].map(async (name, index) => {
+  ['backend', 'frontend', 'api-client'].map(async (name, index) => {
+    if (name === 'api-client') {
+      return {
+        name,
+        prefixColor: 'yellow',
+        command: `pnpm api:client:watch`,
+      };
+    }
     return {
       name,
       prefixColor: ['blue', 'green'][index],

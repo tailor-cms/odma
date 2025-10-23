@@ -1,24 +1,102 @@
-# Node
-node_modules
+# Dependencies
+node_modules/
+**/node_modules/
 
-# IDEs and editors
-.classpath
-.project
-/.idea
-*.launch
-.c9/
-.settings/
-*.sublime-workspace
+# Build outputs
+dist/
+build/
+.output/
+.next/
+.nuxt/
+.cache/
+.parcel-cache/
 
-# IDE - VSCode
-.vscode/*
-!.vscode/settings.json
-!.vscode/tasks.json
-!.vscode/extensions.json
-!.vscode/launch.json
-
-# OS
-.DS_Store
-
-# Config
+# Environment files
 .env
+.env.*
+!.env.example
+**/.env
+**/.env.*
+!**/.env.example
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# Runtime data
+pids
+*.pid
+*.seed
+*.pid.lock
+
+# Coverage directory used by tools like istanbul
+coverage/
+*.lcov
+.nyc_output/
+
+# Database files
+*.db
+*.sqlite
+*.sqlite3
+database.sqlite
+prisma/dev.db*
+
+# Uploads and temporary files
+uploads/
+tmp/
+temp/
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.fleet/
+
+# Package manager files
+.pnpm-debug.log*
+.yarn/
+.pnp.*
+yarn-error.log
+
+# Test results
+test-results/
+playwright-report/
+playwright/.cache/
+
+# TypeScript
+*.tsbuildinfo
+
+# Optional caches
+.eslintcache
+.rpt2_cache/
+.rts2_cache_cjs/
+.rts2_cache_es/
+.rts2_cache_umd/
+
+# Backup files
+*.backup
+*.bak
+*.tmp
+
+# Local development
+.local/
+local/
+
+# Generated documentation
+docs/build/

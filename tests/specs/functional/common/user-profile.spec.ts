@@ -4,6 +4,8 @@ import userSeed from '@app/seed/user.json';
 
 import { ChangePasswordDialog } from '../../../pom/common/ChangePasswordDiaog';
 import SeedClient from '../../../api/SeedClient';
+import { SignIn } from '../../../pom/auth/index.ts';
+import { TEST_USER } from '../../../fixtures/auth.ts';
 import { UserProfile } from '../../../pom/common/UserProfile';
 
 interface UserData {
@@ -12,15 +14,21 @@ interface UserData {
   lastName: string;
 }
 
-const getMockUserData = (): UserData => ({
-  email: faker.internet.email({ provider: 'example.com' }).toLowerCase(),
+const getTestUserData = (): UserData => ({
+  email: TEST_USER.email,
   firstName: faker.person.firstName(),
   lastName: faker.person.lastName(),
 });
 
 test.beforeEach(async ({ page }) => {
   await SeedClient.resetDatabase();
+  // Re-authenticate after database reset
+  const authPage = new SignIn(page);
+  await authPage.visit();
+  await authPage.signIn(TEST_USER.email, TEST_USER.password);
+  await page.waitForLoadState('networkidle');
   await page.goto(UserProfile.route);
+  await page.waitForLoadState('networkidle');
 });
 
 test('should be able to access profile page', async ({ page }) => {
@@ -29,7 +37,7 @@ test('should be able to access profile page', async ({ page }) => {
 
 test('should be able to update user', async ({ page }) => {
   const profilePage = new UserProfile(page);
-  const { email, firstName, lastName } = getMockUserData();
+  const { email, firstName, lastName } = getTestUserData();
   await profilePage.updateProfile(email, firstName, lastName);
   await profilePage.hasVisibleStatusMessage('User information updated!');
   await page.reload();
@@ -41,7 +49,7 @@ test('should be able to update user', async ({ page }) => {
 test('updating user should fail if email already exists', async ({ page }) => {
   const { data: user } = await SeedClient.seedUser();
   const email = user.email.toLowerCase();
-  const { firstName, lastName } = getMockUserData();
+  const { firstName, lastName } = getTestUserData();
   const profilePage = new UserProfile(page);
   await profilePage.updateProfile(email, firstName, lastName);
   await profilePage.hasVisibleAlert('Email is already taken');
@@ -121,7 +129,7 @@ test('updating password should fail if password confirmation does not match', as
   const passwordDialog = new ChangePasswordDialog(page);
   await passwordDialog.open();
   await passwordDialog.fillCurrentPassword(userSeed[0].password);
-  await passwordDialog.fillNewPassword(faker.internet.password());
+  await passwordDialog.fillNewPassword('Test1234!');
   await passwordDialog.fillPasswordConfirmation(faker.internet.password());
   await passwordDialog.save();
   await passwordDialog.hasVisibleAlert('Password confirmation does not match');
@@ -133,7 +141,7 @@ test('updating password should fail if current password is incorrect', async ({
   const passwordDialog = new ChangePasswordDialog(page);
   await passwordDialog.open();
   await passwordDialog.fillCurrentPassword(faker.internet.password());
-  const newPassword = faker.internet.password();
+  const newPassword = 'Test1234!';
   await passwordDialog.fillNewPassword(newPassword);
   await passwordDialog.fillPasswordConfirmation(newPassword);
   await passwordDialog.save();
@@ -144,10 +152,11 @@ test('should be able to update password', async ({ page }) => {
   const passwordDialog = new ChangePasswordDialog(page);
   await passwordDialog.open();
   await passwordDialog.fillCurrentPassword(userSeed[0].password);
-  const newPassword = faker.internet.password();
+  const newPassword = 'Test1234!';
   await passwordDialog.fillNewPassword(newPassword);
   await passwordDialog.fillPasswordConfirmation(newPassword);
   await passwordDialog.save();
+  await page.waitForLoadState('networkidle');
   await expect(page).toHaveTitle('Sign in');
 });
 

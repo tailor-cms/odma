@@ -160,6 +160,7 @@ export class UserManagement {
     lastName: string = 'Doe',
     role: 'Admin' | 'User' = 'Admin',
   ) {
+    await this.el.waitFor({ state: 'visible' });
     await this.addBtn.click();
     const dialog = new UserDialog(this.page);
     await dialog.edit(email, firstName, lastName, role);

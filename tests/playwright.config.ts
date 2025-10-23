@@ -3,7 +3,7 @@ import { defineConfig, devices } from '@playwright/test';
 
 dotenv.config();
 
-if (!process.env.APP_URL) process.env.APP_URL = 'http://localhost:3001';
+if (!process.env.APP_URL) process.env.APP_URL = 'http://localhost:3000';
 
 // See https://playwright.dev/docs/test-configuration.
 export default defineConfig({

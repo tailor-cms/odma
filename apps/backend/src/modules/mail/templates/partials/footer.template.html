@@ -1,0 +1,12 @@
+<div class="footer">
+  <p>Best regards,<br /><strong>{{fromName}}</strong></p>
+  {{#if footerLinks}}
+  <p>
+    {{#each footerLinks}}
+    <a href="{{this.url}}">{{this.text}}</a>{{#unless @last}} | {{/unless}}
+    {{/each}}
+  </p>
+  {{/if}} {{#if footerNote}}
+  <p style="color: #999; font-size: 12px">{{footerNote}}</p>
+  {{/if}}
+</div>

@@ -8,6 +8,6 @@ setup('authenticate', async ({ page }) => {
   await authPage.visit();
   await authPage.signIn(TEST_USER.email, TEST_USER.password);
   await page.waitForLoadState('networkidle');
-  await expect(page).toHaveTitle(/Catalog/);
+  await expect(page).toHaveTitle(/Home/);
   await page.context().storageState({ path: '.auth.json' });
 });

@@ -1,0 +1,20 @@
+Welcome!
+========
+
+Hello {{firstName}},
+
+You have been invited to join our platform. We're excited to have you as part of our community!
+
+Click the link below to set up your account and get started:
+
+{{inviteUrl}}
+
+📅 Note: This invitation link will expire in 7 days. Please set up your account before then.
+
+If you have any questions or need assistance, feel free to reach out to our support team.
+
+Best regards,
+{{fromName}}
+
+---
+This invitation was sent to you by an administrator of our platform.
