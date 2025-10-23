@@ -61,7 +61,7 @@ jobs:
           echo "MAILTRAP_ACCOUNT_ID=${{ secrets.MAILTRAP_ACCOUNT_ID }}" >> ./tests/.env
           echo "MAILTRAP_TOKEN=${{ secrets.MAILTRAP_TOKEN }}" >> ./tests/.env
           echo "MAILTRAP_INBOX_ID=${{ secrets.MAILTRAP_INBOX_ID }}" >> ./tests/.env
-          echo "MAILTRAP_INBOX_NAME=e2e" >> ./tests/.env
+          echo "MAILTRAP_INBOX_NAME=odma-e2e" >> ./tests/.env
           echo "PERCY_TOKEN=${{ secrets.PERCY_TOKEN }}" >> ./tests/.env
       - name: Setup backend test .env
         run: |
