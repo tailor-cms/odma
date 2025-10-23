@@ -27,7 +27,7 @@
             }
           },
           "401": {
-            "description": "Invalid credentials"
+            "description": "The email or password you entered is incorrect."
           }
         },
         "summary": "User login",
@@ -309,7 +309,7 @@
             }
           }
         },
-        "summary": "List users (Admin only)",
+        "summary": "List users",
         "tags": [
           "users"
         ]

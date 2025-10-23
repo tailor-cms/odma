@@ -248,7 +248,7 @@ resetDatabase: ApiMethod<{}, SeedResponseDto>;
  */
 seedUser: ApiMethod<{}, SeedResponseDto>; }
 export interface UserNamespace { /**
- * List users (Admin only)
+ * List users
  */
 fetch: ApiMethod<{query?: {email?: string; search?: string; includeArchived?: boolean; page?: number; limit?: number; sortBy?: 'id' | 'email' | 'firstName' | 'lastName' | 'createdAt' | 'updatedAt'; sortOrder?: 'ASC' | 'DESC'}}, Array<UserDto>>;
 /**

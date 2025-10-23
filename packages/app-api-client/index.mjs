@@ -1,6 +1,6 @@
 /**
  * Auto-generated axios-based API client
- * Generated from: 2025-10-15T12:02:19.394Z
+ * Generated from: 2025-10-23T10:25:46.287Z
  * Usage:
  *   import { createApiClient } from 'app-api-client'
  *   const api = await createApiClient({ axiosClient })
@@ -100,7 +100,6 @@ index.auth.login = async (request = {}) => {
       message: err.message,
       errorKeys: Object.keys(err)
     });
-    
     // Handle axios errors (4xx, 5xx status codes)
     if (err.response) {
       return {
@@ -153,7 +152,6 @@ index.auth.logout = async (request = {}) => {
       message: err.message,
       errorKeys: Object.keys(err)
     });
-    
     // Handle axios errors (4xx, 5xx status codes)
     if (err.response) {
       return {
@@ -206,7 +204,6 @@ index.auth.changePassword = async (request = {}) => {
       message: err.message,
       errorKeys: Object.keys(err)
     });
-    
     // Handle axios errors (4xx, 5xx status codes)
     if (err.response) {
       return {
@@ -259,7 +256,6 @@ index.auth.forgotPassword = async (request = {}) => {
       message: err.message,
       errorKeys: Object.keys(err)
     });
-    
     // Handle axios errors (4xx, 5xx status codes)
     if (err.response) {
       return {
@@ -312,7 +308,6 @@ index.auth.resetPassword = async (request = {}) => {
       message: err.message,
       errorKeys: Object.keys(err)
     });
-    
     // Handle axios errors (4xx, 5xx status codes)
     if (err.response) {
       return {
@@ -365,7 +360,6 @@ index.auth.validateResetToken = async (request = {}) => {
       message: err.message,
       errorKeys: Object.keys(err)
     });
-    
     // Handle axios errors (4xx, 5xx status codes)
     if (err.response) {
       return {
@@ -418,7 +412,6 @@ index.currentUser.get = async (request = {}) => {
       message: err.message,
       errorKeys: Object.keys(err)
     });
-    
     // Handle axios errors (4xx, 5xx status codes)
     if (err.response) {
       return {
@@ -471,7 +464,6 @@ index.currentUser.update = async (request = {}) => {
       message: err.message,
       errorKeys: Object.keys(err)
     });
-    
     // Handle axios errors (4xx, 5xx status codes)
     if (err.response) {
       return {
@@ -503,7 +495,7 @@ index.currentUser.update.raw =
       'PATCH');
     return await axiosClient.request(axiosConfig);
 };
-// List users (Admin only)
+// List users
 index.user.fetch = async (request = {}) => {
   const axiosConfig =
     buildAxiosConfig(request, '/users', 'GET');
@@ -524,7 +516,6 @@ index.user.fetch = async (request = {}) => {
       message: err.message,
       errorKeys: Object.keys(err)
     });
-    
     // Handle axios errors (4xx, 5xx status codes)
     if (err.response) {
       return {
@@ -577,7 +568,6 @@ index.user.create = async (request = {}) => {
       message: err.message,
       errorKeys: Object.keys(err)
     });
-    
     // Handle axios errors (4xx, 5xx status codes)
     if (err.response) {
       return {
@@ -630,7 +620,6 @@ index.user.get = async (request = {}) => {
       message: err.message,
       errorKeys: Object.keys(err)
     });
-    
     // Handle axios errors (4xx, 5xx status codes)
     if (err.response) {
       return {
@@ -683,7 +672,6 @@ index.user.update = async (request = {}) => {
       message: err.message,
       errorKeys: Object.keys(err)
     });
-    
     // Handle axios errors (4xx, 5xx status codes)
     if (err.response) {
       return {
@@ -736,7 +724,6 @@ index.user.remove = async (request = {}) => {
       message: err.message,
       errorKeys: Object.keys(err)
     });
-    
     // Handle axios errors (4xx, 5xx status codes)
     if (err.response) {
       return {
@@ -789,7 +776,6 @@ index.user.restore = async (request = {}) => {
       message: err.message,
       errorKeys: Object.keys(err)
     });
-    
     // Handle axios errors (4xx, 5xx status codes)
     if (err.response) {
       return {
@@ -842,7 +828,6 @@ index.user.reinvite = async (request = {}) => {
       message: err.message,
       errorKeys: Object.keys(err)
     });
-    
     // Handle axios errors (4xx, 5xx status codes)
     if (err.response) {
       return {
@@ -895,7 +880,6 @@ index.health.healthCheck = async (request = {}) => {
       message: err.message,
       errorKeys: Object.keys(err)
     });
-    
     // Handle axios errors (4xx, 5xx status codes)
     if (err.response) {
       return {
@@ -948,7 +932,6 @@ index.health.liveness = async (request = {}) => {
       message: err.message,
       errorKeys: Object.keys(err)
     });
-    
     // Handle axios errors (4xx, 5xx status codes)
     if (err.response) {
       return {
@@ -1001,7 +984,6 @@ index.health.readiness = async (request = {}) => {
       message: err.message,
       errorKeys: Object.keys(err)
     });
-    
     // Handle axios errors (4xx, 5xx status codes)
     if (err.response) {
       return {
@@ -1054,7 +1036,6 @@ index.health.sentryDebug = async (request = {}) => {
       message: err.message,
       errorKeys: Object.keys(err)
     });
-    
     // Handle axios errors (4xx, 5xx status codes)
     if (err.response) {
       return {
@@ -1107,7 +1088,6 @@ index.health.sentryMessage = async (request = {}) => {
       message: err.message,
       errorKeys: Object.keys(err)
     });
-    
     // Handle axios errors (4xx, 5xx status codes)
     if (err.response) {
       return {
@@ -1160,7 +1140,6 @@ index.seed.resetDatabase = async (request = {}) => {
       message: err.message,
       errorKeys: Object.keys(err)
     });
-    
     // Handle axios errors (4xx, 5xx status codes)
     if (err.response) {
       return {
@@ -1213,7 +1192,6 @@ index.seed.seedUser = async (request = {}) => {
       message: err.message,
       errorKeys: Object.keys(err)
     });
-    
     // Handle axios errors (4xx, 5xx status codes)
     if (err.response) {
       return {
