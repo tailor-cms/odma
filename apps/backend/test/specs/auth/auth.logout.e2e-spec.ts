@@ -1,12 +1,11 @@
 import { INestApplication } from '@nestjs/common';
-import { User } from '@/database/entities';
 import {
   AuthClient,
   TestUser,
   cleanDatabase,
   closeTestingApp,
   createTestingApp,
-  seedTestUsers, getEntityManager,
+  seedTestUsers,
 } from '../../helpers/test.helpers';
 import request from 'supertest';
 
