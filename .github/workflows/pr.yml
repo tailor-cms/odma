@@ -50,8 +50,8 @@ jobs:
           echo "AUTH_COOKIE_NAME=access_token" >> .env
           echo "MAIL_FROM_NAME=App" >> .env
           echo "MAIL_FROM_EMAIL=app@myappdomain.com" >> .env
-          echo "MAIL_USER=${{ secrets.EMAIL_USER }}" >> .env
-          echo "MAIL_PASSWORD=${{ secrets.EMAIL_PASSWORD }}" >> .env
+          echo "MAIL_USER=${{ secrets.MAIL_USER }}" >> .env
+          echo "MAIL_PASSWORD=${{ secrets.MAIL_PASSWORD }}" >> .env
           echo "MAIL_HOST=sandbox.smtp.mailtrap.io" >> .env
           echo "MAIL_PORT=2525" >> .env
           echo "MAIL_SECURE=false" >> .env
