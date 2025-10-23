@@ -1,4 +1,4 @@
-import { createApiClient, type ApiClient } from 'app-api-client';
+import { type ApiClient, createApiClient } from 'app-api-client';
 import axiosClient from './request';
 
 export { default as client } from './request';
