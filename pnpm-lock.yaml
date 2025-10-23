@@ -310,9 +310,6 @@ importers:
       '@mdi/font':
         specifier: 7.4.47
         version: 7.4.47
-      '@paralleldrive/cuid2':
-        specifier: ^2.2.2
-        version: 2.2.2
       '@pinia/nuxt':
         specifier: ^0.11.2
         version: 0.11.2(magicast@0.3.5)(pinia@3.0.3(typescript@5.9.3)(vue@3.5.22(typescript@5.9.3)))
@@ -343,12 +340,6 @@ importers:
       debug:
         specifier: ^4.4.3
         version: 4.4.3
-      fecha:
-        specifier: ^4.2.3
-        version: 4.2.3
-      hashids:
-        specifier: ^2.3.0
-        version: 2.3.0
       humanize-string:
         specifier: ^3.1.0
         version: 3.1.0
@@ -382,12 +373,6 @@ importers:
       vee-validate:
         specifier: 4.15.1
         version: 4.15.1(vue@3.5.22(typescript@5.9.3))
-      vue3-tree-vue:
-        specifier: ^2.0.15
-        version: 2.0.15(vue@3.5.22(typescript@5.9.3))
-      vuedraggable:
-        specifier: 4.1.0
-        version: 4.1.0(vue@3.5.22(typescript@5.9.3))
       vuetify:
         specifier: 3.10.5
         version: 3.10.5(typescript@5.9.3)(vue@3.5.22(typescript@5.9.3))
@@ -5670,9 +5655,6 @@ packages:
       picomatch:
         optional: true
 
-  fecha@4.2.3:
-    resolution: {integrity: sha512-OP2IUU6HeYKJi3i0z4A19kHMQoLVs4Hc+DPqqxI2h/DPZHTm/vjsfC6P0b4jCMy14XizLBqvndQ+UilD7707Jw==}
-
   fetch-blob@3.2.0:
     resolution: {integrity: sha512-7yAQpD2UMJzLi1Dqv7qFYnPbaPx7ZfFK6PiIxQ4PfkGPyNyl2Ugx+a/umUonmKqjhM4DnfbMvdX6otXq83soQQ==}
     engines: {node: ^12.20 || >= 14.13}
@@ -5973,9 +5955,6 @@ packages:
   has-tostringtag@1.0.2:
     resolution: {integrity: sha512-NqADB8VjPFLM2V0VvHUewwwsw0ZWBaIdgo+ieHtK3hasLz4qeCRjYcqfB6AQrBggRKppKF8L52/VqdVsO47Dlw==}
     engines: {node: '>= 0.4'}
-
-  hashids@2.3.0:
-    resolution: {integrity: sha512-ljM73TE/avEhNnazxaj0Dw3BbEUuLC5yYCQ9RSkSUcT4ZSU6ZebdKCIBJ+xT/DnSYW36E9k82GH1Q6MydSIosQ==}
 
   hasown@2.0.2:
     resolution: {integrity: sha512-0hJU9SCPvmMzIBdZFqNPXWa6dqh7WdH0cII9y+CyS8rG3nL48Bclra9HmKhVVUHyPWNH5Y7xDwAB7bfgSjkUMQ==}
@@ -9312,12 +9291,6 @@ packages:
     resolution: {integrity: sha512-ogAF3P97NPm8fJsE4by9dwSYtDwXIY1nFY9T6DyQnGHd1E2Da94w9JIolpe42LJGIl0DwOHBi8TcRPlPGwbTtw==}
     peerDependencies:
       vue: ^3.2.0
-
-  vue3-tree-vue@2.0.15:
-    resolution: {integrity: sha512-9SeBuervVBNgyGJS6c7CD9nuaZpzpbdCUHaerk5vXOYgBwJAlle6EMbqm/H+OD09SCMy5NLoLimzCMTr15eU1A==}
-    engines: {node: '>=12'}
-    peerDependencies:
-      vue: ^3.0.5
 
   vue@3.5.22:
     resolution: {integrity: sha512-toaZjQ3a/G/mYaLSbV+QsQhIdMo9x5rrqIpYRObsJ6T/J+RyCSFwN2LHNVH9v8uIcljDNa3QzPVdv3Y6b9hAJQ==}
@@ -15924,8 +15897,6 @@ snapshots:
     optionalDependencies:
       picomatch: 4.0.3
 
-  fecha@4.2.3: {}
-
   fetch-blob@3.2.0:
     dependencies:
       node-domexception: 1.0.0
@@ -16291,8 +16262,6 @@ snapshots:
   has-tostringtag@1.0.2:
     dependencies:
       has-symbols: 1.1.0
-
-  hashids@2.3.0: {}
 
   hasown@2.0.2:
     dependencies:
@@ -20067,10 +20036,6 @@ snapshots:
   vue-router@4.5.1(vue@3.5.22(typescript@5.9.3)):
     dependencies:
       '@vue/devtools-api': 6.6.4
-      vue: 3.5.22(typescript@5.9.3)
-
-  vue3-tree-vue@2.0.15(vue@3.5.22(typescript@5.9.3)):
-    dependencies:
       vue: 3.5.22(typescript@5.9.3)
 
   vue@3.5.22(typescript@5.9.3):
