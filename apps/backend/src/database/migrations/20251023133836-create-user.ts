@@ -2,7 +2,7 @@ import { Migration } from '@mikro-orm/migrations';
 
 export class CreateUser extends Migration {
   async up(): Promise<void> {
-    await this.ctx.schema.createTable('users', (table) => {
+    await this.ctx?.schema?.createTable('users', (table) => {
       table.uuid('id').primary();
       table.datetime('created_at').notNullable();
       table.datetime('updated_at').notNullable();
@@ -18,6 +18,6 @@ export class CreateUser extends Migration {
   }
 
   async down(): Promise<void> {
-    await this.ctx.schema.dropTable('users');
+    await this.ctx?.schema?.dropTable('users');
   }
 }
