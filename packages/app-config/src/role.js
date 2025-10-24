@@ -1,7 +1,6 @@
 const role = {
   user: {
     ADMIN: 'ADMIN',
-    INTEGRATION: 'INTEGRATION',
     USER: 'USER',
   },
 };

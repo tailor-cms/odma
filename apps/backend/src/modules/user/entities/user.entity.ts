@@ -10,7 +10,7 @@ import {
   Property,
 } from '@mikro-orm/core';
 import { Exclude } from 'class-transformer';
-import { BaseEntity } from './base.entity';
+import { BaseEntity } from '@/database/entities/base.entity';
 import { UserRepository } from '@/modules/user/user.repository';
 
 export enum UserRole {

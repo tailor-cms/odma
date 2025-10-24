@@ -28,8 +28,6 @@ export const getErrorType = (status: number): string => {
   if ([HttpStatus.TOO_MANY_REQUESTS].includes(status)) {
     return ErrorTypes.RATE_LIMIT;
   }
-  if (status >= 500) {
-    return ErrorTypes.INTERNAL;
-  }
+  if (status >= 500) return ErrorTypes.INTERNAL;
   return ErrorTypes.HTTP;
 };

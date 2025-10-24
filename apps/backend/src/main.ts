@@ -1,5 +1,5 @@
 // Sentry must be imported FIRST, before any other modules
-import './instrument';
+import './sentry';
 
 import { ClassSerializerInterceptor, ValidationPipe } from '@nestjs/common';
 import { SwaggerModule } from '@nestjs/swagger';
@@ -13,7 +13,7 @@ import { LoggingInterceptor } from './common/interceptors/logging.interceptor';
 import { ResponseInterceptor } from './common/interceptors/response.interceptor';
 import { ThrottlerExceptionFilter } from './common/filters/throttler-exception.filter';
 import { ValidationExceptionFilter } from './common/filters/validation-exception.filter';
-import { generateOpenApiDocument, saveOpenApiSpec } from './utils/openapi';
+import { generateOpenApiDocument, saveOpenApiSpec } from './common/openapi';
 import cookieParser from 'cookie-parser';
 import helmet from 'helmet';
 

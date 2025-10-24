@@ -1,7 +1,7 @@
 # TODO: Make all env variables configurable
 services:
   postgres:
-    container_name: "app-starter-postgres"
+    container_name: "odma-postgres"
     image: "postgres:15.1"
     environment:
       POSTGRES_DB: "odma"
@@ -13,7 +13,7 @@ services:
       - "5432:5432"
     restart: "no"
   redis:
-    container_name: "app-starter-redis"
+    container_name: "odma-redis"
     image: redis:7.4.0
     ports:
       - "6379:6379"

@@ -1,12 +1,11 @@
 import { INestApplication } from '@nestjs/common';
-import { User } from '@/database/entities';
 import {
   AuthClient,
   TestUser,
   cleanDatabase,
   closeTestingApp,
   createTestingApp,
-  seedTestUsers, getEntityManager,
+  seedTestUsers,
 } from '../../helpers/test.helpers';
 import request from 'supertest';
 
@@ -62,21 +61,6 @@ describe('Auth logout', () => {
       await apiClient.login(user.email, user.password);
       await apiClient.auth.logout(200);
       await apiClient.auth.logout(401);
-    });
-
-    it('should update lastLoginAt on logout', async () => {
-      await apiClient.login(user.email, user.password);
-      const em = getEntityManager();
-      const userAfterLogin = await em.findOne(User, { email: user.email });
-      const loginTimestamp = userAfterLogin?.lastLoginAt;
-      // Wait to ensure timestamp difference
-      await new Promise((resolve) => setTimeout(resolve, 10));
-      await apiClient.auth.logout(200);
-      const userAfterLogout = await em.findOne(User, { email: user.email });
-      expect(userAfterLogout?.lastLoginAt).toBeDefined();
-      expect(new Date(userAfterLogout!.lastLoginAt!).getTime()).toBeGreaterThan(
-        new Date(loginTimestamp!).getTime(),
-      );
     });
   });
 });

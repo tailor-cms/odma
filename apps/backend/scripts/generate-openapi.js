@@ -2,19 +2,17 @@ import { resolve, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const __dirname = fileURLToPath(new URL('.', import.meta.url));
-const backendDir = resolve(__dirname, '../');
+const appDir = resolve(__dirname, '../');
 
 async function generateOpenApi() {
   console.log('🔄 Generating OpenAPI specification...');
 
   try {
     // Import from dist (compiled) backend code
-    const { AppModule } = await import(
-      join(backendDir, 'dist/src/app.module.js')
-    );
+    const { AppModule } = await import(join(appDir, 'dist/src/app.module.js'));
     const { NestFactory } = await import('@nestjs/core');
     const { generateOpenApiDocument, saveOpenApiSpec } = await import(
-      join(backendDir, 'dist/src/utils/openapi.js')
+      join(appDir, 'dist/src/utils/openapi.js')
     );
     // Create app instance for spec generation only
     const app = await NestFactory.create(AppModule, {
@@ -23,9 +21,9 @@ async function generateOpenApi() {
     });
     app.setGlobalPrefix('api');
     const document = generateOpenApiDocument(app);
-    const success = saveOpenApiSpec(document);
+    const isGenerated = saveOpenApiSpec(document);
     await app.close();
-    if (success) {
+    if (isGenerated) {
       console.log('✅ OpenAPI specification generated successfully');
     } else {
       console.error('❌ Failed to save OpenAPI specification');

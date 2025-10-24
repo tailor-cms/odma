@@ -1,6 +1,26 @@
 import axios, { Axios } from 'axios';
 import buildFullPath from 'axios/unsafe/core/buildFullPath';
-import { getErrorInfo } from './helpers';
+
+// Helper to get error information
+export function getErrorInfo(error: any) {
+  const data = error?.response?.data;
+  if (data.error) {
+    return {
+      code: data.error.code,
+      type: data.error.type,
+      message: data.error.message,
+      details: data.error.details,
+      statusCode: data.meta?.statusCode || error.response.status,
+    };
+  }
+  // Fallback for network errors
+  return {
+    code: 'NETWORK_ERROR',
+    type: 'NetworkError',
+    message: error.message || 'Network error occurred',
+    statusCode: error.response?.status || 0,
+  };
+}
 
 Axios.prototype.submitForm = function (url, fields, options) {
   const action = buildFullPath(this.defaults.baseURL, url);
