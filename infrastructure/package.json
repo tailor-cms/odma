@@ -1,8 +1,8 @@
 {
-  "name": "@app/infrastucture",
+  "name": "@odma/infrastucture",
   "main": "src/index.ts",
   "devDependencies": {
-    "@types/node": "^24"
+    "@types/node": "^24.9.1"
   },
   "dependencies": {
     "@pulumi/aws": "^7.9.1",

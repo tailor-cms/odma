@@ -1,6 +1,6 @@
 # Infrastructure Deployment
 
-AWS infrastructure provisioning for the App Starter project using Pulumi and TypeScript.
+AWS infrastructure provisioning for the Odma template using Pulumi and TypeScript.
 
 ## 🏗️ Architecture Overview
 
@@ -49,7 +49,7 @@ config:
   mail:host: email-smtp.us-east-1.amazonaws.com   # Your SMTP host
   mail:senderAddress: noreply@your-domain.com     # Your sender email
   ssm:keyPrefix: app/dev                          # SSM parameter prefix
-  app-starter:resourceNamePrefix: your-app        # Resource naming prefix
+  odma:resourceNamePrefix: odma                   # Resource naming prefix
 ```
 
 ### 2. Set Up AWS Secrets
