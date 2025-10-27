@@ -65,20 +65,19 @@ async function bootstrap() {
     app.get(ValidationExceptionFilter), // 2nd: BadRequestException (validation)
     app.get(ThrottlerExceptionFilter), // 1st: ThrottlerException
   );
-  if (!config.get<string>('isProduction')) {
-    const document = generateOpenApiDocument(app);
-    // Save OpenAPI spec to file
-    // for offline access and build-time client generation
-    saveOpenApiSpec(document);
-    SwaggerModule.setup('api/docs', app, document, {
-      swaggerOptions: {
-        persistAuthorization: true,
-        docExpansion: 'none',
-        filter: true,
-        showRequestDuration: true,
-      },
-    });
-  }
+
+  // Enable Swagger documentation
+  const document = generateOpenApiDocument(app);
+  // for offline access and build-time client generation
+  if (!config.get<string>('isProduction')) saveOpenApiSpec(document);
+  SwaggerModule.setup('api/docs', app, document, {
+    swaggerOptions: {
+      persistAuthorization: true,
+      docExpansion: 'none',
+      filter: true,
+      showRequestDuration: true,
+    },
+  });
   // Set config cookie
   app.use((req, res, next) => {
     if (req.path === '/' || req.path === '/index.html') {
