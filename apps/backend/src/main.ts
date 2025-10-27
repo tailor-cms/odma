@@ -14,12 +14,22 @@ import { ResponseInterceptor } from './common/interceptors/response.interceptor'
 import { ThrottlerExceptionFilter } from './common/filters/throttler-exception.filter';
 import { ValidationExceptionFilter } from './common/filters/validation-exception.filter';
 import { generateOpenApiDocument, saveOpenApiSpec } from './common/openapi';
+import { MikroORM } from '@mikro-orm/core';
 import cookieParser from 'cookie-parser';
 import helmet from 'helmet';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule, { bufferLogs: true });
   const config = app.get(ConfigService);
+
+  if (config.get<boolean>('database.autoMigrations')) {
+    console.log('🔄 Running database migrations...');
+    const orm = app.get(MikroORM);
+    const migrator = orm.getMigrator();
+    await migrator.up();
+    console.log('✅ Database migrations completed');
+  }
+
   const reflector = app.get(Reflector);
   app.useLogger(app.get(Logger));
   app.use(cookieParser(config.get<string>('auth.jwt.secret')));
