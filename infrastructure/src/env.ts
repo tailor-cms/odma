@@ -36,6 +36,7 @@ export const getEnvVariables = (db: studion.Database) => [
   { name: 'DATABASE_USERNAME', value: db.instance.username },
   { name: 'DATABASE_SSL', value: 'true' },
   { name: 'DATABASE_LOGGING', value: 'false' },
+  { name: 'DATABASE_AUTO_MIGRATIONS', value: 'true' },
   // Authentication configuration
   { name: 'AUTH_JWT_ISSUER', value: 'App' },
   { name: 'AUTH_JWT_EXPIRES_IN', value: '7d' },
@@ -43,9 +44,9 @@ export const getEnvVariables = (db: studion.Database) => [
   { name: 'AUTH_SALT_ROUNDS', value: '12' },
   // Mail configuration
   { name: 'MAIL_HOST', value: mailConfig.require('host') },
-  { name: 'MAIL_PORT', value: '587' },
+  { name: 'MAIL_PORT', value: '465' },
   { name: 'MAIL_SECURE', value: 'true' },
-  { name: 'MAIL_FROM_NAME', value: 'App' },
+  { name: 'MAIL_FROM_NAME', value: 'Odma' },
   { name: 'MAIL_FROM_EMAIL', value: mailConfig.require('senderAddress') },
 ];
 

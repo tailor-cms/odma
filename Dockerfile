@@ -1,7 +1,7 @@
 ARG PNPM_HOME="/root/.local/share/pnpm"
-ARG PNPM_VERSION="10.17.1"
+ARG PNPM_VERSION="10.19.0"
 
-FROM node:22.11.0-alpine3.18
+FROM node:24.10.0-alpine3.22
 # Prerequisites
 ARG PORT=3000
 ARG PNPM_HOME

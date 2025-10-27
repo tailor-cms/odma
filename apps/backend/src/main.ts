@@ -1,5 +1,5 @@
 // Sentry must be imported FIRST, before any other modules
-import './instrument';
+import './sentry';
 
 import { ClassSerializerInterceptor, ValidationPipe } from '@nestjs/common';
 import { SwaggerModule } from '@nestjs/swagger';
@@ -13,13 +13,23 @@ import { LoggingInterceptor } from './common/interceptors/logging.interceptor';
 import { ResponseInterceptor } from './common/interceptors/response.interceptor';
 import { ThrottlerExceptionFilter } from './common/filters/throttler-exception.filter';
 import { ValidationExceptionFilter } from './common/filters/validation-exception.filter';
-import { generateOpenApiDocument, saveOpenApiSpec } from './utils/openapi';
+import { generateOpenApiDocument, saveOpenApiSpec } from './common/openapi';
+import { MikroORM } from '@mikro-orm/core';
 import cookieParser from 'cookie-parser';
 import helmet from 'helmet';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule, { bufferLogs: true });
   const config = app.get(ConfigService);
+
+  if (config.get<boolean>('database.autoMigrations')) {
+    console.log('🔄 Running database migrations...');
+    const orm = app.get(MikroORM);
+    const migrator = orm.getMigrator();
+    await migrator.up();
+    console.log('✅ Database migrations completed');
+  }
+
   const reflector = app.get(Reflector);
   app.useLogger(app.get(Logger));
   app.use(cookieParser(config.get<string>('auth.jwt.secret')));
@@ -55,20 +65,19 @@ async function bootstrap() {
     app.get(ValidationExceptionFilter), // 2nd: BadRequestException (validation)
     app.get(ThrottlerExceptionFilter), // 1st: ThrottlerException
   );
-  if (!config.get<string>('isProduction')) {
-    const document = generateOpenApiDocument(app);
-    // Save OpenAPI spec to file
-    // for offline access and build-time client generation
-    saveOpenApiSpec(document);
-    SwaggerModule.setup('api/docs', app, document, {
-      swaggerOptions: {
-        persistAuthorization: true,
-        docExpansion: 'none',
-        filter: true,
-        showRequestDuration: true,
-      },
-    });
-  }
+
+  // Enable Swagger documentation
+  const document = generateOpenApiDocument(app);
+  // for offline access and build-time client generation
+  if (!config.get<string>('isProduction')) saveOpenApiSpec(document);
+  SwaggerModule.setup('api/docs', app, document, {
+    swaggerOptions: {
+      persistAuthorization: true,
+      docExpansion: 'none',
+      filter: true,
+      showRequestDuration: true,
+    },
+  });
   // Set config cookie
   app.use((req, res, next) => {
     if (req.path === '/' || req.path === '/index.html') {

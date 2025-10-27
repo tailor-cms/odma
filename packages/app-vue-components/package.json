@@ -14,9 +14,6 @@
     "@types/pluralize": "^0.0.33"
   },
   "peerDependencies": {
-    "@tiptap/pm": "^2.4.0",
-    "@tiptap/starter-kit": "^2.4.0",
-    "@tiptap/vue-3": "^2.4.0",
     "date-fns": "^3.6.0",
     "lodash": "^4.17.21",
     "p-min-delay": "^4.0.2",
@@ -28,11 +25,7 @@
     "yup": "^1.4.0"
   },
   "dependencies": {
-    "@tiptap/extension-character-count": "^3.6.6",
-    "@tiptap/extension-subscript": "^3.6.6",
-    "@tiptap/extension-superscript": "^3.6.6",
-    "@tiptap/extension-underline": "^3.6.6",
-    "@vueuse/core": "^13.9.0"
+    "@vueuse/core": "^14.0.0"
   },
   "bundledDependencies": [
     "@app/interfaces"

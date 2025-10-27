@@ -32,12 +32,7 @@ export default defineNuxtConfig({
   },
   telemetry: false,
   debug: true,
-  googleFonts: {
-    families: {
-      Roboto: true,
-      Poppins: true,
-    },
-  },
+  googleFonts: { families: { Roboto: true, Poppins: true } },
   pinia: {
     storesDirs: ['./stores/**'],
   },

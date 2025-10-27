@@ -14,28 +14,42 @@ const STACK = pulumi.getStack();
 const resourceNamePrefix = config.require('resourceNamePrefix');
 const fullPrefix = `${resourceNamePrefix}-${STACK}`;
 
-export const appImage = process.env.APP_DOCKER_IMAGE;
-if (!appImage) throw new Error('Missing App Docker image env variable!');
+function buildAndPushImage() {
+  const imageRepository = new aws.ecr.Repository(`${fullPrefix}-ecr`, {
+    forceDelete: true,
+  });
+  return new awsx.ecr.Image(`${fullPrefix}-img`, {
+    repositoryUrl: imageRepository.repositoryUrl,
+    context: '..',
+    platform: 'linux/amd64',
+    args: {
+      ssh: 'default',
+      GITHUB_TOKEN: process.env.GITHUB_TOKEN || '',
+    },
+  });
+}
+
+export const dockerImage =
+  process.env.APP_DOCKER_IMAGE || buildAndPushImage().imageUri;
 
 const vpc = new awsx.ec2.Vpc(`${PROJECT_NAME}-vpc`, {
   enableDnsHostnames: true,
   numberOfAvailabilityZones: 2,
-  natGateways: { strategy: 'None' },
+  natGateways: { strategy: 'Single' },
   subnetStrategy: 'Auto',
   subnetSpecs: [
     { type: awsx.ec2.SubnetType.Public, cidrMask: 24 },
     { type: awsx.ec2.SubnetType.Private, cidrMask: 24 },
-    { type: awsx.ec2.SubnetType.Isolated, cidrMask: 24 },
   ],
 });
 
-const db = new studion.Database(`${fullPrefix}-app-starter-db`, {
+const db = new studion.Database(`${fullPrefix}-odma-db`, {
   instanceClass: 'db.t4g.micro',
   dbName: 'odma',
   username: 'odma',
   vpcId: vpc.vpcId,
   vpcCidrBlock: vpc.vpc.cidrBlock,
-  isolatedSubnetIds: vpc.isolatedSubnetIds,
+  isolatedSubnetIds: vpc.privateSubnetIds,
 });
 
 const cluster = new aws.ecs.Cluster(`${fullPrefix}-ecs-cluster`, {
@@ -44,8 +58,8 @@ const cluster = new aws.ecs.Cluster(`${fullPrefix}-ecs-cluster`, {
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const webServer = new studion.WebServer(`${fullPrefix}-server`, {
-  image: appImage,
-  port: 3001,
+  image: dockerImage,
+  port: 3000,
   domain: dnsConfig.require('domain'),
   vpcId: vpc.vpcId,
   vpcCidrBlock: vpc.vpc.cidrBlock,

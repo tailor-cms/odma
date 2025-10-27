@@ -62,9 +62,7 @@ export class AuthService {
 
   async logout(user: User): Promise<void> {
     this.logger.debug(`Logout attempt for email: ${user.email}`);
-    // TODO: Figure out better name for this field
-    user.lastLoginAt = new Date();
-    await this.em.flush();
+    // TODO: Invalidate JWT token (e.g., add to blacklist)
     this.logger.debug(`Logout success for email: ${user.email}`);
   }
 
