@@ -8,6 +8,7 @@
   "scripts": {
     "build": "nest build",
     "openapi:generate": "node scripts/generate-openapi.js",
+    "invite:admin": "node scripts/invite-admin.js",
     "dev": "dotenv -e ../../.env -- nest start --watch",
     "start": "dotenv -e ../../.env -- node dist/src/main",
     "start:dev": "nest start --watch",
@@ -64,6 +65,7 @@
     "handlebars": "^4.7.8",
     "helmet": "^8.1.0",
     "joi": "^18.0.1",
+    "minimist": "^1.2.8",
     "ms": "^2.1.3",
     "multer": "^2.0.2",
     "nestjs-pino": "^4.4.1",
