@@ -71,8 +71,8 @@ export class MailService {
     } catch (err) {
       await this.logger.error(
         `Failed to send reset password email to: ${user.email}`,
-        err,
       );
+      await this.logger.error(err);
     }
   }
 
@@ -117,8 +117,8 @@ export class MailService {
     } catch (error) {
       await this.logger.error(
         `Failed to send invitation email to: ${user.email}`,
-        error,
       );
+      await this.logger.error(error);
     }
   }
 }
